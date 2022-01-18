@@ -4,7 +4,25 @@ This extension helps run the freeCodeCamp courses found here: []()
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+### User Stories
+
+- [ ] Campers can download extension
+- [x] Campers can select `Open Course` in the command palette
+- [x] Campers can select a course from a list in the command palette
+  - [ ] If course is already downloaded, it is opened
+  - [ ] Course is downloaded from GitHub repo
+- Once course is opened/downloaded:
+  - [ ] `live-server` is started
+  - [ ] _Watcher_ is started
+  - [ ] _Simple Browser_ is opened
+- [ ] Campers can select `Shutdown Course` in the command palette
+  - [ ] All services will gracefully be killed
+- [ ] ? freeCodeCamp Courses hooks into `temp.html` to listen for button presses
+- [ ] ? Campers can select `Restart Project` in the command palette
+  - [ ] Current project lesson resets to 1
+- [ ] ? Campers can select `Run Tests` in the command palette
+  - [ ] Current project test script is run
+- [ ] ? Campers can select `Restart Lesson` in the command palette
 
 For example if there is an image subfolder under your extension project workspace:
 
@@ -28,8 +46,6 @@ This extension contributes the following settings:
 - `myExtension.thing`: set to `blah` to do something
 
 ## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
 
 ## Release Notes
 
