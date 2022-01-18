@@ -15,7 +15,6 @@ interface Courses {
  * Shows a pick list using window.showQuickPick().
  */
 export async function courseInput(context: ExtensionContext) {
-  let i = 0;
   const { courses } = (await (
     await fetch(
       "https://raw.githubusercontent.com/ShaunSHamilton/courses-plus/main/resources/courses.json"
@@ -29,7 +28,6 @@ export async function courseInput(context: ExtensionContext) {
         window.showInformationMessage(`Opening Course: ${course}`),
     }
   );
-  window.showInformationMessage(`Got: ${result}`);
 }
 
 /**
