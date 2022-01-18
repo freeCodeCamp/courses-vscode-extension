@@ -4,6 +4,16 @@
       "name": "Rust in Replit",
       "githubLink": "https://github.com/freeCodeCamp/Rust-in-Replit",
       "tags": ["rust"]
+    },
+    {
+      "name": "Learn Relational Databases by Doing What Tom Says",
+      "githubLink": "https://github.com/freeCodeCamp/learn-relational-databases-by-building-a-mario-database",
+      "tags": ["databases"]
+    },
+    {
+      "name": "Learn Bash by Listening to Tom",
+      "githubLink": "https://github.com/freeCodeCamp/learn-bash-scripting-by-building-five-programs",
+      "tags": ["bash"]
     }
   ]
 }
