@@ -1,5 +1,12 @@
-import { ExtensionContext, window } from "vscode";
+import { window } from "vscode";
 import fetch from "node-fetch";
+import {
+  openSimpleBrowser,
+  startLiveServer,
+  startWatcher,
+  installCourseTools,
+  gitCourseContent,
+} from "./components";
 
 interface Course {
   name: string;
@@ -14,7 +21,7 @@ interface Courses {
 /**
  * Shows a pick list using window.showQuickPick().
  */
-export async function courseInput(context: ExtensionContext) {
+export async function courseInput() {
   const { courses } = (await (
     await fetch(
       "https://raw.githubusercontent.com/ShaunSHamilton/courses-plus/main/resources/courses.json"
@@ -27,7 +34,15 @@ export async function courseInput(context: ExtensionContext) {
       // onDidSelectItem: (course) =>
     }
   );
-  window.showInformationMessage(`Opening Course: ${result}`);
+  if (result) {
+    window.showInformationMessage(`Opening Course: ${result}`);
+
+    await gitCourseContent(courses.find(({ name }) => name === result));
+    installCourseTools();
+    startLiveServer();
+    openSimpleBrowser();
+    startWatcher();
+  }
 }
 
 /**
