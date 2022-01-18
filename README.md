@@ -37,7 +37,7 @@ Users appreciate release notes as you update your extension.
 
 ### 1.0.0
 
-Initial release of ...
+Official release of the freeCodeCamp Courses extension!
 
 ### 1.0.1
 

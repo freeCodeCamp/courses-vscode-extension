@@ -24,10 +24,10 @@ export async function courseInput(context: ExtensionContext) {
     courses.map(({ name }) => name),
     {
       placeHolder: "Select a course",
-      onDidSelectItem: (course) =>
-        window.showInformationMessage(`Opening Course: ${course}`),
+      // onDidSelectItem: (course) =>
     }
   );
+  window.showInformationMessage(`Opening Course: ${result}`);
 }
 
 /**
