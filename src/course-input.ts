@@ -27,16 +27,15 @@ export async function courseInput() {
       "https://raw.githubusercontent.com/ShaunSHamilton/courses-plus/main/resources/courses.json"
     )
   ).json()) as Courses;
-  const result = await window.showQuickPick(
-    courses.map(({ name }) => name),
-    {
-      placeHolder: "Select a course",
-      // onDidSelectItem: (course) =>
-    }
-  );
+  const courseNames = courses.map((course) => course.name);
+  const result = await window.showQuickPick(courseNames, {
+    placeHolder: "Select a course",
+    // onDidSelectItem: (course) =>
+  });
   if (result) {
     window.showInformationMessage(`Opening Course: ${result}`);
 
+    // @ts-expect-error TODO: strongly type this
     await gitCourseContent(courses.find(({ name }) => name === result));
     installCourseTools();
     startLiveServer();
