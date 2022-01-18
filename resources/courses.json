@@ -1,0 +1,9 @@
+{
+  "courses": [
+    {
+      "name": "Rust in Replit",
+      "githubLink": "https://github.com/freeCodeCamp/Rust-in-Replit",
+      "tags": ["rust"]
+    }
+  ]
+}
