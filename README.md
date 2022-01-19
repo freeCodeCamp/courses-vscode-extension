@@ -10,7 +10,9 @@ This extension helps run the freeCodeCamp courses found here: []()
 - [x] Campers can select `Open Course` in the command palette
 - [x] Campers can select a course from a list in the command palette
   - [ ] If course is already downloaded, it is opened
-  - [ ] Course is downloaded from GitHub repo
+  - [x] Course is downloaded from GitHub repo
+- [x] Campers can select `Re-download Course`
+- [x] Campers can select `Run Course`
 - Once course is opened/downloaded:
   - [ ] `live-server` is started
   - [ ] _Watcher_ is started
@@ -23,6 +25,7 @@ This extension helps run the freeCodeCamp courses found here: []()
 - [ ] ? Campers can select `Run Tests` in the command palette
   - [ ] Current project test script is run
 - [ ] ? Campers can select `Restart Lesson` in the command palette
+- [ ] ? Use _Virtual Workspaces_ for courses
 
 For example if there is an image subfolder under your extension project workspace:
 
