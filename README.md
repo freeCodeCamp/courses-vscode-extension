@@ -30,6 +30,29 @@ For example if there is an image subfolder under your extension project workspac
 
 > Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
 
+### How to Open A Course
+
+1. Press `Ctrl + Shift + P` to open the command palette
+
+2. Select `Open Course`
+
+![Open Course](images/open-course.png)
+
+3. Select a course from the list
+
+![Courses List](images/courses-list.png)
+
+4. The following will happen:
+
+- Course will be downloaded into current directory from GitHub
+- [BACKGROUND]: Terminal will open and install dependencies
+- [BACKGROUND]: _live-server_ will start
+- [FOREGROUND]: _Simple Browser_ will open
+- [BACKGROUND]: _Watcher_ will start watching for changes
+- [FOREGROUND]: A new terminal will open in the CWD
+
+![Opening Rust in Replit Course](images/opening-rust-in-replit.png)
+
 ## Requirements
 
 If you have any requirements or dependencies, add a section describing those and how to install and configure them.

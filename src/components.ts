@@ -42,7 +42,7 @@ interface Course {
  */
 export async function gitCourseContent(course: Course): Promise<void> {
   const terminal = window.createTerminal("freeCodeCamp: Git Course Content");
-  terminal.sendText(`git clone ${course.githubLink}.git .`, true);
+  // terminal.sendText(`git clone ${course.githubLink}.git .`, true);
   // window.onDidChangeActiveTerminal(status => {
   //   if (status === 0) {
   //     window.showInformationMessage(`Successfully cloned ${course.name}`);
