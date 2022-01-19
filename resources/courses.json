@@ -1,6 +1,11 @@
 {
   "courses": [
     {
+      "name": "External Courses (To Test With, Tom)",
+      "githubLink": "https://github.com/ShaunSHamilton/external-project",
+      "tags": ["test"]
+    },
+    {
       "name": "Rust in Replit",
       "githubLink": "https://github.com/freeCodeCamp/Rust-in-Replit",
       "tags": ["rust"]
