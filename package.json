@@ -24,6 +24,10 @@
       {
         "command": "freecodecamp-courses.openCourse",
         "title": "Open Course"
+      },
+      {
+        "command": "freecodecamp-courses.runCourse",
+        "title": "Run Course"
       }
     ]
   },
