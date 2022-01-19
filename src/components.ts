@@ -1,4 +1,6 @@
+import { readFileSync } from "fs";
 import { commands, window } from "vscode";
+import { Flash, Course, FlashTypes } from "./typings";
 
 /**
  * This function opens the built-in VSCode Simple Browser, and loads the local port started by live-server
@@ -10,7 +12,7 @@ export function openSimpleBrowser() {
 export function openTerminal() {}
 
 /**
- * This function runs `live-server --port=8080 --entry-file=temp.html` in the background
+ * Runs `live-server --port=8080 --entry-file=temp.html` in the background
  */
 export function startLiveServer() {
   const terminal = window.createTerminal("freeCodeCamp: Live Server");
@@ -20,27 +22,25 @@ export function startLiveServer() {
 export function stopLiveServer() {}
 
 /**
- * This function runs `node ./tooling/hot-reload.js` in the background
+ * Runs `node ./tooling/hot-reload.js` in the background
  */
 export function startWatcher() {
   const terminal = window.createTerminal("freeCodeCamp: Watcher");
   terminal.sendText("node ./tooling/hot-reload.js", true);
 }
 
-export function installCourseTools() {
+export async function installCourseTools(): Promise<Flash> {
   const terminal = window.createTerminal("freeCodeCamp: Install Course Tools");
   terminal.sendText("npm install", true);
+  // TODO: Resolve on successful install, reject on exit
+
+  return Promise.resolve({ message: "", type: FlashTypes.INFO });
 }
 
-interface Course {
-  name: string;
-  githubLink: string;
-  tags: string[];
-}
 /**
- * This function uses Git to clone the course content from the GitHub link into the current directory. **The directory has to be empty!**
+ * Uses Git to clone the course content from the GitHub link into the current directory. **The directory has to be empty!**
  */
-export async function gitCourseContent(course: Course): Promise<void> {
+export async function gitCourseContent(course: Course): Promise<Flash> {
   const terminal = window.createTerminal("freeCodeCamp: Git Course Content");
   // terminal.sendText(`git clone ${course.githubLink}.git .`, true);
   // window.onDidChangeActiveTerminal(status => {
@@ -51,4 +51,17 @@ export async function gitCourseContent(course: Course): Promise<void> {
   //   }
   // }
   // );
+  // TODO: Should maybe clear CWD?
+  return Promise.resolve({ message: "", type: FlashTypes.INFO });
+}
+
+/**
+ * Returns the current working directory `package.json > repository.url` or `null`
+ */
+export async function currentDirectoryCourse(): Promise<
+  Course["githubLink"] | null
+> {
+  const data = JSON.parse(readFileSync("package.json", "utf8"));
+  const courseGithubLink = data?.repository?.url ?? null;
+  return Promise.resolve(courseGithubLink);
 }

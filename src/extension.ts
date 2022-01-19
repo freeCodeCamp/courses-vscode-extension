@@ -1,7 +1,15 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import { commands, ExtensionContext } from "vscode";
+import { commands, ExtensionContext, window } from "vscode";
+import {
+  installCourseTools,
+  openSimpleBrowser,
+  startLiveServer,
+  startWatcher,
+} from "./components";
 import { courseInput } from "./course-input";
+import { handleMessage } from "./handles";
+import { FlashTypes } from "./typings";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -15,6 +23,38 @@ export function activate(context: ExtensionContext) {
       courseInput();
     })
   );
+  context.subscriptions.push(
+    commands.registerCommand("freecodecamp-courses.runCourse", async () => {
+      runCourse();
+    })
+  );
+}
+
+async function runCourse() {
+  const isNodeModulesExists = await ensureNodeModules();
+  try {
+    await installCourseTools();
+    startLiveServer();
+    openSimpleBrowser();
+    startWatcher();
+  } catch (e) {
+    if (isNodeModulesExists) {
+      handleMessage({
+        message: "No connection found. Using existing `node_modules`",
+        type: FlashTypes.WARNING,
+      });
+    } else {
+      handleMessage({
+        message: "Unable to install course tools",
+        type: FlashTypes.ERROR,
+      });
+    }
+  }
+}
+
+async function ensureNodeModules(): Promise<boolean> {
+  // TODO
+  return Promise.resolve(true);
 }
 
 // this method is called when your extension is deactivated

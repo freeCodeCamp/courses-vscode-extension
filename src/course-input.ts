@@ -6,17 +6,9 @@ import {
   startWatcher,
   installCourseTools,
   gitCourseContent,
+  currentDirectoryCourse,
 } from "./components";
-
-interface Course {
-  name: string;
-  githubLink: string;
-  tags: string[];
-}
-
-interface Courses {
-  courses: Course[];
-}
+import { Courses } from "./typings";
 
 /**
  * Shows a pick list using window.showQuickPick().
@@ -27,17 +19,28 @@ export async function courseInput() {
       "https://raw.githubusercontent.com/ShaunSHamilton/courses-plus/main/resources/courses.json"
     )
   ).json()) as Courses;
-  const courseNames = courses.map((course) => course.name);
+  // Check if course is already downloaded
+  const courseGitDownloaded = await currentDirectoryCourse();
+
+  const courseNames = courses.map((course) => {
+    if (courseGitDownloaded === course.githubLink) {
+      return `Re-download: ${course.name}`;
+    } else {
+      return course.name;
+    }
+  });
   const result = await window.showQuickPick(courseNames, {
     placeHolder: "Select a course",
-    // onDidSelectItem: (course) =>
   });
   if (result) {
     window.showInformationMessage(`Opening Course: ${result}`);
 
+    const course = courses.find(
+      ({ name }) => name === result.replace("Re-download: ", "")
+    );
     // @ts-expect-error TODO: strongly type this
-    await gitCourseContent(courses.find(({ name }) => name === result));
-    installCourseTools();
+    await gitCourseContent(course);
+    await installCourseTools();
     startLiveServer();
     openSimpleBrowser();
     startWatcher();
