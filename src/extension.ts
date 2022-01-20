@@ -28,6 +28,14 @@ export function activate(context: ExtensionContext) {
       runCourse();
     })
   );
+  context.subscriptions.push(
+    commands.registerCommand(
+      "freecodecamp-courses.shutdownCourse",
+      async () => {
+        shutdownCourse();
+      }
+    )
+  );
 }
 
 async function runCourse() {
@@ -55,6 +63,13 @@ async function runCourse() {
 async function ensureNodeModules(): Promise<boolean> {
   // TODO
   return Promise.resolve(true);
+}
+
+function shutdownCourse() {
+  // End all running terminal processes
+  window.terminals.forEach((terminal) => {
+    terminal.dispose();
+  });
 }
 
 // this method is called when your extension is deactivated

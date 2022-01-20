@@ -14,11 +14,11 @@ This extension helps run the freeCodeCamp courses found here: []()
 - [x] Campers can select `Re-download Course`
 - [x] Campers can select `Run Course`
 - Once course is opened/downloaded:
-  - [ ] `live-server` is started
-  - [ ] _Watcher_ is started
-  - [ ] _Simple Browser_ is opened
-- [ ] Campers can select `Shutdown Course` in the command palette
-  - [ ] All services will gracefully be killed
+  - [x] `live-server` is started
+  - [x] _Watcher_ is started
+  - [x] _Simple Browser_ is opened
+- [x] Campers can select `Shutdown Course` in the command palette
+  - [x] All services will gracefully be killed
 - [ ] ? freeCodeCamp Courses hooks into `temp.html` to listen for button presses
 - [ ] ? Campers can select `Restart Project` in the command palette
   - [ ] Current project lesson resets to 1
@@ -26,12 +26,6 @@ This extension helps run the freeCodeCamp courses found here: []()
   - [ ] Current project test script is run
 - [ ] ? Campers can select `Restart Lesson` in the command palette
 - [ ] ? Use _Virtual Workspaces_ for courses
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
 
 ### How to Open A Course
 
@@ -111,3 +105,16 @@ Ensure that you've read through the extensions guidelines and follow the best pr
 - [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
 
 **Enjoy!**
+
+## Published Courses
+
+- [External Project (test)](https://github.com/ShaunSHamilton/external-project)
+
+## Contributing
+
+- Create a new branch following naming convention provided here: https://contribute.freecodecamp.org/#/how-to-open-a-pull-request
+- Include _vsix_ file, and specify if change is patch (`0.0.x`), minor (`0.x.0`), or major (`x.0.0`).
+
+```bash
+vsce package 0.0.2
+```
