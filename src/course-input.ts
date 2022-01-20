@@ -14,6 +14,7 @@ import { Courses } from "./typings";
  * Shows a pick list using window.showQuickPick().
  */
 export async function courseInput() {
+  // TODO: Timeout fetch after X time
   const { courses } = (await (
     await fetch(
       "https://raw.githubusercontent.com/ShaunSHamilton/courses-plus/main/resources/courses.json"
