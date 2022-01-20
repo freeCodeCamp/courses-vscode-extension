@@ -9,7 +9,7 @@ This extension helps run the freeCodeCamp courses found here: []()
 - [ ] Campers can download extension
 - [x] Campers can select `Open Course` in the command palette
 - [x] Campers can select a course from a list in the command palette
-  - [ ] If course is already downloaded, it is opened
+  - [x] If course is already downloaded, it is opened
   - [x] Course is downloaded from GitHub repo
 - [x] Campers can select `Re-download Course`
 - [x] Campers can select `Run Course`

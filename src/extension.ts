@@ -50,11 +50,13 @@ async function runCourse() {
       handleMessage({
         message: "No connection found. Using existing `node_modules`",
         type: FlashTypes.WARNING,
+        opts: { detail: e as string },
       });
     } else {
       handleMessage({
         message: "Unable to install course tools",
         type: FlashTypes.ERROR,
+        opts: { detail: e as string },
       });
     }
   }

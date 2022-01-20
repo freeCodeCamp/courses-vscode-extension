@@ -8,6 +8,10 @@ export enum FlashTypes {
 export type Flash = {
   message: string;
   type: FlashTypes;
+  opts?: {
+    modal?: boolean;
+    detail: string;
+  };
 };
 
 export interface Course {
