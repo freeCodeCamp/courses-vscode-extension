@@ -1,5 +1,5 @@
 import { Flash, FlashTypes } from "./typings";
-import { env, window } from "vscode";
+import { window } from "vscode";
 
 const showMessage = (shower: Function) => (s: string, opts: Flash["opts"]) =>
   shower(s, opts);
@@ -15,10 +15,12 @@ export function handleMessage(flash: Flash) {
 }
 
 /**
- * Example Usage: `handleTerminal("freeCodeCamp: Open Course", "git clone something", "npm install", "live-server .")`
+ * Creates a terminal with the given name and executes the given commands.
+ * @example
+ * handleTerminal("freeCodeCamp: Open Course", "git clone something", "npm install", "live-server .")
  */
 export function handleTerminal(name: string, ...commands: string[]) {
-  const commandString = commands.join(" && ");
+  const commandString = commands.join(" && ").replace(/&& & &&/g, "&");
   const terminal = window.createTerminal(name);
   terminal.sendText(commandString, true);
   return terminal;

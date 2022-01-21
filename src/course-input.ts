@@ -41,14 +41,9 @@ export async function courseInput() {
       gitClone(course.githubLink),
       npmInstall,
       liveServer,
+      "&",
       hotReload
     );
-    if (term.exitStatus?.code !== 0) {
-      handleMessage({
-        message: "Error: " + term.exitStatus?.code,
-        type: FlashTypes.ERROR,
-      });
-    }
     openSimpleBrowser();
   }
 }

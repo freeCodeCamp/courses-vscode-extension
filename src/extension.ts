@@ -45,22 +45,16 @@ async function runCourse() {
   const isNodeModulesExists = await ensureNodeModules();
   const isConnected = await isConnectedToInternet();
   try {
-    let term;
     if (!isNodeModulesExists) {
-      term = handleTerminal(
-        "freeCodeCamp: Install Node Modules",
+      handleTerminal(
+        "freeCodeCamp: Run Course - Install",
         npmInstall,
         liveServer,
+        "&",
         hotReload
       );
     } else {
-      term = handleTerminal("freeCodeCamp: Run Course", liveServer, hotReload);
-    }
-    if (term.exitStatus?.code !== 0) {
-      handleMessage({
-        message: "Error: " + term.exitStatus?.code,
-        type: FlashTypes.ERROR,
-      });
+      handleTerminal("freeCodeCamp: Run Course", liveServer, "&", hotReload);
     }
     openSimpleBrowser();
   } catch (e) {
@@ -85,6 +79,7 @@ async function ensureNodeModules(): Promise<boolean> {
     const arrOfArrs = await workspace.fs.readDirectory(
       Uri.file("./node_modules")
     );
+    console.log("arr: ", arrOfArrs);
     if (arrOfArrs.includes(["node_modules", FileType.Directory])) {
       return Promise.resolve(true);
     } else {

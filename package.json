@@ -24,15 +24,15 @@
     "commands": [
       {
         "command": "freecodecamp-courses.openCourse",
-        "title": "Open Course"
+        "title": "freeCodeCamp: Open Course"
       },
       {
         "command": "freecodecamp-courses.runCourse",
-        "title": "Run Course"
+        "title": "freeCodeCamp: Run Course"
       },
       {
         "command": "freecodecamp-courses.shutdownCourse",
-        "title": "Shutdown Course"
+        "title": "freeCodeCamp: Shutdown Course"
       }
     ]
   },
