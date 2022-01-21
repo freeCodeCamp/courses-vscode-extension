@@ -1,14 +1,9 @@
 import { window } from "vscode";
 import fetch from "node-fetch";
-import {
-  openSimpleBrowser,
-  startLiveServer,
-  startWatcher,
-  installCourseTools,
-  gitCourseContent,
-  currentDirectoryCourse,
-} from "./components";
-import { Courses } from "./typings";
+import { openSimpleBrowser, currentDirectoryCourse } from "./components";
+import { Courses, FlashTypes } from "./typings";
+import { handleMessage, handleTerminal } from "./handles";
+import { gitClone, hotReload, liveServer, npmInstall } from "./usefuls";
 
 /**
  * Shows a pick list using window.showQuickPick().
@@ -39,12 +34,22 @@ export async function courseInput() {
     const course = courses.find(
       ({ name }) => name === result.replace("Re-download: ", "")
     );
-    // @ts-expect-error TODO: strongly type this
-    await gitCourseContent(course);
-    await installCourseTools();
-    startLiveServer();
+
+    const term = handleTerminal(
+      "freeCodeCamp: Open Course",
+      // @ts-expect-error TODO: strongly type this
+      gitClone(course.githubLink),
+      npmInstall,
+      liveServer,
+      hotReload
+    );
+    if (term.exitStatus?.code !== 0) {
+      handleMessage({
+        message: "Error: " + term.exitStatus?.code,
+        type: FlashTypes.ERROR,
+      });
+    }
     openSimpleBrowser();
-    startWatcher();
   }
 }
 

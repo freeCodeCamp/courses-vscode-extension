@@ -1,15 +1,18 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import { commands, ExtensionContext, window } from "vscode";
 import {
-  installCourseTools,
-  openSimpleBrowser,
-  startLiveServer,
-  startWatcher,
-} from "./components";
+  commands,
+  ExtensionContext,
+  FileType,
+  Uri,
+  window,
+  workspace,
+} from "vscode";
+import { isConnectedToInternet, openSimpleBrowser } from "./components";
 import { courseInput } from "./course-input";
-import { handleMessage } from "./handles";
+import { handleMessage, handleTerminal } from "./handles";
 import { FlashTypes } from "./typings";
+import { hotReload, liveServer, npmInstall } from "./usefuls";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -40,13 +43,28 @@ export function activate(context: ExtensionContext) {
 
 async function runCourse() {
   const isNodeModulesExists = await ensureNodeModules();
+  const isConnected = await isConnectedToInternet();
   try {
-    await installCourseTools();
-    startLiveServer();
+    let term;
+    if (!isNodeModulesExists) {
+      term = handleTerminal(
+        "freeCodeCamp: Install Node Modules",
+        npmInstall,
+        liveServer,
+        hotReload
+      );
+    } else {
+      term = handleTerminal("freeCodeCamp: Run Course", liveServer, hotReload);
+    }
+    if (term.exitStatus?.code !== 0) {
+      handleMessage({
+        message: "Error: " + term.exitStatus?.code,
+        type: FlashTypes.ERROR,
+      });
+    }
     openSimpleBrowser();
-    startWatcher();
   } catch (e) {
-    if (isNodeModulesExists) {
+    if (!isConnected) {
       handleMessage({
         message: "No connection found. Using existing `node_modules`",
         type: FlashTypes.WARNING,
@@ -63,8 +81,18 @@ async function runCourse() {
 }
 
 async function ensureNodeModules(): Promise<boolean> {
-  // TODO
-  return Promise.resolve(true);
+  try {
+    const arrOfArrs = await workspace.fs.readDirectory(
+      Uri.file("./node_modules")
+    );
+    if (arrOfArrs.includes(["node_modules", FileType.Directory])) {
+      return Promise.resolve(true);
+    } else {
+      return Promise.resolve(false);
+    }
+  } catch (e) {
+    return Promise.resolve(false);
+  }
 }
 
 function shutdownCourse() {
