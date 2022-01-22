@@ -52,8 +52,9 @@ export function activate(context: ExtensionContext) {
   );
   context.subscriptions.push(
     commands.registerCommand("freecodecamp-courses.test", async () => {
-      const isConnected = await isConnectedToInternet();
-      console.log(isConnected);
+      const path = Uri.file(workspace.workspaceFolders?.[0]?.uri?.fsPath ?? "");
+      const arrOfArrs = await workspace.fs.readDirectory(path);
+      console.log(arrOfArrs, path);
     })
   );
 }
