@@ -4,6 +4,7 @@ import {
   openSimpleBrowser,
   currentDirectoryCourse,
   isConnectedToInternet,
+  openTerminal,
 } from "./components";
 import { Courses, FlashTypes } from "./typings";
 import { handleMessage, handleTerminal } from "./handles";
@@ -70,6 +71,7 @@ export async function courseInput() {
       // This is a hack to wait for the live-server to finish
       await new Promise((resolve) => setTimeout(resolve, 3000));
       openSimpleBrowser();
+      openTerminal();
     }
   } else {
     handleMessage({

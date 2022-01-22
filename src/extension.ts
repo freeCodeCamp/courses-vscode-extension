@@ -8,7 +8,11 @@ import {
   workspace,
   FileType,
 } from "vscode";
-import { isConnectedToInternet, openSimpleBrowser } from "./components";
+import {
+  isConnectedToInternet,
+  openSimpleBrowser,
+  openTerminal,
+} from "./components";
 import { courseInput } from "./course-input";
 import { handleMessage, handleTerminal } from "./handles";
 import { FlashTypes } from "./typings";
@@ -48,9 +52,8 @@ export function activate(context: ExtensionContext) {
   );
   context.subscriptions.push(
     commands.registerCommand("freecodecamp-courses.test", async () => {
-      const path = Uri.file(workspace.workspaceFolders?.[0]?.uri?.fsPath ?? "");
-      const arrOfArrs = await workspace.fs.readDirectory(path);
-      console.log("test: ", arrOfArrs, path);
+      const isConnected = await isConnectedToInternet();
+      console.log(isConnected);
     })
   );
 }
@@ -95,6 +98,7 @@ async function runCourse() {
     // Hack to await live-server for Simple Browser
     await new Promise((resolve) => setTimeout(resolve, 3000));
     openSimpleBrowser();
+    openTerminal();
   } else if (isNodeModulesExists) {
     handleTerminal("freeCodeCamp: Run Course", liveServer, "&", hotReload);
 
@@ -105,6 +109,7 @@ async function runCourse() {
     // Hack to await live-server for Simple Browser
     await new Promise((resolve) => setTimeout(resolve, 3000));
     openSimpleBrowser();
+    openTerminal();
   } else {
     handleMessage({
       message: "Connection needed install course tools",

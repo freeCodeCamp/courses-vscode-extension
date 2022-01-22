@@ -1,7 +1,17 @@
-import { commands, Uri, workspace } from "vscode";
+import { commands, Uri, workspace, window } from "vscode";
 import { Course, FlashTypes } from "./typings";
 import fetch from "node-fetch";
 import { handleMessage } from "./handles";
+
+export function openTerminal() {
+  const terminal = window.createTerminal("freeCodeCamp");
+  terminal.sendText(
+    `echo '\n# freeCodeCamp Courses\nPROMPT_COMMAND="echo $PWD >> ./tooling/bash/.cwd; history -a"\ntrap "echo $BASH_COMMAND >> ./tooling/bash/.next_command" DEBUG' >> ~/.bashrc`,
+    true
+  );
+  terminal.sendText(`source ~/.bashrc`, true);
+  terminal.show();
+}
 
 /**
  * This function opens the built-in VSCode Simple Browser, and loads the local port started by live-server
@@ -36,7 +46,7 @@ export async function currentDirectoryCourse(): Promise<
 export async function isConnectedToInternet(): Promise<boolean> {
   try {
     const res = await fetch("https://www.google.com");
-    return Promise.resolve(res.status === 200);
+    return Promise.resolve(res.ok);
   } catch (e) {
     console.log("isConnected: ", e);
     return Promise.resolve(false);
