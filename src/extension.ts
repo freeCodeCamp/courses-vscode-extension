@@ -3,20 +3,21 @@
 import {
   commands,
   ExtensionContext,
-  FileType,
   Uri,
   window,
   workspace,
+  FileType,
 } from "vscode";
 import { isConnectedToInternet, openSimpleBrowser } from "./components";
 import { courseInput } from "./course-input";
 import { handleMessage, handleTerminal } from "./handles";
 import { FlashTypes } from "./typings";
 import {
-  ensurePackageJsonExists,
+  getPackageJson,
   hotReload,
   liveServer,
   npmInstall,
+  ensureFileOrFolder,
 } from "./usefuls";
 
 // this method is called when your extension is activated
@@ -44,12 +45,22 @@ export function activate(context: ExtensionContext) {
       }
     )
   );
+  context.subscriptions.push(
+    commands.registerCommand("freecodecamp-courses.test", async () => {
+      const path = Uri.file(workspace.workspaceFolders?.[0]?.uri?.fsPath ?? "");
+      const arrOfArrs = await workspace.fs.readDirectory(path);
+      console.log("test: ", arrOfArrs, path);
+    })
+  );
 }
 
 async function runCourse() {
-  const isNodeModulesExists = await ensureNodeModules();
+  const isNodeModulesExists = await ensureFileOrFolder(
+    "node_modules",
+    FileType.Directory
+  );
   const isConnected = await isConnectedToInternet();
-  const isPackageJsonExists = await ensurePackageJsonExists();
+  const isPackageJsonExists = Object.keys(await getPackageJson()).length > 0;
 
   if (!isNodeModulesExists && isConnected) {
     if (!isPackageJsonExists) {
@@ -79,21 +90,6 @@ async function runCourse() {
       message: "Connection needed install course tools",
       type: FlashTypes.ERROR,
     });
-  }
-}
-
-async function ensureNodeModules(): Promise<boolean> {
-  try {
-    const arrOfArrs = await workspace.fs.readDirectory(
-      Uri.file(workspace.workspaceFolders?.[0]?.uri?.fsPath ?? "")
-    );
-    if (arrOfArrs.includes(["node_modules", FileType.Directory])) {
-      return Promise.resolve(true);
-    } else {
-      return Promise.resolve(false);
-    }
-  } catch (e) {
-    return Promise.resolve(false);
   }
 }
 

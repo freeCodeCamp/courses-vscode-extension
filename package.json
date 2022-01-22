@@ -17,7 +17,8 @@
   ],
   "activationEvents": [
     "onCommand:freecodecamp-courses.openCourse",
-    "onCommand:freecodecamp-courses.runCourse"
+    "onCommand:freecodecamp-courses.runCourse",
+    "onCommand:freecodecamp-courses.test"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -33,6 +34,10 @@
       {
         "command": "freecodecamp-courses.shutdownCourse",
         "title": "freeCodeCamp: Shutdown Course"
+      },
+      {
+        "command": "freecodecamp-courses.test",
+        "title": "freeCodeCamp: Test"
       }
     ]
   },

@@ -19,6 +19,9 @@ This extension helps run the freeCodeCamp courses found here: []()
   - [x] _Simple Browser_ is opened
 - [x] Campers can select `Shutdown Course` in the command palette
   - [x] All services will gracefully be killed
+
+**Questionables**
+
 - [ ] ? freeCodeCamp Courses hooks into `temp.html` to listen for button presses
 - [ ] ? Campers can select `Restart Project` in the command palette
   - [ ] Current project lesson resets to 1
