@@ -1,5 +1,6 @@
 import { commands, Uri, workspace } from "vscode";
 import { Course } from "./typings";
+import fetch from "node-fetch";
 
 /**
  * This function opens the built-in VSCode Simple Browser, and loads the local port started by live-server
@@ -15,7 +16,11 @@ export async function currentDirectoryCourse(): Promise<
   Course["githubLink"] | null
 > {
   try {
-    const bin = await workspace.fs.readFile(Uri.file("./package.json"));
+    const bin = await workspace.fs.readFile(
+      Uri.file(
+        workspace.workspaceFolders?.[0]?.uri?.fsPath ?? "" + "/package.json"
+      )
+    );
     // Turn Uint8Array into string
     const fileData = JSON.parse(bin.toString());
     const courseGithubLink = fileData?.repository?.url ?? null;
@@ -35,6 +40,7 @@ export async function isConnectedToInternet(): Promise<boolean> {
     const res = await fetch("https://www.google.com");
     return Promise.resolve(res.status === 200);
   } catch (e) {
+    console.log("isConnected: ", e);
     return Promise.resolve(false);
   }
 }

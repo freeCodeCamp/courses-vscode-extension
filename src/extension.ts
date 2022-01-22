@@ -12,7 +12,12 @@ import { isConnectedToInternet, openSimpleBrowser } from "./components";
 import { courseInput } from "./course-input";
 import { handleMessage, handleTerminal } from "./handles";
 import { FlashTypes } from "./typings";
-import { hotReload, liveServer, npmInstall } from "./usefuls";
+import {
+  ensurePackageJsonExists,
+  hotReload,
+  liveServer,
+  npmInstall,
+} from "./usefuls";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -44,42 +49,44 @@ export function activate(context: ExtensionContext) {
 async function runCourse() {
   const isNodeModulesExists = await ensureNodeModules();
   const isConnected = await isConnectedToInternet();
-  try {
-    if (!isNodeModulesExists) {
-      handleTerminal(
-        "freeCodeCamp: Run Course - Install",
-        npmInstall,
-        liveServer,
-        "&",
-        hotReload
-      );
-    } else {
-      handleTerminal("freeCodeCamp: Run Course", liveServer, "&", hotReload);
-    }
-    openSimpleBrowser();
-  } catch (e) {
-    if (!isConnected) {
-      handleMessage({
-        message: "No connection found. Using existing `node_modules`",
-        type: FlashTypes.WARNING,
-        opts: { detail: e as string },
-      });
-    } else {
-      handleMessage({
-        message: "Unable to install course tools",
+  const isPackageJsonExists = await ensurePackageJsonExists();
+
+  if (!isNodeModulesExists && isConnected) {
+    if (!isPackageJsonExists) {
+      return handleMessage({
+        message: "No package.json found. Unable to install tooling",
         type: FlashTypes.ERROR,
-        opts: { detail: e as string },
       });
     }
+    handleTerminal(
+      "freeCodeCamp: Run Course - Install",
+      npmInstall,
+      liveServer,
+      "&",
+      hotReload
+    );
+    openSimpleBrowser();
+  } else if (isNodeModulesExists) {
+    handleTerminal("freeCodeCamp: Run Course", liveServer, "&", hotReload);
+
+    handleMessage({
+      message: "No connection found. Using existing `node_modules`",
+      type: FlashTypes.WARNING,
+    });
+    openSimpleBrowser();
+  } else {
+    handleMessage({
+      message: "Connection needed install course tools",
+      type: FlashTypes.ERROR,
+    });
   }
 }
 
 async function ensureNodeModules(): Promise<boolean> {
   try {
     const arrOfArrs = await workspace.fs.readDirectory(
-      Uri.file("./node_modules")
+      Uri.file(workspace.workspaceFolders?.[0]?.uri?.fsPath ?? "")
     );
-    console.log("arr: ", arrOfArrs);
     if (arrOfArrs.includes(["node_modules", FileType.Directory])) {
       return Promise.resolve(true);
     } else {
@@ -95,6 +102,16 @@ function shutdownCourse() {
   window.terminals.forEach((terminal) => {
     terminal.dispose();
   });
+
+  // This is a bit of a hack to close the Simple Browser window
+  // So, it might not work well.
+  try {
+    window.visibleTextEditors.forEach((editor) => {
+      window.showTextDocument(editor.document).then((_) => {
+        return commands.executeCommand("workbench.action.closeActiveEditor");
+      });
+    });
+  } catch {}
 }
 
 // this method is called when your extension is deactivated
