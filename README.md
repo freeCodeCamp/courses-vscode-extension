@@ -2,6 +2,12 @@
 
 This extension helps run the freeCodeCamp courses found here: []()
 
+Downloading this extension for development testing:
+
+```bash
+wget https://github.com/ShaunSHamilton/courses-plus/raw/main/freecodecamp-courses-patch.vsix
+```
+
 ## Features
 
 ### User Stories
