@@ -11,13 +11,13 @@ export async function ensureDirectoryIsEmpty(): Promise<boolean> {
       Uri.file(workspace.workspaceFolders?.[0]?.uri?.fsPath ?? "")
     );
     if (arrOfArrs.length === 0) {
-      return Promise.resolve(false);
-    } else {
       return Promise.resolve(true);
+    } else {
+      return Promise.resolve(false);
     }
   } catch (e) {
-    console.log("ensureDirectoryIsEmpty: ", e);
-    return Promise.resolve(false);
+    console.error("freeCodeCamp > ensureDirectoryIsEmpty: ", e);
+    return Promise.reject(false);
   }
 }
 
@@ -28,7 +28,7 @@ export async function getPackageJson(): Promise<any> {
     const fileData = JSON.parse(bin.toString());
     return Promise.resolve(fileData);
   } catch (e) {
-    console.error(e);
+    console.error("freeCodeCamp > getPackageJson: ", e);
     return Promise.reject(e);
   }
 }
@@ -51,6 +51,7 @@ export async function ensureFileOrFolder(
       return Promise.resolve(false);
     }
   } catch (e) {
-    return Promise.resolve(false);
+    console.log("freeCodeCamp > ensureFileOrFolder: ", e);
+    return Promise.reject(false);
   }
 }
