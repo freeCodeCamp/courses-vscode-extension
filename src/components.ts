@@ -3,13 +3,15 @@ import { Course, FlashTypes } from "./typings";
 import fetch from "node-fetch";
 import { handleMessage } from "./handles";
 
-export function openTerminal() {
+export async function openTerminal() {
+  const currentWorkspaceDir = await getRootWorkspaceDir();
   const terminal = window.createTerminal("freeCodeCamp");
   terminal.sendText(
-    `echo '\n# freeCodeCamp Courses\nPROMPT_COMMAND="echo $PWD >> ./tooling/bash/.cwd; history -a"\ntrap "echo $BASH_COMMAND >> ./tooling/bash/.next_command" DEBUG' >> ~/.bashrc`,
+    `echo '\n# freeCodeCamp Courses\nPROMPT_COMMAND="echo $PWD >> ${currentWorkspaceDir}/tooling/bash/.cwd; history -a"\ntrap "echo $BASH_COMMAND >> ${currentWorkspaceDir}/tooling/bash/.next_command" DEBUG' >> ~/.bashrc`,
     true
   );
   terminal.sendText(`source ~/.bashrc`, true);
+  // TODO: clear terminal
   terminal.show();
 }
 
@@ -32,6 +34,17 @@ export async function currentDirectoryCourse(): Promise<
     const fileData = JSON.parse(bin.toString());
     const courseGithubLink = fileData?.repository?.url ?? null;
     return Promise.resolve(courseGithubLink);
+  } catch (e) {
+    console.error(e);
+    handleMessage({ message: e as string, type: FlashTypes.INFO });
+    return Promise.resolve(null);
+  }
+}
+
+export async function getRootWorkspaceDir() {
+  try {
+    const path = Uri.file(workspace.workspaceFolders?.[0]?.uri?.fsPath ?? "");
+    return Promise.resolve(path.path);
   } catch (e) {
     console.error(e);
     handleMessage({ message: e as string, type: FlashTypes.INFO });
