@@ -13,6 +13,7 @@ import {
   hotReload,
   liveServer,
   npmInstall,
+  copyEnv,
 } from "./usefuls";
 
 /**
@@ -60,6 +61,7 @@ export async function courseInput() {
         "freeCodeCamp: Open Course",
         // @ts-expect-error TODO: strongly type this
         gitClone(course.githubLink),
+        copyEnv,
         npmInstall,
         liveServer,
         "&",

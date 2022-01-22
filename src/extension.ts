@@ -18,6 +18,7 @@ import {
   liveServer,
   npmInstall,
   ensureFileOrFolder,
+  copyEnv,
 } from "./usefuls";
 
 // this method is called when your extension is activated
@@ -61,6 +62,20 @@ async function runCourse() {
   );
   const isConnected = await isConnectedToInternet();
   const isPackageJsonExists = Object.keys(await getPackageJson()).length > 0;
+  const isEnvExists = await ensureFileOrFolder(".env", FileType.File);
+  const isSampleEnvExists = await ensureFileOrFolder(
+    "sample.env",
+    FileType.File
+  );
+
+  if (!isEnvExists && !isSampleEnvExists) {
+    return handleMessage({
+      message: "No `.env` or `sample.env` file found.",
+      type: FlashTypes.ERROR,
+    });
+  } else if (!isEnvExists) {
+    handleTerminal("freeCodeCamp: Copy .env", copyEnv);
+  }
 
   if (!isNodeModulesExists && isConnected) {
     if (!isPackageJsonExists) {
@@ -69,6 +84,7 @@ async function runCourse() {
         type: FlashTypes.ERROR,
       });
     }
+
     handleTerminal(
       "freeCodeCamp: Run Course - Install",
       npmInstall,
