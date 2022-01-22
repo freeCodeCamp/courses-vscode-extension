@@ -67,6 +67,8 @@ export async function courseInput() {
         "&",
         hotReload
       );
+      // This is a hack to wait for the live-server to finish
+      await new Promise((resolve) => setTimeout(resolve, 3000));
       openSimpleBrowser();
     }
   } else {

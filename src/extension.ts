@@ -92,6 +92,8 @@ async function runCourse() {
       "&",
       hotReload
     );
+    // Hack to await live-server for Simple Browser
+    await new Promise((resolve) => setTimeout(resolve, 3000));
     openSimpleBrowser();
   } else if (isNodeModulesExists) {
     handleTerminal("freeCodeCamp: Run Course", liveServer, "&", hotReload);
@@ -100,6 +102,8 @@ async function runCourse() {
       message: "No connection found. Using existing `node_modules`",
       type: FlashTypes.WARNING,
     });
+    // Hack to await live-server for Simple Browser
+    await new Promise((resolve) => setTimeout(resolve, 3000));
     openSimpleBrowser();
   } else {
     handleMessage({
