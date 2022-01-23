@@ -14,7 +14,12 @@ import {
   openTerminal,
 } from "./components";
 import { courseInput } from "./course-input";
-import { handleMessage, handleTerminal } from "./handles";
+import {
+  createBackgroundTerminal,
+  handleMessage,
+  handleTerminal,
+  rebuildAndReopenInContainer,
+} from "./handles";
 import { FlashTypes } from "./typings";
 import {
   getPackageJson,
@@ -85,15 +90,11 @@ async function runCourse() {
       });
     }
 
-    handleTerminal(
-      "freeCodeCamp: Run Course - Install",
-      npmInstall,
-      liveServer,
-      "&",
-      hotReload
-    );
+    await rebuildAndReopenInContainer();
+    await createBackgroundTerminal("freeCodeCamp: NPM", npmInstall);
+    handleTerminal("freeCodeCamp: Run Course", liveServer, "&", hotReload);
     // Hack to await live-server for Simple Browser
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    await new Promise((resolve) => setTimeout(resolve, 10000));
     openSimpleBrowser();
     openTerminal();
   } else if (isNodeModulesExists) {
