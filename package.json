@@ -75,5 +75,9 @@
   },
   "dependencies": {
     "node-fetch": "~3.0"
+  },
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/freeCodeCamp/freecodecamp-courses/issues"
   }
 }

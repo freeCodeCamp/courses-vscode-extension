@@ -1,4 +1,4 @@
-# freecodecamp-courses-plus README
+# freeCodeCamp - Courses
 
 This extension helps run the freeCodeCamp courses found here: []()
 
@@ -17,7 +17,6 @@ wget https://github.com/ShaunSHamilton/courses-plus/raw/main/freecodecamp-course
 - [x] Campers can select a course from a list in the command palette
   - [x] If course is already downloaded, it is opened
   - [x] Course is downloaded from GitHub repo
-- [x] Campers can select `Re-download Course`
 - [x] Campers can select `Run Course`
 - Once course is opened/downloaded:
   - [x] `live-server` is started
@@ -40,7 +39,7 @@ wget https://github.com/ShaunSHamilton/courses-plus/raw/main/freecodecamp-course
 
 1. Press `Ctrl + Shift + P` to open the command palette
 
-2. Select `Open Course`
+2. Select `freeCodeCamp: Open Course`
 
 ![Open Course](images/open-course.png)
 
@@ -57,13 +56,13 @@ wget https://github.com/ShaunSHamilton/courses-plus/raw/main/freecodecamp-course
 - [BACKGROUND]: _Watcher_ will start watching for changes
 - [FOREGROUND]: A new terminal will open in the CWD
 
-![Opening Rust in Replit Course](images/opening-rust-in-replit.png)
+![Opening Example Course](images/opening-example-course.png)
 
-## Requirements
+<!-- ## Requirements -->
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+<!-- If you have any requirements or dependencies, add a section describing those and how to install and configure them. -->
 
-## Extension Settings
+<!-- ## Extension Settings
 
 Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
 
@@ -72,7 +71,7 @@ For example:
 This extension contributes the following settings:
 
 - `myExtension.enable`: enable/disable this extension
-- `myExtension.thing`: set to `blah` to do something
+- `myExtension.thing`: set to `blah` to do something -->
 
 ## Known Issues
 
@@ -125,5 +124,5 @@ Ensure that you've read through the extensions guidelines and follow the best pr
 - Include _vsix_ file, and specify if change is patch (`0.0.x`), minor (`0.x.0`), or major (`x.0.0`).
 
 ```bash
-vsce package 0.0.2
+npm run pack minor
 ```

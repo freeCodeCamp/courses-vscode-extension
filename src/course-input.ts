@@ -53,8 +53,12 @@ export async function courseInput() {
         if (!isEmpty) {
           return handleMessage({
             message:
-              "Directory is not empty. Can only clone into empty directory.",
-            type: FlashTypes.ERROR,
+              "Directory is not empty. Please empty directory, and try again.",
+            type: FlashTypes.WARNING,
+            opts: {
+              detail: "Please empty working directory, and try again.",
+              modal: true,
+            },
           });
         }
       }
@@ -88,7 +92,7 @@ export async function showInputBox() {
   const result = await window.showInputBox({
     value: "abcdef",
     valueSelection: [2, 4],
-    placeHolder: "For example: fedcba. But not: 123",
+    placeHolder: "",
     validateInput: (text) => {
       window.showInformationMessage(`Validating: ${text}`);
       return text === "123" ? "Not 123!" : null;

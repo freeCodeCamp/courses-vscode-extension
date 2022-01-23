@@ -7,7 +7,7 @@ export async function openTerminal() {
   const currentWorkspaceDir = await getRootWorkspaceDir();
   const terminal = window.createTerminal("freeCodeCamp");
   terminal.sendText(
-    `echo '\n# freeCodeCamp Courses\nPROMPT_COMMAND="echo $PWD >> ${currentWorkspaceDir}/tooling/bash/.cwd; history -a"\ntrap "echo $BASH_COMMAND >> ${currentWorkspaceDir}/tooling/bash/.next_command" DEBUG' >> ~/.bashrc`,
+    `echo '\n# freeCodeCamp Courses\nPROMPT_COMMAND="echo $PWD >> ${currentWorkspaceDir}/curriculum/.freecodecamp/.cwd; history -a"\ntrap "echo $BASH_COMMAND >> ${currentWorkspaceDir}/curriculum/.freecodecamp/.next_command" DEBUG' >> ~/.bashrc`,
     true
   );
   terminal.sendText(`source ~/.bashrc`, true);
