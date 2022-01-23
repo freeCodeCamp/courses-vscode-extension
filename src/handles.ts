@@ -1,5 +1,5 @@
 import { Flash, FlashTypes } from "./typings";
-import { Terminal, window } from "vscode";
+import { commands, Terminal, window } from "vscode";
 
 const showMessage = (shower: Function) => (s: string, opts: Flash["opts"]) =>
   shower(s, opts);
@@ -49,4 +49,10 @@ export async function pollTerminal(terminal: Terminal) {
       }
     }, 400);
   });
+}
+
+export async function rebuildAndReopenInContainer() {
+  await commands.executeCommand(
+    "remote-containers.rebuildAndReopenInContainer"
+  );
 }

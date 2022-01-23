@@ -7,7 +7,11 @@ import {
   openTerminal,
 } from "./components";
 import { Courses, FlashTypes } from "./typings";
-import { createBackgroundTerminal, handleMessage } from "./handles";
+import {
+  createBackgroundTerminal,
+  handleMessage,
+  rebuildAndReopenInContainer,
+} from "./handles";
 import {
   ensureDirectoryIsEmpty,
   gitClone,
@@ -67,6 +71,7 @@ export async function courseInput() {
         // @ts-expect-error TODO: strongly type this
         gitClone(course.githubLink)
       );
+      await rebuildAndReopenInContainer();
       await createBackgroundTerminal("freeCodeCamp: Env", copyEnv);
       await createBackgroundTerminal("freeCodeCamp: NPM", npmInstall);
       createBackgroundTerminal("freeCodeCamp: Live Server", liveServer);
