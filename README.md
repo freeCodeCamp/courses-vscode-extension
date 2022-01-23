@@ -8,6 +8,15 @@ Downloading this extension for development testing:
 wget https://github.com/ShaunSHamilton/courses-plus/raw/main/freecodecamp-courses-patch.vsix
 ```
 
+## TODO On Release
+
+- [ ] Update `resources/courses.json` to match actual available courses
+- [ ] Update this README to suit features
+- [ ] Package major release
+- [ ] Double-confirm LICENSE
+- [ ] Develop CONTRIBUTION guide for this extension
+- [ ] Iron out development guide for courses using extension
+
 ## Features
 
 ### User Stories
