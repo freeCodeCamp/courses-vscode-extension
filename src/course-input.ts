@@ -7,7 +7,7 @@ import {
   openTerminal,
 } from "./components";
 import { Courses, FlashTypes } from "./typings";
-import { handleMessage, handleTerminal } from "./handles";
+import { createBackgroundTerminal, handleMessage } from "./handles";
 import {
   ensureDirectoryIsEmpty,
   gitClone,
@@ -62,18 +62,17 @@ export async function courseInput() {
           });
         }
       }
-      handleTerminal(
-        "freeCodeCamp: Open Course",
+      await createBackgroundTerminal(
+        "freeCodeCamp: Git Course",
         // @ts-expect-error TODO: strongly type this
-        gitClone(course.githubLink),
-        copyEnv,
-        npmInstall,
-        liveServer,
-        "&",
-        hotReload
+        gitClone(course.githubLink)
       );
+      await createBackgroundTerminal("freeCodeCamp: Env", copyEnv);
+      await createBackgroundTerminal("freeCodeCamp: NPM", npmInstall);
+      createBackgroundTerminal("freeCodeCamp: Live Server", liveServer);
+      createBackgroundTerminal("freeCodeCamp: Hot Reload", hotReload);
       // This is a hack to wait for the live-server to finish
-      await new Promise((resolve) => setTimeout(resolve, 8000));
+      await new Promise((resolve) => setTimeout(resolve, 10000));
       openSimpleBrowser();
       openTerminal();
     }
