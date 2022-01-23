@@ -98,6 +98,7 @@ async function runCourse() {
     openSimpleBrowser();
     openTerminal();
   } else if (isNodeModulesExists) {
+    await rebuildAndReopenInContainer();
     handleTerminal("freeCodeCamp: Run Course", liveServer, "&", hotReload);
 
     handleMessage({
