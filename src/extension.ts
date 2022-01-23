@@ -1,13 +1,6 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import {
-  commands,
-  ExtensionContext,
-  Uri,
-  window,
-  workspace,
-  FileType,
-} from "vscode";
+import { commands, ExtensionContext, window, FileType } from "vscode";
 import {
   isConnectedToInternet,
   openSimpleBrowser,
@@ -18,7 +11,6 @@ import {
   createBackgroundTerminal,
   handleMessage,
   handleTerminal,
-  rebuildAndReopenInContainer,
 } from "./handles";
 import { FlashTypes } from "./typings";
 import {
@@ -90,7 +82,6 @@ async function runCourse() {
       });
     }
 
-    await rebuildAndReopenInContainer();
     await createBackgroundTerminal("freeCodeCamp: NPM", npmInstall);
     handleTerminal("freeCodeCamp: Run Course", liveServer, "&", hotReload);
     // Hack to await live-server for Simple Browser
@@ -98,12 +89,11 @@ async function runCourse() {
     openSimpleBrowser();
     openTerminal();
   } else if (isNodeModulesExists) {
-    await rebuildAndReopenInContainer();
     handleTerminal("freeCodeCamp: Run Course", liveServer, "&", hotReload);
 
     handleMessage({
-      message: "No connection found. Using existing `node_modules`",
-      type: FlashTypes.WARNING,
+      message: "Using existing `node_modules`",
+      type: FlashTypes.INFO,
     });
     // Hack to await live-server for Simple Browser
     await new Promise((resolve) => setTimeout(resolve, 3000));

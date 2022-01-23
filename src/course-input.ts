@@ -72,14 +72,6 @@ export async function courseInput() {
         gitClone(course.githubLink)
       );
       await rebuildAndReopenInContainer();
-      await createBackgroundTerminal("freeCodeCamp: Env", copyEnv);
-      await createBackgroundTerminal("freeCodeCamp: NPM", npmInstall);
-      createBackgroundTerminal("freeCodeCamp: Live Server", liveServer);
-      createBackgroundTerminal("freeCodeCamp: Hot Reload", hotReload);
-      // This is a hack to wait for the live-server to finish
-      await new Promise((resolve) => setTimeout(resolve, 10000));
-      openSimpleBrowser();
-      openTerminal();
     }
   } else {
     handleMessage({
