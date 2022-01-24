@@ -51,9 +51,6 @@ export async function pollTerminal(terminal: Terminal) {
   });
 }
 
-export async function rebuildAndReopenInContainer() {
-  const s = await commands.executeCommand(
-    "remote-containers.rebuildAndReopenInContainer"
-  );
-  console.log(s);
+export function rebuildAndReopenInContainer() {
+  commands.executeCommand("remote-containers.rebuildAndReopenInContainer");
 }

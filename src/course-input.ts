@@ -1,25 +1,13 @@
 import { window } from "vscode";
 import fetch from "node-fetch";
-import {
-  openSimpleBrowser,
-  currentDirectoryCourse,
-  isConnectedToInternet,
-  openTerminal,
-} from "./components";
+import { currentDirectoryCourse, isConnectedToInternet } from "./components";
 import { Courses, FlashTypes } from "./typings";
 import {
   createBackgroundTerminal,
   handleMessage,
   rebuildAndReopenInContainer,
 } from "./handles";
-import {
-  ensureDirectoryIsEmpty,
-  gitClone,
-  hotReload,
-  liveServer,
-  npmInstall,
-  copyEnv,
-} from "./usefuls";
+import { ensureDirectoryIsEmpty, gitClone } from "./usefuls";
 
 /**
  * Shows a pick list using window.showQuickPick().

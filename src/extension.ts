@@ -11,6 +11,7 @@ import {
   createBackgroundTerminal,
   handleMessage,
   handleTerminal,
+  rebuildAndReopenInContainer,
 } from "./handles";
 import { FlashTypes } from "./typings";
 import {
@@ -48,7 +49,9 @@ export function activate(context: ExtensionContext) {
     )
   );
   context.subscriptions.push(
-    commands.registerCommand("freecodecamp-courses.test", async () => {})
+    commands.registerCommand("freecodecamp-courses.test", async () => {
+      await rebuildAndReopenInContainer();
+    })
   );
 }
 
