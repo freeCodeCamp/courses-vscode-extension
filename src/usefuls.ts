@@ -1,10 +1,10 @@
 import { workspace, Uri, FileType } from "vscode";
 
 export const gitClone = (githubLink: string) => `git clone ${githubLink}.git .`;
-export const npmInstall = "npm install";
-export const liveServer = "live-server --port=8080 --entry-file=temp.html";
-export const hotReload = "node ./tooling/hot-reload.js";
-export const copyEnv = "cp sample.env .env";
+export const npmInstall = "cd .. && npm install && cd curriculum";
+export const liveServer = "live-server --port=8080 --entry-file=../temp.html";
+export const hotReload = "node ../tooling/hot-reload.js";
+export const copyEnv = "cp ../sample.env ../.env";
 
 export async function ensureDirectoryIsEmpty(): Promise<boolean> {
   try {
@@ -25,7 +25,9 @@ export async function ensureDirectoryIsEmpty(): Promise<boolean> {
 export async function getPackageJson(): Promise<any> {
   try {
     const path = Uri.file(workspace.workspaceFolders?.[0]?.uri?.fsPath ?? "");
-    const bin = await workspace.fs.readFile(Uri.joinPath(path, "package.json"));
+    const bin = await workspace.fs.readFile(
+      Uri.joinPath(path, "..", "package.json")
+    );
     const fileData = JSON.parse(bin.toString());
     return Promise.resolve(fileData);
   } catch (e) {
