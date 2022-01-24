@@ -57,14 +57,14 @@ export function activate(context: ExtensionContext) {
 
 async function runCourse() {
   const isNodeModulesExists = await ensureFileOrFolder(
-    "../node_modules",
+    "node_modules",
     FileType.Directory
   );
   const isConnected = await isConnectedToInternet();
   const isPackageJsonExists = Object.keys(await getPackageJson()).length > 0;
-  const isEnvExists = await ensureFileOrFolder("../.env", FileType.File);
+  const isEnvExists = await ensureFileOrFolder(".env", FileType.File);
   const isSampleEnvExists = await ensureFileOrFolder(
-    "../sample.env",
+    "sample.env",
     FileType.File
   );
 
