@@ -24,8 +24,8 @@ export async function ensureDirectoryIsEmpty(): Promise<boolean> {
 
 export async function getPackageJson(): Promise<any> {
   try {
-    const path = Uri.file("../");
-    const bin = await workspace.fs.readFile(Uri.joinPath(path, "package.json"));
+    const path = Uri.file("~/package.json");
+    const bin = await workspace.fs.readFile(path);
     const fileData = JSON.parse(bin.toString());
     return Promise.resolve(fileData);
   } catch (e) {
@@ -39,7 +39,7 @@ export async function ensureFileOrFolder(
   type: FileType
 ): Promise<boolean> {
   try {
-    const arrOfArrs = await workspace.fs.readDirectory(Uri.file("../"));
+    const arrOfArrs = await workspace.fs.readDirectory(Uri.file("~/"));
     console.log("ensureFileOrFolder: ", arrOfArrs);
     if (
       arrOfArrs.find(
