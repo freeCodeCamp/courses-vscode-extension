@@ -1,10 +1,11 @@
 import { workspace, Uri, FileType } from "vscode";
 
 export const gitClone = (githubLink: string) => `git clone ${githubLink}.git .`;
-export const npmInstall = "cd .. && npm install && cd curriculum";
-export const liveServer = "live-server --port=8080 --entry-file=../temp.html";
-export const hotReload = "node ../tooling/hot-reload.js";
-export const copyEnv = "cp ../sample.env ../.env";
+export const npmInstall = "cd .. && sudo npm install";
+export const liveServer =
+  "cd .. && live-server --port=8080 --entry-file=temp.html";
+export const hotReload = "cd && sudo node tooling/hot-reload.js";
+export const copyEnv = "cd .. && sudo cp sample.env .env";
 
 export async function ensureDirectoryIsEmpty(): Promise<boolean> {
   try {
