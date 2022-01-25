@@ -2,7 +2,8 @@ import { workspace, Uri, FileType } from "vscode";
 
 export const gitClone = (githubLink: string) => `git clone ${githubLink}.git .`;
 export const npmInstall = "cd .. && sudo npm install";
-export const liveServer = "live-server --port=8080 --entry-file=temp.html";
+export const liveServer =
+  "live-server --port=8080 --entry-file=temp.html --no-browser";
 export const hotReload = "sudo node tooling/hot-reload.js";
 export const copyEnv = "cd .. && sudo cp sample.env .env";
 
@@ -40,7 +41,6 @@ export async function ensureFileOrFolder(
 ): Promise<boolean> {
   try {
     const arrOfArrs = await workspace.fs.readDirectory(Uri.file("home/camper"));
-    console.log("ensureFileOrFolder: ", arrOfArrs);
     if (
       arrOfArrs.find(
         ([name, fileType]) => name === fileOrFolder && fileType === type

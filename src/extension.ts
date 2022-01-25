@@ -71,7 +71,7 @@ async function runCourse() {
       type: FlashTypes.ERROR,
     });
   } else if (!isEnvExists) {
-    handleTerminal("freeCodeCamp: Copy .env", copyEnv);
+    await createBackgroundTerminal("freeCodeCamp: Copy .env", copyEnv);
   }
 
   if (!isNodeModulesExists && isConnected) {
@@ -83,13 +83,8 @@ async function runCourse() {
     }
 
     await createBackgroundTerminal("freeCodeCamp: NPM", npmInstall);
-    handleTerminal(
-      "freeCodeCamp: Run Course",
-      "cd ..",
-      liveServer,
-      "&",
-      hotReload
-    );
+    handleTerminal("freeCodeCamp: Live Server", "cd ..", liveServer);
+    handleTerminal("freeCodeCamp: Watcher", "cd ..", hotReload);
     // Hack to await live-server for Simple Browser
     await new Promise((resolve) => setTimeout(resolve, 10000));
     openSimpleBrowser();
