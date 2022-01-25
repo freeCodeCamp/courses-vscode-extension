@@ -93,25 +93,20 @@ async function runCourse() {
     openSimpleBrowser();
     openTerminal();
   } else if (isNodeModulesExists) {
-    handleTerminal(
-      "freeCodeCamp: Run Course",
-      "cd ..",
-      liveServer,
-      "&",
-      hotReload
-    );
+    handleTerminal("freeCodeCamp: Live Server", liveServer);
+    handleTerminal("freeCodeCamp: Watcher", hotReload);
 
     handleMessage({
       message: "Using existing `node_modules`",
       type: FlashTypes.INFO,
     });
     // Hack to await live-server for Simple Browser
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    await new Promise((resolve) => setTimeout(resolve, 9000));
     openSimpleBrowser();
     openTerminal();
   } else {
     handleMessage({
-      message: "Connection needed install course tools",
+      message: "Connection needed to install course tools",
       type: FlashTypes.ERROR,
     });
   }
