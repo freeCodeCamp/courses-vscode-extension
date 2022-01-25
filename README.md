@@ -57,14 +57,9 @@ wget https://github.com/ShaunSHamilton/courses-plus/raw/main/freecodecamp-course
 
 ![Courses List](images/courses-list.png)
 
-4. The following will happen:
+4. `Ctrl + Shift + P` and select `Remote-Containers: Rebuild and Reopen in Container`
 
-- Course will be downloaded into current directory from GitHub
-- [BACKGROUND]: Terminal will open and install dependencies
-- [BACKGROUND]: _live-server_ will start
-- [FOREGROUND]: _Simple Browser_ will open
-- [BACKGROUND]: _Watcher_ will start watching for changes
-- [FOREGROUND]: A new terminal will open in the CWD
+5. `Ctrl + Shift + P` and select `freeCodeCamp: Run Course`
 
 ![Opening Example Course](images/opening-example-course.png)
 
