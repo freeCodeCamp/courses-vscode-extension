@@ -31,7 +31,7 @@ export async function courseInput() {
       placeHolder: "Select a course",
     });
     if (result) {
-      window.showInformationMessage(`Opening Course: ${result}`);
+      window.showInformationMessage(`Downloading Course: ${result}`);
 
       const course = courses.find(
         ({ name }) => name === result.replace("Re-download: ", "")
@@ -40,8 +40,7 @@ export async function courseInput() {
         const isEmpty = await ensureDirectoryIsEmpty();
         if (!isEmpty) {
           return handleMessage({
-            message:
-              "Directory is not empty. Please empty directory, and try again.",
+            message: "Directory is not empty.",
             type: FlashTypes.WARNING,
             opts: {
               detail: "Please empty working directory, and try again.",
@@ -49,12 +48,14 @@ export async function courseInput() {
             },
           });
         }
+        await createBackgroundTerminal(
+          "freeCodeCamp: Git Course",
+          // @ts-expect-error TODO: strongly type this
+          gitClone(course.githubLink)
+        );
+      } else {
+        await createBackgroundTerminal("freeCodeCamp: Re-Git", "git pull");
       }
-      await createBackgroundTerminal(
-        "freeCodeCamp: Git Course",
-        // @ts-expect-error TODO: strongly type this
-        gitClone(course.githubLink)
-      );
 
       // TODO: This does not work for some reason
       // await rebuildAndReopenInContainer();

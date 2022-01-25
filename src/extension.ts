@@ -18,6 +18,7 @@ import {
   npmInstall,
   ensureFileOrFolder,
   copyEnv,
+  PATH,
 } from "./usefuls";
 
 export function activate(context: ExtensionContext) {
@@ -55,14 +56,16 @@ export function activate(context: ExtensionContext) {
 async function runCourse() {
   const isNodeModulesExists = await ensureFileOrFolder(
     "node_modules",
-    FileType.Directory
+    FileType.Directory,
+    PATH
   );
   const isConnected = await isConnectedToInternet();
   const isPackageJsonExists = Object.keys(await getPackageJson()).length > 0;
-  const isEnvExists = await ensureFileOrFolder(".env", FileType.File);
+  const isEnvExists = await ensureFileOrFolder(".env", FileType.File, PATH);
   const isSampleEnvExists = await ensureFileOrFolder(
     "sample.env",
-    FileType.File
+    FileType.File,
+    PATH
   );
 
   if (!isEnvExists && !isSampleEnvExists) {
@@ -83,8 +86,8 @@ async function runCourse() {
     }
 
     await createBackgroundTerminal("freeCodeCamp: NPM", npmInstall);
-    handleTerminal("freeCodeCamp: Live Server", "cd ..", liveServer);
-    handleTerminal("freeCodeCamp: Watcher", "cd ..", hotReload);
+    handleTerminal("freeCodeCamp: Live Server", liveServer);
+    handleTerminal("freeCodeCamp: Watcher", hotReload);
     // Hack to await live-server for Simple Browser
     await new Promise((resolve) => setTimeout(resolve, 10000));
     openSimpleBrowser();

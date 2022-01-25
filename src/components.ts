@@ -2,6 +2,7 @@ import { commands, Uri, workspace, window } from "vscode";
 import { Course, FlashTypes } from "./typings";
 import fetch from "node-fetch";
 import { handleMessage } from "./handles";
+import { PATH } from "./usefuls";
 
 export async function openTerminal() {
   const terminal = window.createTerminal("freeCodeCamp");
@@ -24,7 +25,8 @@ export async function currentDirectoryCourse(): Promise<
   Course["githubLink"] | null
 > {
   try {
-    const path = Uri.file(workspace.workspaceFolders?.[0]?.uri?.fsPath ?? "");
+    const work = workspace.workspaceFolders?.[0]?.uri?.fsPath ?? "";
+    const path = Uri.file(`${work}/${PATH}`);
     const bin = await workspace.fs.readFile(Uri.joinPath(path, "package.json"));
     const fileData = JSON.parse(bin.toString());
     const courseGithubLink = fileData?.repository?.url ?? null;
