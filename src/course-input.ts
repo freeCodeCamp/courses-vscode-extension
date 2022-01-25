@@ -2,11 +2,7 @@ import { window } from "vscode";
 import fetch from "node-fetch";
 import { currentDirectoryCourse, isConnectedToInternet } from "./components";
 import { Courses, FlashTypes } from "./typings";
-import {
-  createBackgroundTerminal,
-  handleMessage,
-  rebuildAndReopenInContainer,
-} from "./handles";
+import { createBackgroundTerminal, handleMessage } from "./handles";
 import { ensureDirectoryIsEmpty, gitClone } from "./usefuls";
 
 /**
@@ -59,7 +55,9 @@ export async function courseInput() {
         // @ts-expect-error TODO: strongly type this
         gitClone(course.githubLink)
       );
-      await rebuildAndReopenInContainer();
+
+      // TODO: This does not work for some reason
+      // await rebuildAndReopenInContainer();
     }
   } else {
     handleMessage({

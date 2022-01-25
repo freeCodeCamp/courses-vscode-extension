@@ -1,5 +1,3 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import { commands, ExtensionContext, window, FileType } from "vscode";
 import {
   isConnectedToInternet,
@@ -11,7 +9,6 @@ import {
   createBackgroundTerminal,
   handleMessage,
   handleTerminal,
-  rebuildAndReopenInContainer,
 } from "./handles";
 import { FlashTypes } from "./typings";
 import {
@@ -23,12 +20,8 @@ import {
   copyEnv,
 } from "./usefuls";
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
 export function activate(context: ExtensionContext) {
-  // Use the console to output diagnostic information (console.log) and errors (console.error)
-  // This line of code will only be executed once when your extension is activated
-  console.log("Your extension is now active!");
+  console.log("freeCodeCamp Courses extension is now active!");
 
   context.subscriptions.push(
     commands.registerCommand("freecodecamp-courses.openCourse", async () => {
@@ -50,7 +43,11 @@ export function activate(context: ExtensionContext) {
   );
   context.subscriptions.push(
     commands.registerCommand("freecodecamp-courses.test", async () => {
-      await rebuildAndReopenInContainer();
+      const t = await createBackgroundTerminal(
+        "freeCodeCamp: Test",
+        "echo 'hello Camper'"
+      );
+      console.log("Test: ", t);
     })
   );
 }
@@ -86,13 +83,25 @@ async function runCourse() {
     }
 
     await createBackgroundTerminal("freeCodeCamp: NPM", npmInstall);
-    handleTerminal("freeCodeCamp: Run Course", liveServer, "&", hotReload);
+    handleTerminal(
+      "freeCodeCamp: Run Course",
+      "cd ..",
+      liveServer,
+      "&",
+      hotReload
+    );
     // Hack to await live-server for Simple Browser
     await new Promise((resolve) => setTimeout(resolve, 10000));
     openSimpleBrowser();
     openTerminal();
   } else if (isNodeModulesExists) {
-    handleTerminal("freeCodeCamp: Run Course", liveServer, "&", hotReload);
+    handleTerminal(
+      "freeCodeCamp: Run Course",
+      "cd ..",
+      liveServer,
+      "&",
+      hotReload
+    );
 
     handleMessage({
       message: "Using existing `node_modules`",

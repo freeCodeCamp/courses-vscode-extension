@@ -33,7 +33,7 @@ wget https://github.com/ShaunSHamilton/courses-plus/raw/main/freecodecamp-course
   - [x] _Simple Browser_ is opened
 - [x] Campers can select `Shutdown Course` in the command palette
   - [x] All services will gracefully be killed
-- [ ] Prioritise Docker setup to remove setup-specific issues
+- [x] Prioritise Docker setup to remove setup-specific issues
 
 **Questionables**
 

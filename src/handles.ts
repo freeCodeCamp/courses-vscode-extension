@@ -30,16 +30,18 @@ export function handleTerminal(name: string, ...commands: string[]) {
 
 export async function createBackgroundTerminal(name: string, command: string) {
   const terminal = window.createTerminal(name);
-  terminal.sendText(command, true);
+  terminal.sendText(`${command} && exit`, true);
   const exitStatus = await pollTerminal(terminal);
   if (exitStatus) {
     terminal.dispose();
-    return Promise.resolve();
+    return Promise.resolve(exitStatus);
   }
   return Promise.reject();
 }
 
-export async function pollTerminal(terminal: Terminal) {
+export async function pollTerminal(
+  terminal: Terminal
+): Promise<Terminal["exitStatus"]> {
   // Every 400ms, check if `terminal.exitStatus` is `undefined`. If it is not `undefined`, resolve promise to `terminal.exitStatus`.
   return new Promise((resolve) => {
     const interval = setInterval(() => {
