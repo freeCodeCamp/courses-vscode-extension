@@ -5,7 +5,7 @@ export const PATH = ".freeCodeCamp";
 export const liveServer = `live-server --port=8080 --entry-file=${PATH}/temp.html --no-browser`;
 export const npmInstall = `cd ${PATH} && sudo npm install`;
 export const hotReload = `sudo node ${PATH}/tooling/hot-reload.js`;
-export const copyEnv = `cp ${PATH}/sample.env ${PATH}/.env`;
+export const copyEnv = `sudo cp ${PATH}/sample.env ${PATH}/.env`;
 
 export async function ensureDirectoryIsEmpty(): Promise<boolean> {
   try {
