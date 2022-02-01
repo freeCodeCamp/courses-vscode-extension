@@ -35,7 +35,7 @@ export default async function developCourse() {
   } else if (!isEnvExists) {
     await createBackgroundTerminal(
       "freeCodeCamp: Copy .env",
-      cd("cp .sample.env .env")
+      cd("npm run ensure-env")
     );
   }
 
