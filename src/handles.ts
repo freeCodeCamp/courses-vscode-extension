@@ -1,5 +1,7 @@
 import { Flash, FlashTypes } from "./typings";
 import { commands, Terminal, window } from "vscode";
+import { isConnectedToInternet } from "./components";
+import { ensureDirectoryIsEmpty } from "./usefuls";
 
 const showMessage = (shower: Function) => (s: string, opts: Flash["opts"]) =>
   shower(s, opts);
@@ -55,4 +57,33 @@ export async function pollTerminal(
 
 export function rebuildAndReopenInContainer() {
   commands.executeCommand("remote-containers.rebuildAndReopenInContainer");
+}
+
+export async function handleConnection() {
+  const isConnected = await isConnectedToInternet();
+  if (!isConnected) {
+    handleMessage({
+      message: "No connection found. Please check your internet connection",
+      type: FlashTypes.ERROR,
+    });
+    return Promise.reject();
+  }
+  return Promise.resolve();
+}
+
+export async function handleEmptyDirectory() {
+  const isEmpty = await ensureDirectoryIsEmpty();
+  if (!isEmpty) {
+    handleMessage({
+      message: "Directory is not empty.",
+      type: FlashTypes.WARNING,
+      opts: {
+        detail: "Please empty working directory, and try again.",
+        modal: true,
+      },
+    });
+
+    return Promise.reject();
+  }
+  return Promise.resolve();
 }

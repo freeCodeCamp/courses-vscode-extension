@@ -2,10 +2,7 @@ import { workspace, Uri, FileType } from "vscode";
 
 export const gitClone = (githubLink: string) => `git clone ${githubLink}.git .`;
 export const PATH = ".freeCodeCamp";
-export const liveServer = `live-server --port=8080 --entry-file=${PATH}/temp.html --no-browser`;
-export const npmInstall = `cd ${PATH} && npm install`;
-export const hotReload = `node ${PATH}/tooling/hot-reload.js`;
-export const copyEnv = `cp ${PATH}/sample.env ${PATH}/.env`;
+export const cd = (cmd: string) => `cd ${PATH} && ${cmd}`;
 
 export async function ensureDirectoryIsEmpty(): Promise<boolean> {
   try {

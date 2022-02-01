@@ -1,37 +1,25 @@
-import { commands, ExtensionContext, window, FileType } from "vscode";
-import {
-  isConnectedToInternet,
-  openSimpleBrowser,
-  openTerminal,
-} from "./components";
-import { courseInput } from "./course-input";
-import {
-  createBackgroundTerminal,
-  handleMessage,
-  handleTerminal,
-} from "./handles";
-import { FlashTypes } from "./typings";
-import {
-  getPackageJson,
-  hotReload,
-  liveServer,
-  npmInstall,
-  ensureFileOrFolder,
-  copyEnv,
-  PATH,
-} from "./usefuls";
+import { commands, ExtensionContext, window } from "vscode";
+import openCourse from "./commands/open-course";
+import runCourse from "./commands/run-course";
+import developCourse from "./commands/develop-course";
+import { createBackgroundTerminal } from "./handles";
 
 export function activate(context: ExtensionContext) {
   console.log("freeCodeCamp Courses extension is now active!");
 
   context.subscriptions.push(
     commands.registerCommand("freecodecamp-courses.openCourse", async () => {
-      courseInput();
+      openCourse();
     })
   );
   context.subscriptions.push(
     commands.registerCommand("freecodecamp-courses.runCourse", async () => {
       runCourse();
+    })
+  );
+  context.subscriptions.push(
+    commands.registerCommand("freecodecamp-courses.developCourse", async () => {
+      developCourse();
     })
   );
   context.subscriptions.push(
@@ -44,6 +32,7 @@ export function activate(context: ExtensionContext) {
   );
   context.subscriptions.push(
     commands.registerCommand("freecodecamp-courses.test", async () => {
+      // Find open remote ports in vscode
       const t = await createBackgroundTerminal(
         "freeCodeCamp: Test",
         "echo 'hello Camper'"
@@ -51,65 +40,6 @@ export function activate(context: ExtensionContext) {
       console.log("Test: ", t);
     })
   );
-}
-
-async function runCourse() {
-  const isNodeModulesExists = await ensureFileOrFolder(
-    "node_modules",
-    FileType.Directory,
-    PATH
-  );
-  const isConnected = await isConnectedToInternet();
-  const isPackageJsonExists = Object.keys(await getPackageJson()).length > 0;
-  const isEnvExists = await ensureFileOrFolder(".env", FileType.File, PATH);
-  const isSampleEnvExists = await ensureFileOrFolder(
-    "sample.env",
-    FileType.File,
-    PATH
-  );
-
-  if (!isEnvExists && !isSampleEnvExists) {
-    return handleMessage({
-      message: "No `.env` or `sample.env` file found.",
-      type: FlashTypes.ERROR,
-    });
-  } else if (!isEnvExists) {
-    await createBackgroundTerminal("freeCodeCamp: Copy .env", copyEnv);
-  }
-
-  if (!isNodeModulesExists && isConnected) {
-    if (!isPackageJsonExists) {
-      return handleMessage({
-        message: "No package.json found. Unable to install tooling",
-        type: FlashTypes.ERROR,
-      });
-    }
-
-    await createBackgroundTerminal("freeCodeCamp: NPM", npmInstall);
-    handleTerminal("freeCodeCamp: Live Server", liveServer);
-    handleTerminal("freeCodeCamp: Watcher", hotReload);
-    // Hack to await live-server for Simple Browser
-    await new Promise((resolve) => setTimeout(resolve, 10000));
-    openSimpleBrowser();
-    openTerminal();
-  } else if (isNodeModulesExists) {
-    handleTerminal("freeCodeCamp: Live Server", liveServer);
-    handleTerminal("freeCodeCamp: Watcher", hotReload);
-
-    handleMessage({
-      message: "Using existing `node_modules`",
-      type: FlashTypes.INFO,
-    });
-    // Hack to await live-server for Simple Browser
-    await new Promise((resolve) => setTimeout(resolve, 9000));
-    openSimpleBrowser();
-    openTerminal();
-  } else {
-    handleMessage({
-      message: "Connection needed to install course tools",
-      type: FlashTypes.ERROR,
-    });
-  }
 }
 
 function shutdownCourse() {
