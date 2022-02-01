@@ -50,9 +50,7 @@ export default async function developCourse() {
     await createBackgroundTerminal("freeCodeCamp: NPM", cd("npm install"));
     handleTerminal("freeCodeCamp: Live Server", cd("npm run dev:live-server"));
     handleTerminal("freeCodeCamp: Watcher", cd("npm run dev:watcher"));
-    // Hack to await live-server for Simple Browser
-    await new Promise((resolve) => setTimeout(resolve, 7000));
-    openSimpleBrowser();
+
     openTerminal();
   } else if (isNodeModulesExists) {
     handleTerminal("freeCodeCamp: Live Server", cd("npm run dev:live-server"));
@@ -62,9 +60,7 @@ export default async function developCourse() {
       message: "Using existing `node_modules`",
       type: FlashTypes.INFO,
     });
-    // Hack to await live-server for Simple Browser
-    await new Promise((resolve) => setTimeout(resolve, 7000));
-    openSimpleBrowser();
+
     openTerminal();
   } else {
     handleMessage({
