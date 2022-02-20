@@ -35,6 +35,7 @@ wget https://github.com/ShaunSHamilton/courses-plus/raw/main/freecodecamp-course
   - [x] All services will gracefully be killed
 - [x] Prioritise Docker setup to remove setup-specific issues
 - [x] Developers can select `Develop Course` in the command palette
+- [x] Developers can select `Create New Course` in the command palette
 
 **Questionables**
 
