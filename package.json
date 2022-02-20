@@ -17,6 +17,7 @@
   ],
   "activationEvents": [
     "onCommand:freecodecamp-courses.openCourse",
+    "onCommand:freecodecamp-courses.createNewCourse",
     "onCommand:freecodecamp-courses.runCourse",
     "onCommand:freecodecamp-courses.developCourse",
     "onCommand:freecodecamp-courses.test"
@@ -27,6 +28,10 @@
       {
         "command": "freecodecamp-courses.openCourse",
         "title": "freeCodeCamp: Open Course"
+      },
+      {
+        "command": "freecodecamp-courses.createNewCourse",
+        "title": "freeCodeCamp: Create New Course"
       },
       {
         "command": "freecodecamp-courses.runCourse",

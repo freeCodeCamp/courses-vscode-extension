@@ -2,6 +2,7 @@ import { commands, ExtensionContext, window } from "vscode";
 import openCourse from "./commands/open-course";
 import runCourse from "./commands/run-course";
 import developCourse from "./commands/develop-course";
+import createNewCourse from "./commands/create-new-course";
 import { createBackgroundTerminal } from "./handles";
 
 export function activate(context: ExtensionContext) {
@@ -27,6 +28,14 @@ export function activate(context: ExtensionContext) {
       "freecodecamp-courses.shutdownCourse",
       async () => {
         shutdownCourse();
+      }
+    )
+  );
+  context.subscriptions.push(
+    commands.registerCommand(
+      "freecodecamp-courses.createNewCourse",
+      async () => {
+        createNewCourse();
       }
     )
   );

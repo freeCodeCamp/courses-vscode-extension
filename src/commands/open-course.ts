@@ -6,6 +6,7 @@ import { Courses } from "../typings";
 import { promptQuickPick } from "../inputs";
 import { createBackgroundTerminal } from "../handles";
 import { currentDirectoryCourse } from "../components";
+import { gitClone } from "../usefuls";
 
 export default async function openCourse() {
   try {
