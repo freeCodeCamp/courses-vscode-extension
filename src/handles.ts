@@ -124,13 +124,18 @@ const confs: {
   terminals: (val = [], path: string) => {
     for (const term of val) {
       if (term?.name) {
-        const t = handleTerminal(term.name, cd(path, term.message || ""));
+        const t = handleTerminal(
+          term.name,
+          cd(path, `echo ${term.message || ""}`)
+        );
         if (term?.show) {
           t.show();
         }
       }
     }
   },
+  // TODO
+  files: (val = [], path: string) => {},
 };
 
 export async function handleConfig(

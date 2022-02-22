@@ -43,6 +43,9 @@ type Terminal = {
   message?: string;
 };
 
+// TODO
+type File = string;
+
 export interface Config {
   path: string;
   scripts: {
@@ -53,4 +56,5 @@ export interface Config {
   preview?: Preview;
   bashrc?: Bashrc;
   terminals?: Terminal[];
+  files?: File[];
 }
