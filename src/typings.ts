@@ -23,3 +23,25 @@ export interface Course {
 export interface Courses {
   courses: Course[];
 }
+
+type Bashrc =
+  | { enabled: true; path: string }
+  | { enabled: false; path?: string };
+
+type Preview =
+  | {
+      open: true;
+      url: string;
+    }
+  | { open: false; url?: string };
+
+export interface Config {
+  path: string;
+  scripts: {
+    "develop-course": string;
+    "run-course": string;
+    test?: string;
+  };
+  preview?: Preview;
+  bashrc?: Bashrc;
+}

@@ -8,6 +8,59 @@ Downloading this extension for development testing:
 wget https://github.com/ShaunSHamilton/courses-plus/raw/main/freecodecamp-courses-patch.vsix
 ```
 
+## Config
+
+Create a `freecodecamp.conf.json` file somewhere within the workspace.
+
+### Basic Config File
+
+```json
+{
+  "path": ".freeCodeCamp",
+  "scripts": {
+    "develop-course": "npm run dev:curriculum && npm run start",
+    "run-course": "npm run dev:curriculum && npm run start",
+    "test": ""
+  },
+  "preview": {
+    "open": true,
+    "url": "http://127.0.0.1:8080"
+  },
+  "bashrc": {
+    "enabled": true,
+    "path": "./.freeCodeCamp/tooling/.bashrc"
+  },
+  "requiredFiles": [".freeCodeCamp/package.json"], // Maybe?
+  "requiredDirectories": [".freeCodeCamp"] // Maybe?
+}
+```
+
+**Typing**
+
+```ts
+type Bashrc =
+  | { enabled: true; path: string }
+  | { enabled: false; path?: string };
+
+type Preview =
+  | {
+      open: true;
+      url: string;
+    }
+  | { open: false; url?: string };
+
+export interface Config {
+  path: string;
+  scripts: {
+    "develop-course": string;
+    "run-course": string;
+    test?: string;
+  };
+  preview?: Preview;
+  bashrc?: Bashrc;
+}
+```
+
 ## TODO On Release
 
 - [ ] Update `resources/courses.json` to match actual available courses
@@ -18,34 +71,6 @@ wget https://github.com/ShaunSHamilton/courses-plus/raw/main/freecodecamp-course
 - [ ] Iron out development guide for courses using extension
 
 ## Features
-
-### User Stories
-
-- [ ] Campers can download extension
-- [x] Campers can select `Open Course` in the command palette
-- [x] Campers can select a course from a list in the command palette
-  - [x] If course is already downloaded, it is opened
-  - [x] Course is downloaded from GitHub repo
-- [x] Campers can select `Run Course`
-- Once course is opened/downloaded:
-  - [x] `live-server` is started
-  - [x] _Watcher_ is started
-  - [x] _Simple Browser_ is opened
-- [x] Campers can select `Shutdown Course` in the command palette
-  - [x] All services will gracefully be killed
-- [x] Prioritise Docker setup to remove setup-specific issues
-- [x] Developers can select `Develop Course` in the command palette
-- [x] Developers can select `Create New Course` in the command palette
-
-**Questionables**
-
-- [ ] ? freeCodeCamp Courses hooks into `temp.html` to listen for button presses
-- [ ] ? Campers can select `Restart Project` in the command palette
-  - [ ] Current project lesson resets to 1
-- [ ] ? Campers can select `Run Tests` in the command palette
-  - [ ] Current project test script is run
-- [ ] ? Campers can select `Restart Lesson` in the command palette
-- [ ] ? Use _Virtual Workspaces_ for courses
 
 ### How to Open A Course
 
@@ -105,14 +130,6 @@ Added features X, Y, and Z.
 Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
 
 - [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-- Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-- Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-- Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
 
 ### For more information
 

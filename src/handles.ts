@@ -1,7 +1,7 @@
-import { Flash, FlashTypes } from "./typings";
+import { Config, Flash, FlashTypes } from "./typings";
 import { commands, Terminal, window } from "vscode";
-import { isConnectedToInternet } from "./components";
-import { ensureDirectoryIsEmpty } from "./usefuls";
+import { isConnectedToInternet, openSimpleBrowser } from "./components";
+import { cd, ensureDirectoryIsEmpty } from "./usefuls";
 
 const showMessage = (shower: Function) => (s: string, opts: Flash["opts"]) =>
   shower(s, opts);
@@ -55,6 +55,7 @@ export async function pollTerminal(
   });
 }
 
+// Does not work. Unsure why not.
 export function rebuildAndReopenInContainer() {
   commands.executeCommand("remote-containers.rebuildAndReopenInContainer");
 }
@@ -86,4 +87,79 @@ export async function handleEmptyDirectory() {
     return Promise.reject();
   }
   return Promise.resolve();
+}
+
+const scripts = {
+  "develop-course": (val: string, path: string) => {
+    handleTerminal("freeCodeCamp: Develop Course", cd(path, val));
+  },
+  "run-course": (val: string, path: string) => {
+    handleTerminal("freeCodeCamp: Run Course", cd(path, val));
+  },
+};
+
+type ConfigKeys = keyof Omit<Config, "path">;
+
+const confs: {
+  [T in ConfigKeys]: (val: Config[T], path: string) => void;
+} = {
+  scripts: (val, path: string) => {
+    for (const key in val) {
+      // @ts-expect-error TS is stupid
+      scripts[key]?.(val[key], path);
+    }
+  },
+  preview: (val, path: string) => {
+    if (val?.open) {
+      openSimpleBrowser(val.url);
+    }
+  },
+  bashrc: (val, path: string) => {
+    if (val?.enabled) {
+      createBackgroundTerminal(
+        "freeCodeCamp: Install bashrc",
+        cd(path, `source ${val.path}`)
+      );
+    }
+  },
+};
+
+export async function handleConfig(config: Config) {
+  // Ensure compulsory keys and values are set
+  const path = config.path;
+  const compulsoryKeys = [
+    "path",
+    "scripts",
+    "scripts.develop-course",
+    "scripts.run-course",
+  ];
+  // @ts-expect-error TS is stupid
+  const notSets = getNotSets(config, compulsoryKeys);
+  if (notSets.length) {
+    return handleMessage({
+      type: FlashTypes.ERROR,
+      message: `${notSets.join(", and ")} not set.`,
+    });
+  }
+
+  for (const key in config) {
+    // @ts-expect-error TS is stupid
+    confs[key]?.(config[key], path);
+  }
+}
+
+function getNotSets(obj: Record<string, unknown>, compulsoryKeys: string[]) {
+  return compulsoryKeys.filter((key) => !hasProp(obj, key));
+}
+
+function hasProp(obj: Record<string, unknown>, keys: string): boolean {
+  const keysArr = keys.split(".");
+  let currObj: any = obj;
+  for (const key of keysArr) {
+    if (!currObj[key]) {
+      return false;
+    }
+    currObj = currObj[key];
+  }
+  return true;
 }

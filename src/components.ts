@@ -14,8 +14,8 @@ export async function openTerminal() {
 /**
  * This function opens the built-in VSCode Simple Browser, and loads the local port started by live-server
  */
-export function openSimpleBrowser() {
-  commands.executeCommand("simpleBrowser.show", "http://127.0.0.1:8080/");
+export function openSimpleBrowser(url: string) {
+  commands.executeCommand("simpleBrowser.show", url);
 }
 
 /**
