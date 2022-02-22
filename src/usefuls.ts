@@ -65,18 +65,19 @@ export async function ensureFileOrFolder(
  */
 export async function getConfig(): Promise<Config> {
   try {
-    const work = Uri.file(workspace.workspaceFolders?.[0]?.uri?.fsPath ?? "");
-    const arrOfArrs = await workspace.fs.readDirectory(
-      Uri.joinPath(work, "**/freecodecamp.conf.json")
+    const uriArr = await workspace.findFiles(
+      "**/freecodecamp.conf.json",
+      "**/node_modules/**",
+      1
     );
-    if (arrOfArrs.length === 0) {
-      return Promise.reject(false);
-    } else {
-      const path = Uri.file(arrOfArrs[0][0]);
-      const bin = await workspace.fs.readFile(path);
-      const fileData = JSON.parse(bin.toString());
-      return Promise.resolve(fileData);
+    if (uriArr.length === 0) {
+      return Promise.reject(
+        "Unable to find a `freecodecamp.conf.json` file in workspace."
+      );
     }
+    const bin = await workspace.fs.readFile(uriArr[0]);
+    const fileData = JSON.parse(bin.toString());
+    return Promise.resolve(fileData);
   } catch (e) {
     console.error("freeCodeCamp > getConfig: ", e);
     handleMessage({
