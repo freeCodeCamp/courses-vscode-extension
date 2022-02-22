@@ -126,7 +126,7 @@ const confs: {
       if (term?.name) {
         const t = handleTerminal(
           term.name,
-          cd(path, `echo ${term.message || ""}`)
+          cd(term.directory, `echo ${term.message || ""}`)
         );
         if (term?.show) {
           t.show();
