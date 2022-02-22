@@ -32,8 +32,9 @@ type Preview =
   | {
       open: true;
       url: string;
+      timeout: number;
     }
-  | { open: false; url?: string };
+  | { open: false; url?: string; timeout?: number };
 
 export interface Config {
   path: string;

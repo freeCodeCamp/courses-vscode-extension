@@ -106,8 +106,10 @@ type ConfigKeys = keyof Omit<Omit<Config, "path">, "scripts">;
 const confs: {
   [T in ConfigKeys]: (val: Config[T], path: string) => void;
 } = {
-  preview: (val, path: string) => {
+  preview: async (val, path: string) => {
     if (val?.open) {
+      // Timeout for 2 seconds to ensure server is running
+      await new Promise((resolve) => setTimeout(resolve, val?.timeout || 100));
       openSimpleBrowser(val.url);
     }
   },
@@ -141,12 +143,14 @@ export async function handleConfig(
       message: `${notSets.join(", and ")} not set.`,
     });
   }
-  for (const key in config) {
-    // @ts-expect-error TS is stupid
-    confs[key]?.(config[key], path);
-  }
+
   // @ts-expect-error TS is stupid
   scripts[caller](path, config.scripts[caller]);
+
+  for (const key in config) {
+    // @ts-expect-error TS is stupid
+    await confs[key]?.(config[key], path);
+  }
 }
 
 function getNotSets(obj: Record<string, unknown>, compulsoryKeys: string[]) {
