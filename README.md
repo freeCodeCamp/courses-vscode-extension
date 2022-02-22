@@ -30,6 +30,14 @@ Create a `freecodecamp.conf.json` file somewhere within the workspace.
     "enabled": true,
     "path": "./.freeCodeCamp/tooling/.bashrc"
   },
+  "terminals": [
+    {
+      "name": "Camper",
+      "path": ".",
+      "show": true,
+      "message": "Welcome, Camper, to this course!"
+    }
+  ],
   "requiredFiles": [".freeCodeCamp/package.json"], // Maybe?
   "requiredDirectories": [".freeCodeCamp"] // Maybe?
 }
@@ -46,8 +54,16 @@ type Preview =
   | {
       open: true;
       url: string;
+      timeout: number;
     }
-  | { open: false; url?: string };
+  | { open: false; url?: string; timeout?: number };
+
+type Terminal = {
+  name: string;
+  directory: string;
+  show: boolean;
+  message?: string;
+};
 
 export interface Config {
   path: string;
@@ -58,6 +74,7 @@ export interface Config {
   };
   preview?: Preview;
   bashrc?: Bashrc;
+  terminals?: Terminal[];
 }
 ```
 

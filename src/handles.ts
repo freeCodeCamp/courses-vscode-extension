@@ -116,9 +116,19 @@ const confs: {
   bashrc: (val, path: string) => {
     if (val?.enabled) {
       createBackgroundTerminal(
-        "freeCodeCamp: Install bashrc",
+        "freeCodeCamp: Source bashrc",
         cd(path, `source ${val.path}`)
       );
+    }
+  },
+  terminals: (val = [], path: string) => {
+    for (const term of val) {
+      if (term?.name) {
+        const t = handleTerminal(term.name, cd(path, term.message || ""));
+        if (term?.show) {
+          t.show();
+        }
+      }
     }
   },
 };

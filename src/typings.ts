@@ -36,6 +36,13 @@ type Preview =
     }
   | { open: false; url?: string; timeout?: number };
 
+type Terminal = {
+  name: string;
+  directory: string;
+  show: boolean;
+  message?: string;
+};
+
 export interface Config {
   path: string;
   scripts: {
@@ -45,4 +52,5 @@ export interface Config {
   };
   preview?: Preview;
   bashrc?: Bashrc;
+  terminals?: Terminal[];
 }
