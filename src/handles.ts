@@ -90,25 +90,22 @@ export async function handleEmptyDirectory() {
 }
 
 const scripts = {
-  "develop-course": (val: string, path: string) => {
+  "develop-course": (path: string, val: string) => {
     handleTerminal("freeCodeCamp: Develop Course", cd(path, val));
   },
-  "run-course": (val: string, path: string) => {
+  "run-course": (path: string, val: string) => {
     handleTerminal("freeCodeCamp: Run Course", cd(path, val));
+  },
+  test: (path: string, val: string) => {
+    handleTerminal("freeCodeCamp: Test", cd(path, val));
   },
 };
 
-type ConfigKeys = keyof Omit<Config, "path">;
+type ConfigKeys = keyof Omit<Omit<Config, "path">, "scripts">;
 
 const confs: {
   [T in ConfigKeys]: (val: Config[T], path: string) => void;
 } = {
-  scripts: (val, path: string) => {
-    for (const key in val) {
-      // @ts-expect-error TS is stupid
-      scripts[key]?.(val[key], path);
-    }
-  },
   preview: (val, path: string) => {
     if (val?.open) {
       openSimpleBrowser(val.url);
@@ -124,7 +121,10 @@ const confs: {
   },
 };
 
-export async function handleConfig(config: Config) {
+export async function handleConfig(
+  config: Config,
+  caller: keyof Config["scripts"]
+) {
   // Ensure compulsory keys and values are set
   const path = config.path;
   const compulsoryKeys = [
@@ -141,11 +141,12 @@ export async function handleConfig(config: Config) {
       message: `${notSets.join(", and ")} not set.`,
     });
   }
-
   for (const key in config) {
     // @ts-expect-error TS is stupid
     confs[key]?.(config[key], path);
   }
+  // @ts-expect-error TS is stupid
+  scripts[caller](path, config.scripts[caller]);
 }
 
 function getNotSets(obj: Record<string, unknown>, compulsoryKeys: string[]) {

@@ -3,7 +3,8 @@ import openCourse from "./commands/open-course";
 import runCourse from "./commands/run-course";
 import developCourse from "./commands/develop-course";
 import createNewCourse from "./commands/create-new-course";
-import { createBackgroundTerminal } from "./handles";
+import { handleConfig } from "./handles";
+import { getConfig } from "./usefuls";
 
 export function activate(context: ExtensionContext) {
   console.log("freeCodeCamp Courses extension is now active!");
@@ -42,11 +43,9 @@ export function activate(context: ExtensionContext) {
   context.subscriptions.push(
     commands.registerCommand("freecodecamp-courses.test", async () => {
       // Find open remote ports in vscode
-      const t = await createBackgroundTerminal(
-        "freeCodeCamp: Test",
-        "echo 'hello Camper'"
-      );
-      console.log("Test: ", t);
+      const config = await getConfig();
+      console.log(config);
+      handleConfig(config, "test");
     })
   );
 }

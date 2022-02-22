@@ -5,7 +5,7 @@ import { getConfig } from "../usefuls";
 export default async function developCourse() {
   try {
     const config = await getConfig();
-    handleConfig(config);
+    handleConfig(config, "develop-course");
   } catch (e) {
     console.error("freeCodeCamp > runCourse: ", e);
     return handleMessage({
