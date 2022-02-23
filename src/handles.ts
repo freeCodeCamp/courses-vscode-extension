@@ -150,7 +150,7 @@ export async function handleConfig(
     "scripts.develop-course",
     "scripts.run-course",
   ];
-  // @ts-expect-error TS is stupid
+
   const notSets = getNotSets(config, compulsoryKeys);
   if (notSets.length) {
     return handleMessage({
@@ -159,20 +159,20 @@ export async function handleConfig(
     });
   }
 
-  // @ts-expect-error TS is stupid
   scripts[caller](path, config.scripts[caller]);
 
   for (const key in config) {
-    // @ts-expect-error TS is stupid
-    await confs[key]?.(config[key], path);
+    // @ts-expect-error it's not sure which config it's passing to confs. Might
+    // be possible to handle this with generics, though.
+    await confs[key as ConfigKeys]?.(config[key as ConfigKeys], path);
   }
 }
 
-function getNotSets(obj: Record<string, unknown>, compulsoryKeys: string[]) {
+function getNotSets(obj: Config, compulsoryKeys: string[]) {
   return compulsoryKeys.filter((key) => !hasProp(obj, key));
 }
 
-function hasProp(obj: Record<string, unknown>, keys: string): boolean {
+function hasProp(obj: Config, keys: string): boolean {
   const keysArr = keys.split(".");
   let currObj: any = obj;
   for (const key of keysArr) {
