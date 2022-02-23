@@ -65,9 +65,10 @@ export async function ensureFileOrFolder(
  */
 export async function getConfig(): Promise<Config> {
   try {
+    // Without `null` in pos. 2, `.vscode > files.exclude` will apply to search.
     const uriArr = await workspace.findFiles(
       "**/freecodecamp.conf.json",
-      "**/node_modules/**",
+      null,
       1
     );
     if (uriArr.length === 0) {
