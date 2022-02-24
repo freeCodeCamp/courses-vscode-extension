@@ -1,6 +1,8 @@
 # freeCodeCamp - Courses
 
-This extension helps run the freeCodeCamp courses found here: []()
+<!-- TODO: Add link to potential page with course descriptions/images -->
+
+This extension helps run the freeCodeCamp courses found here: [./resources/courses.json](resources/courses.json)
 
 Downloading this extension for development testing:
 
@@ -157,6 +159,7 @@ Ensure that you've read through the extensions guidelines and follow the best pr
 
 ## Published Courses
 
+- [Project Euler in Rust](https://github.com/freeCodeCamp/euler-rust/)
 - [External Project (test)](https://github.com/ShaunSHamilton/external-project)
 
 ## Contributing
