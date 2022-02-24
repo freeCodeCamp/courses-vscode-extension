@@ -51,7 +51,7 @@ export interface Config {
   scripts: {
     "develop-course": string;
     "run-course": string;
-    test: string;
+    test?: string;
   };
   preview?: Preview;
   bashrc?: Bashrc;

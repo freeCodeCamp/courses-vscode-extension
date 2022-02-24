@@ -159,7 +159,10 @@ export async function handleConfig(
     });
   }
 
-  scripts[caller](path, config.scripts[caller]);
+  const calledScript = config.scripts[caller];
+  if (typeof calledScript === "string") {
+    scripts[caller](path, calledScript);
+  }
 
   for (const key in config) {
     // @ts-expect-error it's not sure which config it's passing to confs. Might
