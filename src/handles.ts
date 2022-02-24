@@ -106,9 +106,9 @@ type ConfigKeys = keyof Omit<Omit<Config, "path">, "scripts">;
 const confs: {
   [T in ConfigKeys]: (val: Config[T], path: string) => void;
 } = {
-  preview: async (val, path: string) => {
+  preview: async (val, _path: string) => {
     if (val?.open) {
-      // Timeout for 2 seconds to ensure server is running
+      // Timeout for to ensure server is running
       await new Promise((resolve) => setTimeout(resolve, val?.timeout || 100));
       openSimpleBrowser(val.url);
     }
@@ -121,7 +121,7 @@ const confs: {
       );
     }
   },
-  terminals: (val = [], path: string) => {
+  terminals: (val = [], _path: string) => {
     for (const term of val) {
       if (term?.name) {
         const t = handleTerminal(
@@ -135,7 +135,7 @@ const confs: {
     }
   },
   // TODO
-  files: (val = [], path: string) => {},
+  files: (_val = [], _path: string) => {},
 };
 
 export async function handleConfig(
@@ -150,8 +150,8 @@ export async function handleConfig(
     "scripts.develop-course",
     "scripts.run-course",
   ];
-  // @ts-expect-error TS is stupid
-  const notSets = getNotSets(config, compulsoryKeys);
+
+  const notSets = getNotSets<Config>(config, compulsoryKeys);
   if (notSets.length) {
     return handleMessage({
       type: FlashTypes.ERROR,
@@ -159,20 +159,23 @@ export async function handleConfig(
     });
   }
 
-  // @ts-expect-error TS is stupid
-  scripts[caller](path, config.scripts[caller]);
+  const calledScript = config.scripts[caller];
+  if (typeof calledScript === "string") {
+    scripts[caller](path, calledScript);
+  }
 
   for (const key in config) {
-    // @ts-expect-error TS is stupid
-    await confs[key]?.(config[key], path);
+    // @ts-expect-error it's not sure which config it's passing to confs. Might
+    // be possible to handle this with generics, though.
+    await confs[key as ConfigKeys]?.(config[key as ConfigKeys], path);
   }
 }
 
-function getNotSets(obj: Record<string, unknown>, compulsoryKeys: string[]) {
-  return compulsoryKeys.filter((key) => !hasProp(obj, key));
+function getNotSets<T>(obj: T, compulsoryKeys: string[]) {
+  return compulsoryKeys.filter((key) => !hasProp<T>(obj, key));
 }
 
-function hasProp(obj: Record<string, unknown>, keys: string): boolean {
+function hasProp<T>(obj: T, keys: string): boolean {
   const keysArr = keys.split(".");
   let currObj: any = obj;
   for (const key of keysArr) {
