@@ -1,22 +1,22 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 export enum FlashTypes {
+  ERROR = "error",
   INFO = "info",
   WARNING = "warning",
-  ERROR = "error",
 }
 
 export type Flash = {
   message: string;
-  type: FlashTypes;
   opts?: {
-    modal?: boolean;
     detail: string;
+    modal?: boolean;
   };
+  type: FlashTypes;
 };
 
 export interface Course {
-  name: string;
   githubLink: string;
+  name: string;
   tags: string[];
 }
 
@@ -24,37 +24,43 @@ export interface Courses {
   courses: Course[];
 }
 
-type Bashrc =
+export type Bashrc =
   | { enabled: true; path: string }
   | { enabled: false; path?: string };
 
 type Preview =
   | {
       open: true;
-      url: string;
       timeout: number;
+      url: string;
     }
-  | { open: false; url?: string; timeout?: number };
+  | {
+      open: false;
+      timeout?: number;
+      url?: string;
+    };
 
 type Terminal = {
-  name: string;
   directory: string;
-  show: boolean;
   message?: string;
+  name: string;
+  show: boolean;
 };
 
-// TODO
-type File = string;
+type File = { name: string };
 
 export interface Config {
+  bashrc?: Bashrc;
   path: string;
   scripts: {
     "develop-course": string;
     "run-course": string;
     test?: string;
   };
-  preview?: Preview;
-  bashrc?: Bashrc;
-  terminals?: Terminal[];
-  files?: File[];
+  workspace?: {
+    files?: File[];
+    previews?: Preview[];
+    terminals?: Terminal[];
+    order?: string[];
+  };
 }

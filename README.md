@@ -4,91 +4,6 @@
 
 This extension helps run the freeCodeCamp courses found here: [./resources/courses.json](resources/courses.json)
 
-Downloading this extension for development testing:
-
-```bash
-wget https://github.com/ShaunSHamilton/courses-plus/raw/main/freecodecamp-courses-patch.vsix
-```
-
-## Config
-
-Create a `freecodecamp.conf.json` file somewhere within the workspace.
-
-### Basic Config File
-
-```json
-{
-  "path": ".freeCodeCamp",
-  "scripts": {
-    "develop-course": "npm run dev:curriculum && npm run start",
-    "run-course": "npm run dev:curriculum && npm run start",
-    "test": ""
-  },
-  "preview": {
-    "open": true,
-    "url": "http://127.0.0.1:8080"
-  },
-  "bashrc": {
-    "enabled": true,
-    "path": "./.freeCodeCamp/tooling/.bashrc"
-  },
-  "terminals": [
-    {
-      "name": "Camper",
-      "path": ".",
-      "show": true,
-      "message": "Welcome, Camper, to this course!"
-    }
-  ],
-  "requiredFiles": [".freeCodeCamp/package.json"], // Maybe?
-  "requiredDirectories": [".freeCodeCamp"] // Maybe?
-}
-```
-
-**Typing**
-
-```ts
-type Bashrc =
-  | { enabled: true; path: string }
-  | { enabled: false; path?: string };
-
-type Preview =
-  | {
-      open: true;
-      url: string;
-      timeout: number;
-    }
-  | { open: false; url?: string; timeout?: number };
-
-type Terminal = {
-  name: string;
-  directory: string;
-  show: boolean;
-  message?: string;
-};
-
-export interface Config {
-  path: string;
-  scripts: {
-    "develop-course": string;
-    "run-course": string;
-    test?: string;
-  };
-  preview?: Preview;
-  bashrc?: Bashrc;
-  terminals?: Terminal[];
-}
-```
-
-## TODO On Release
-
-- [ ] Update `resources/courses.json` to match actual available courses
-- [ ] Update this README to suit features
-- [ ] Package major release
-- [ ] Double-confirm LICENSE
-- [ ] Develop CONTRIBUTION guide for this extension
-- [ ] Iron out development guide for courses using extension
-
 ## Features
 
 ### How to Open A Course
@@ -109,64 +24,148 @@ export interface Config {
 
 ![Opening Example Course](images/opening-example-course.png)
 
-<!-- ## Requirements -->
-
-<!-- If you have any requirements or dependencies, add a section describing those and how to install and configure them. -->
-
-<!-- ## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-- `myExtension.enable`: enable/disable this extension
-- `myExtension.thing`: set to `blah` to do something -->
-
 ## Known Issues
 
 ## Release Notes
-
-Users appreciate release notes as you update your extension.
 
 ### 1.0.0
 
 Official release of the freeCodeCamp Courses extension!
 
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
 ---
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-- [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-### For more information
-
-- [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-- [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
 
 ## Published Courses
 
 - [Project Euler in Rust](https://github.com/freeCodeCamp/euler-rust/)
-- [External Project (test)](https://github.com/ShaunSHamilton/external-project)
 
 ## Contributing
 
-- Create a new branch following naming convention provided here: https://contribute.freecodecamp.org/#/how-to-open-a-pull-request
-- Include _vsix_ file, and specify if change is patch (`0.0.x`), minor (`0.x.0`), or major (`x.0.0`).
+To contribute a new course, see the [external-project](https://github.com/freeCodeCamp/external-project) repository.
+
+To contribute to this extension, see below.
+
+### Developing Locally
+
+Fork the repository, then clone it to your local machine:
 
 ```bash
-npm run pack minor
+git clone https://github.com/freeCodeCamp/freecodecamp-courses.git
 ```
+
+Change into the directory, and install the dependencies:
+
+```bash
+cd freecodecamp-courses
+npm install
+```
+
+Run the development script:
+
+```bash
+npm run watch
+```
+
+This should open a new VSCode window with the extension running.
+
+### Submitting a Pull Request
+
+Create a new branch following naming convention provided here: https://contribute.freecodecamp.org/#/how-to-open-a-pull-request
+
+Include the _vsix_ file, and specify if change is patch (`0.0.x`), minor (`0.x.0`), or major (`x.0.0`).
+
+```bash
+npm run pack patch
+```
+
+## Config
+
+Create a `freecodecamp.conf.json` file somewhere within the workspace.
+
+### Basic Config File
+
+```json
+{
+  "bashrc": {
+    "enabled": true,
+    "path": "./.freeCodeCamp/tooling/.bashrc"
+  },
+  "path": ".freeCodeCamp",
+  "scripts": {
+    "develop-course": "npm run dev:curriculum && npm run start",
+    "run-course": "npm run dev:curriculum && npm run start",
+    "test": ""
+  },
+  "workspace": {
+    "files": [{ "name": "./src/main.rs" }],
+    "previews": [
+      {
+        "open": true,
+        "url": "http://127.0.0.1:8080"
+      }
+    ],
+    "terminals": [
+      {
+        "message": "Welcome, Camper, to this course!",
+        "name": "Camper",
+        "path": ".",
+        "show": true
+      }
+    ],
+    "order": ["file preview, terminal"]
+  }
+}
+```
+
+**Typing**
+
+```ts
+type Bashrc =
+  | { enabled: true; path: string }
+  | { enabled: false; path?: string };
+
+type Preview =
+  | {
+      open: true;
+      timeout: number;
+      url: string;
+    }
+  | {
+      open: false;
+      timeout?: number;
+      url?: string;
+    };
+
+type Terminal = {
+  directory: string;
+  message?: string;
+  name: string;
+  show: boolean;
+};
+
+type File = { name: string };
+
+export interface Config {
+  bashrc?: Bashrc;
+  path: string;
+  scripts: {
+    "develop-course": string;
+    "run-course": string;
+    test?: string;
+  };
+  workspace?: {
+    files?: File[];
+    previews?: Preview[];
+    terminals?: Terminal[];
+    order?: string[];
+  };
+}
+```
+
+## TODO On Release
+
+- [x] Update `resources/courses.json` to match actual available courses
+- [x] Update this README to suit features
+- [x] Package major release
+- [x] Double-confirm LICENSE
+- [x] Develop CONTRIBUTION guide for this extension
+- [x] Iron out development guide for courses using extension
