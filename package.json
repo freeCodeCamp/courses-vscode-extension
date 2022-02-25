@@ -2,7 +2,7 @@
   "name": "freecodecamp-courses",
   "displayName": "freeCodeCamp - Courses",
   "description": "Provides tooling for quick and easy selection of courses offered by freeCodeCamp",
-  "version": "0.11.7",
+  "version": "0.11.8",
   "author": "freeCodeCamp",
   "publisher": "freeCodeCamp",
   "galleryBanner": {
