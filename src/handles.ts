@@ -237,8 +237,8 @@ function ensureNoExtraKeys(obj: any, exampleObject: any) {
     console.log(
       "There are keys that are not recognised in the `freecodecamp.conf.json` file. Double-check the specification."
     );
-    return handleMessage({
-      type: FlashTypes.ERROR,
+    handleMessage({
+      type: FlashTypes.WARNING,
       message: `Unrecognised keys: ${unrecognisedKeys.join(", ")}`,
     });
   }

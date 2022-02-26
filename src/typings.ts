@@ -112,6 +112,7 @@ export const exampleConfig: Config = {
       // Terminals to be opened in workspace
       {
         directory: ".", // Relative path to open terminal with
+        message: "'Hello World!'", // Message to display in terminal
         name: "Camper", // Name of terminal
         order: {
           // Order to display terminal in workspace
