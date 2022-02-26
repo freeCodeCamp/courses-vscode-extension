@@ -1,4 +1,4 @@
-import { Config, Flash, FlashTypes } from "./typings";
+import { Bashrc, Config, exampleConfig, Flash, FlashTypes } from "./typings";
 import { commands, Terminal, window } from "vscode";
 import { isConnectedToInternet, openSimpleBrowser } from "./components";
 import { cd, ensureDirectoryIsEmpty } from "./usefuls";
@@ -101,28 +101,47 @@ const scripts = {
   },
 };
 
-type ConfigKeys = keyof Omit<Omit<Config, "path">, "scripts">;
+function sourceBashrc(val: Bashrc, path: string): void {
+  if (val?.enabled) {
+    createBackgroundTerminal(
+      "freeCodeCamp: Source bashrc",
+      cd(path, `source ${val.path}`)
+    );
+  }
+}
 
-const confs: {
-  [T in ConfigKeys]: (val: Config[T], path: string) => void;
-} = {
-  preview: async (val, _path: string) => {
-    if (val?.open) {
-      // Timeout for to ensure server is running
-      await new Promise((resolve) => setTimeout(resolve, val?.timeout || 100));
-      openSimpleBrowser(val.url);
+async function handleWorkspace(workspace: Config["workspace"]): Promise<void> {
+  if (workspace!.previews) {
+    const compulsoryKeys = ["open"];
+    for (const preview of workspace!.previews) {
+      const notSets = getNotSets(preview, compulsoryKeys);
+      if (notSets.length) {
+        handleMessage({
+          message: `Preview missing keys: ${notSets.join(", ")}`,
+          type: FlashTypes.ERROR,
+        });
+        return Promise.reject();
+      }
+      if (preview?.open) {
+        // Timeout for to ensure server is running
+        await new Promise((resolve) =>
+          setTimeout(resolve, preview?.timeout || 100)
+        );
+        openSimpleBrowser(preview.url);
+      }
     }
-  },
-  bashrc: (val, path: string) => {
-    if (val?.enabled) {
-      createBackgroundTerminal(
-        "freeCodeCamp: Source bashrc",
-        cd(path, `source ${val.path}`)
-      );
-    }
-  },
-  terminals: (val = [], _path: string) => {
-    for (const term of val) {
+  }
+  if (workspace!.terminals) {
+    const compulsoryKeys = ["directory"];
+    for (const term of workspace!.terminals) {
+      const notSets = getNotSets(term, compulsoryKeys);
+      if (notSets.length) {
+        handleMessage({
+          message: `Terminals missing keys: ${notSets.join(", ")}`,
+          type: FlashTypes.ERROR,
+        });
+        return Promise.reject();
+      }
       if (term?.name) {
         const t = handleTerminal(
           term.name,
@@ -133,10 +152,23 @@ const confs: {
         }
       }
     }
-  },
-  // TODO
-  files: (_val = [], _path: string) => {},
-};
+  }
+  if (workspace!.files) {
+    const compulsoryKeys = ["name"];
+    for (const file of workspace!.files) {
+      const notSets = getNotSets(file, compulsoryKeys);
+      if (notSets.length) {
+        handleMessage({
+          message: `Files missing keys: ${notSets.join(", ")}`,
+          type: FlashTypes.ERROR,
+        });
+        return Promise.reject();
+      }
+      // TODO: Open file
+    }
+  }
+  return Promise.resolve();
+}
 
 export async function handleConfig(
   config: Config,
@@ -151,6 +183,8 @@ export async function handleConfig(
     "scripts.run-course",
   ];
 
+  ensureNoExtraKeys(config, exampleConfig);
+
   const notSets = getNotSets<Config>(config, compulsoryKeys);
   if (notSets.length) {
     return handleMessage({
@@ -164,10 +198,11 @@ export async function handleConfig(
     scripts[caller](path, calledScript);
   }
 
-  for (const key in config) {
-    // @ts-expect-error it's not sure which config it's passing to confs. Might
-    // be possible to handle this with generics, though.
-    await confs[key as ConfigKeys]?.(config[key as ConfigKeys], path);
+  if (config.bashrc) {
+    sourceBashrc(config.bashrc, path);
+  }
+  if (config.workspace) {
+    await handleWorkspace(config.workspace);
   }
 }
 
@@ -185,4 +220,26 @@ function hasProp<T>(obj: T, keys: string): boolean {
     currObj = currObj[key];
   }
   return true;
+}
+
+function ensureNoExtraKeys(obj: any, exampleObject: any) {
+  const unrecognisedKeys = [];
+  for (const key in obj) {
+    if (!exampleObject.hasOwnProperty(key)) {
+      unrecognisedKeys.push(key);
+      continue;
+    }
+    if (typeof obj[key] === "object") {
+      ensureNoExtraKeys(obj[key], exampleObject[key]);
+    }
+  }
+  if (unrecognisedKeys.length) {
+    console.log(
+      "There are keys that are not recognised in the `freecodecamp.conf.json` file. Double-check the specification."
+    );
+    handleMessage({
+      type: FlashTypes.WARNING,
+      message: `Unrecognised keys: ${unrecognisedKeys.join(", ")}`,
+    });
+  }
 }
