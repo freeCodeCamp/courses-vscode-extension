@@ -1,4 +1,4 @@
-import { Bashrc, Config, Flash, FlashTypes } from "./typings";
+import { Bashrc, Config, exampleConfig, Flash, FlashTypes } from "./typings";
 import { commands, Terminal, window } from "vscode";
 import { isConnectedToInternet, openSimpleBrowser } from "./components";
 import { cd, ensureDirectoryIsEmpty } from "./usefuls";
@@ -111,11 +111,6 @@ function sourceBashrc(val: Bashrc, path: string): void {
 }
 
 async function handleWorkspace(workspace: Config["workspace"]): Promise<void> {
-  if (workspace?.order) {
-    // TODO: Open in order
-    // \s represents new colomn
-    // , represents new row
-  }
   if (workspace!.previews) {
     const compulsoryKeys = ["open"];
     for (const preview of workspace!.previews) {
@@ -188,6 +183,8 @@ export async function handleConfig(
     "scripts.run-course",
   ];
 
+  ensureNoExtraKeys(config, exampleConfig);
+
   const notSets = getNotSets<Config>(config, compulsoryKeys);
   if (notSets.length) {
     return handleMessage({
@@ -223,4 +220,26 @@ function hasProp<T>(obj: T, keys: string): boolean {
     currObj = currObj[key];
   }
   return true;
+}
+
+function ensureNoExtraKeys(obj: any, exampleObject: any) {
+  const unrecognisedKeys = [];
+  for (const key in obj) {
+    if (!exampleObject.hasOwnProperty(key)) {
+      unrecognisedKeys.push(key);
+      continue;
+    }
+    if (typeof obj[key] === "object") {
+      ensureNoExtraKeys(obj[key], exampleObject[key]);
+    }
+  }
+  if (unrecognisedKeys.length) {
+    console.log(
+      "There are keys that are not recognised in the `freecodecamp.conf.json` file. Double-check the specification."
+    );
+    return handleMessage({
+      type: FlashTypes.ERROR,
+      message: `Unrecognised keys: ${unrecognisedKeys.join(", ")}`,
+    });
+  }
 }
