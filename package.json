@@ -11,10 +11,16 @@
   },
   "icon": "images/logo-128X128.png",
   "engines": {
-    "vscode": "^1.63.0"
+    "vscode": "^1.64.0"
   },
   "categories": [
-    "Other"
+    "Education"
+  ],
+  "keywords": [
+    "freecodecamp",
+    "courses",
+    "web3",
+    "rust"
   ],
   "activationEvents": [
     "onCommand:freecodecamp-courses.openCourse",
