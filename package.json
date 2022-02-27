@@ -85,7 +85,7 @@
     "url": "https://github.com/freeCodeCamp/freecodecamp-courses"
   },
   "dependencies": {
-    "node-fetch": "~3.0"
+    "node-fetch": "~3.2.0"
   },
   "license": "BSD-3-Clause",
   "bugs": {
