@@ -26,6 +26,7 @@ const flasher = {
 };
 
 export function handleMessage(flash: Flash) {
+  console.log("handled message", flash);
   flasher[flash.type](flash.message, flash.opts);
 }
 
@@ -110,6 +111,8 @@ const scripts = {
     handleTerminal("freeCodeCamp: Run Course", cd(path, val));
   },
   test: async (_path: string, val?: Test) => {
+    // @ts-expect-error This is for testing. So, errors are not bad.
+    console.log("testing", val, allAvailableFunctions?.[val?.functionName]);
     try {
       const args = val?.arguments || [];
       // @ts-expect-error This is for testing. So, errors are not bad.
@@ -215,6 +218,7 @@ export async function handleConfig(
   }
 
   const calledScript = config.scripts[caller];
+  console.log("handling: ", calledScript, caller);
   if (typeof calledScript === "string" && caller !== "test") {
     scripts[caller](path, calledScript);
   } else if (caller === "test" && typeof calledScript !== "string") {
