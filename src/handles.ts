@@ -1,7 +1,20 @@
-import { Bashrc, Config, exampleConfig, Flash, FlashTypes } from "./typings";
+import { Bashrc, Config, Flash, FlashTypes, Test } from "./typings";
+import { exampleConfig } from "./fixture";
 import { commands, Terminal, window } from "vscode";
-import { isConnectedToInternet, openSimpleBrowser } from "./components";
-import { cd, ensureDirectoryIsEmpty } from "./usefuls";
+import {
+  currentDirectoryCourse,
+  getRootWorkspaceDir,
+  isConnectedToInternet,
+  openSimpleBrowser,
+  openTerminal,
+} from "./components";
+import {
+  cd,
+  ensureDirectoryIsEmpty,
+  ensureFileOrFolder,
+  getPackageJson,
+} from "./usefuls";
+import { promptQuickPick, showInputBox } from "./inputs";
 
 const showMessage = (shower: Function) => (s: string, opts: Flash["opts"]) =>
   shower(s, opts);
@@ -96,8 +109,16 @@ const scripts = {
   "run-course": (path: string, val: string) => {
     handleTerminal("freeCodeCamp: Run Course", cd(path, val));
   },
-  test: (path: string, val: string) => {
-    handleTerminal("freeCodeCamp: Test", cd(path, val));
+  test: async (_path: string, val?: Test) => {
+    try {
+      const args = val?.arguments || [];
+      // @ts-expect-error This is for testing. So, errors are not bad.
+      const res = await allAvailableFunctions?.[val?.functionName]?.(...args);
+      return Promise.resolve(res);
+    } catch (e) {
+      console.error(e);
+      return Promise.reject(e);
+    }
   },
 };
 
@@ -194,8 +215,10 @@ export async function handleConfig(
   }
 
   const calledScript = config.scripts[caller];
-  if (typeof calledScript === "string") {
+  if (typeof calledScript === "string" && caller !== "test") {
     scripts[caller](path, calledScript);
+  } else if (caller === "test" && typeof calledScript !== "string") {
+    await scripts[caller](path, calledScript);
   }
 
   if (config.bashrc) {
@@ -243,3 +266,27 @@ function ensureNoExtraKeys(obj: any, exampleObject: any) {
     });
   }
 }
+
+const allAvailableFunctions = {
+  handleMessage: handleMessage,
+  handleConnection: handleConnection,
+  handleEmptyDirectory: handleEmptyDirectory,
+  createBackgroundTerminal: createBackgroundTerminal,
+  showMessage: showMessage,
+  sourceBashrc: sourceBashrc,
+  openTerminal: openTerminal,
+  openSimpleBrowser: openSimpleBrowser,
+  currentDirectoryCourse: currentDirectoryCourse,
+  getRootWorkspaceDir: getRootWorkspaceDir,
+  isConnectedToInternet: isConnectedToInternet,
+  pollTerminal: pollTerminal,
+  rebuildAndReopenInContainer,
+  handleWorkspace,
+  getNotSets,
+  ensureNoExtraKeys,
+  showInputBox,
+  promptQuickPick,
+  ensureDirectoryIsEmpty,
+  getPackageJson,
+  ensureFileOrFolder,
+};

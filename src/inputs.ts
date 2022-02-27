@@ -14,13 +14,7 @@ export async function promptQuickPick(
  */
 export async function showInputBox() {
   const result = await window.showInputBox({
-    value: "abcdef",
-    valueSelection: [2, 4],
-    placeHolder: "",
-    validateInput: (text) => {
-      window.showInformationMessage(`Validating: ${text}`);
-      return text === "123" ? "Not 123!" : null;
-    },
+    placeHolder: "Link to fork of course template",
   });
-  window.showInformationMessage(`Got: ${result}`);
+  return result;
 }

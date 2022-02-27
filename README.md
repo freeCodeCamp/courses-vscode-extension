@@ -83,6 +83,8 @@ Create a `freecodecamp.conf.json` file somewhere within the workspace.
 
 ### Basic Config File
 
+See up-to-date example here: [./src/fixture.ts](src/fixture.ts)
+
 ```js
 // This should be in JSON
 const exampleConfig = {
@@ -96,8 +98,17 @@ const exampleConfig = {
     // Scripts linked to extension commands
     "develop-course": "npm run develop", // Run when `Develop Course` command is executed
     "run-course": "npm run start", // Run when `Run Course` command is executed
-    test: "echo testing...", // Run when `Test` command is executed
-  },
+    test: {
+      // Run when `Test` command is executed
+      functionName: "handleMessage", // Name of the function to be called
+      arguments: [
+        {
+          message: "Hello World!",
+          type: "info",
+        },
+      ], // Arguments to be passed to the function
+    },
+  }
   workspace: {
     // Workspace settings
     files: [
@@ -175,13 +186,18 @@ type Order = { rows: number[]; cols: number[] };
 
 type File = { path: string; order?: Order };
 
+export type Test = {
+  functionName: string;
+  arguments?: unknown[];
+};
+
 export interface Config {
   bashrc?: Bashrc;
   path: string;
   scripts: {
     "develop-course": string;
     "run-course": string;
-    test?: string;
+    test?: Test;
   };
   workspace?: {
     files?: File[];
