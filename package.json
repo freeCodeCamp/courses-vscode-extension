@@ -11,7 +11,7 @@
   },
   "icon": "images/logo-128X128.png",
   "engines": {
-    "vscode": "^1.64.0"
+    "vscode": "^1.63.0"
   },
   "categories": [
     "Education"
@@ -74,7 +74,7 @@
     "@types/glob": "7.2.0",
     "@types/mocha": "9.1.0",
     "@types/node": "14.18.12",
-    "@types/vscode": "1.64.0",
+    "@types/vscode": "1.63.0",
     "@typescript-eslint/eslint-plugin": "5.12.1",
     "@typescript-eslint/parser": "5.12.1",
     "@vscode/test-electron": "2.1.2",
@@ -91,7 +91,7 @@
     "url": "https://github.com/freeCodeCamp/freecodecamp-courses"
   },
   "dependencies": {
-    "node-fetch": "~3.2.0"
+    "node-fetch": "~3.0.0"
   },
   "license": "BSD-3-Clause",
   "bugs": {

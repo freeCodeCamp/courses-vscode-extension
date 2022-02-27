@@ -1,32 +1,39 @@
 import { Bashrc, Config, Flash, FlashTypes, Test } from "./typings";
 import { exampleConfig } from "./fixture";
 import { commands, Terminal, window } from "vscode";
-import {
-  currentDirectoryCourse,
-  getRootWorkspaceDir,
-  isConnectedToInternet,
-  openSimpleBrowser,
-  openTerminal,
-} from "./components";
-import {
-  cd,
-  ensureDirectoryIsEmpty,
-  ensureFileOrFolder,
-  getPackageJson,
-} from "./usefuls";
-import { promptQuickPick, showInputBox } from "./inputs";
+import { isConnectedToInternet, openSimpleBrowser } from "./components";
+import { cd, ensureDirectoryIsEmpty } from "./usefuls";
 
-const showMessage = (shower: Function) => (s: string, opts: Flash["opts"]) =>
-  shower(s, opts);
+import aVF from ".";
 
-const flasher = {
+// This is done to avoid circular imports.
+// hours_of_my_life_lost_by_circular_imports += 2;
+const allAvailableFunctions = {
+  createBackgroundTerminal,
+  ensureNoExtraKeys,
+  getNotSets,
+  handleConnection,
+  handleEmptyDirectory,
+  handleMessage,
+  handleWorkspace,
+  pollTerminal,
+  rebuildAndReopenInContainer,
+  showMessage,
+  sourceBashrc,
+  ...aVF,
+};
+
+export function showMessage(shower: Function) {
+  return (s: string, opts: Flash["opts"]) => shower(s, opts);
+}
+
+export const flasher = {
   [FlashTypes.INFO]: showMessage(window.showInformationMessage),
   [FlashTypes.WARNING]: showMessage(window.showWarningMessage),
   [FlashTypes.ERROR]: showMessage(window.showErrorMessage),
 };
 
 export function handleMessage(flash: Flash) {
-  console.log("handled message", flash);
   flasher[flash.type](flash.message, flash.opts);
 }
 
@@ -111,8 +118,6 @@ const scripts = {
     handleTerminal("freeCodeCamp: Run Course", cd(path, val));
   },
   test: async (_path: string, val?: Test) => {
-    // @ts-expect-error This is for testing. So, errors are not bad.
-    console.log("testing", val, allAvailableFunctions?.[val?.functionName]);
     try {
       const args = val?.arguments || [];
       // @ts-expect-error This is for testing. So, errors are not bad.
@@ -125,7 +130,7 @@ const scripts = {
   },
 };
 
-function sourceBashrc(val: Bashrc, path: string): void {
+export function sourceBashrc(val: Bashrc, path: string): void {
   if (val?.enabled) {
     createBackgroundTerminal(
       "freeCodeCamp: Source bashrc",
@@ -134,7 +139,9 @@ function sourceBashrc(val: Bashrc, path: string): void {
   }
 }
 
-async function handleWorkspace(workspace: Config["workspace"]): Promise<void> {
+export async function handleWorkspace(
+  workspace: Config["workspace"]
+): Promise<void> {
   if (workspace!.previews) {
     const compulsoryKeys = ["open"];
     for (const preview of workspace!.previews) {
@@ -218,7 +225,6 @@ export async function handleConfig(
   }
 
   const calledScript = config.scripts[caller];
-  console.log("handling: ", calledScript, caller);
   if (typeof calledScript === "string" && caller !== "test") {
     scripts[caller](path, calledScript);
   } else if (caller === "test" && typeof calledScript !== "string") {
@@ -233,11 +239,11 @@ export async function handleConfig(
   }
 }
 
-function getNotSets<T>(obj: T, compulsoryKeys: string[]) {
+export function getNotSets<T>(obj: T, compulsoryKeys: string[]) {
   return compulsoryKeys.filter((key) => !hasProp<T>(obj, key));
 }
 
-function hasProp<T>(obj: T, keys: string): boolean {
+export function hasProp<T>(obj: T, keys: string): boolean {
   const keysArr = keys.split(".");
   let currObj: any = obj;
   for (const key of keysArr) {
@@ -249,7 +255,7 @@ function hasProp<T>(obj: T, keys: string): boolean {
   return true;
 }
 
-function ensureNoExtraKeys(obj: any, exampleObject: any) {
+export function ensureNoExtraKeys(obj: any, exampleObject: any) {
   const unrecognisedKeys = [];
   for (const key in obj) {
     if (!exampleObject.hasOwnProperty(key)) {
@@ -270,27 +276,3 @@ function ensureNoExtraKeys(obj: any, exampleObject: any) {
     });
   }
 }
-
-const allAvailableFunctions = {
-  handleMessage: handleMessage,
-  handleConnection: handleConnection,
-  handleEmptyDirectory: handleEmptyDirectory,
-  createBackgroundTerminal: createBackgroundTerminal,
-  showMessage: showMessage,
-  sourceBashrc: sourceBashrc,
-  openTerminal: openTerminal,
-  openSimpleBrowser: openSimpleBrowser,
-  currentDirectoryCourse: currentDirectoryCourse,
-  getRootWorkspaceDir: getRootWorkspaceDir,
-  isConnectedToInternet: isConnectedToInternet,
-  pollTerminal: pollTerminal,
-  rebuildAndReopenInContainer,
-  handleWorkspace,
-  getNotSets,
-  ensureNoExtraKeys,
-  showInputBox,
-  promptQuickPick,
-  ensureDirectoryIsEmpty,
-  getPackageJson,
-  ensureFileOrFolder,
-};
