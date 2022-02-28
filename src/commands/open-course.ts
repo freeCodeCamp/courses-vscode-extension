@@ -1,22 +1,26 @@
 import { window } from "vscode";
-import { handleConnection, handleEmptyDirectory } from "../handles";
-import fetch from "node-fetch";
+import {
+  handleConnection,
+  handleEmptyDirectory,
+  createBackgroundTerminal,
+} from "../handles";
 
 import { Courses } from "../typings";
 import { promptQuickPick } from "../inputs";
-import { createBackgroundTerminal } from "../handles";
 import { currentDirectoryCourse } from "../components";
 import { gitClone } from "../usefuls";
+
+import axios from "axios";
 
 export default async function openCourse() {
   try {
     await handleConnection();
 
-    const { courses } = (await (
-      await fetch(
+    const { courses } = (
+      await axios.get(
         "https://raw.githubusercontent.com/ShaunSHamilton/courses-plus/main/resources/courses.json"
       )
-    ).json()) as Courses;
+    ).data as Courses;
     // Check if course is already downloaded
     const courseGitDownloaded = await currentDirectoryCourse();
 

@@ -2,7 +2,7 @@
   "name": "freecodecamp-courses",
   "displayName": "freeCodeCamp - Courses",
   "description": "Provides tooling for quick and easy selection of courses offered by freeCodeCamp",
-  "version": "0.13.5",
+  "version": "0.13.6",
   "author": "freeCodeCamp",
   "publisher": "freecodecamp",
   "galleryBanner": {
@@ -73,7 +73,8 @@
   "devDependencies": {
     "@types/glob": "7.2.0",
     "@types/mocha": "9.1.0",
-    "@types/node": "14.18.12",
+    "@types/node": "14.18.7",
+    "@types/node-fetch": "^2.6.1",
     "@types/vscode": "1.64.0",
     "@typescript-eslint/eslint-plugin": "5.12.1",
     "@typescript-eslint/parser": "5.12.1",
@@ -90,11 +91,11 @@
     "type": "git",
     "url": "https://github.com/freeCodeCamp/freecodecamp-courses"
   },
-  "dependencies": {
-    "node-fetch": "~3.2.0"
-  },
   "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/freeCodeCamp/freecodecamp-courses/issues"
+  },
+  "dependencies": {
+    "axios": "^0.26.0"
   }
 }
