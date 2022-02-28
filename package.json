@@ -4,7 +4,7 @@
   "description": "Provides tooling for quick and easy selection of courses offered by freeCodeCamp",
   "version": "0.13.4",
   "author": "freeCodeCamp",
-  "publisher": "freeCodeCamp",
+  "publisher": "freecodecamp",
   "galleryBanner": {
     "color": "#0a0a23",
     "theme": "dark"
