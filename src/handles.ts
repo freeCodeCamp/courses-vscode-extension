@@ -1,10 +1,10 @@
-import { Bashrc, Config, Flash, FlashTypes, Test } from "./typings";
+import { Bashrc, Config, FlashTypes, Test } from "./typings";
 import { exampleConfig } from "./fixture";
 import { commands, Terminal, window } from "vscode";
 import { isConnectedToInternet, openSimpleBrowser } from "./components";
 import { cd, ensureDirectoryIsEmpty } from "./usefuls";
-
-import aVF from ".";
+import { handleMessage } from "./flash";
+import { everythingButHandles } from ".";
 
 // This is done to avoid circular imports.
 // hours_of_my_life_lost_by_circular_imports += 2;
@@ -14,28 +14,12 @@ const allAvailableFunctions = {
   getNotSets,
   handleConnection,
   handleEmptyDirectory,
-  handleMessage,
   handleWorkspace,
   pollTerminal,
   rebuildAndReopenInContainer,
-  showMessage,
   sourceBashrc,
-  ...aVF,
+  ...everythingButHandles,
 };
-
-export function showMessage(shower: Function) {
-  return (s: string, opts: Flash["opts"]) => shower(s, opts);
-}
-
-export const flasher = {
-  [FlashTypes.INFO]: showMessage(window.showInformationMessage),
-  [FlashTypes.WARNING]: showMessage(window.showWarningMessage),
-  [FlashTypes.ERROR]: showMessage(window.showErrorMessage),
-};
-
-export function handleMessage(flash: Flash) {
-  flasher[flash.type](flash.message, flash.opts);
-}
 
 /**
  * Creates a terminal with the given name and executes the given commands.

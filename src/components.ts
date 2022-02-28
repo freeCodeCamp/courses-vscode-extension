@@ -1,7 +1,7 @@
 import { commands, Uri, workspace, window } from "vscode";
 import { Course, FlashTypes } from "./typings";
 import fetch from "node-fetch";
-import { handleMessage } from "./handles";
+import { handleMessage } from "./flash";
 import { PATH } from "./usefuls";
 
 export async function openTerminal() {

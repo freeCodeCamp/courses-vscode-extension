@@ -1,5 +1,5 @@
 import { workspace, Uri, FileType } from "vscode";
-import { handleMessage } from "./handles";
+import { handleMessage } from "./flash";
 import { Config, FlashTypes } from "./typings";
 
 export const gitClone = (githubLink: string) => `git clone ${githubLink}.git .`;

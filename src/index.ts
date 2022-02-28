@@ -10,9 +10,12 @@ import {
   ensureDirectoryIsEmpty,
   getPackageJson,
   ensureFileOrFolder,
+  cd,
 } from "./usefuls";
 
-const allAvailableFunctions = {
+import { handleMessage, showMessage } from "./flash";
+
+export const everythingButHandles = {
   currentDirectoryCourse,
   ensureDirectoryIsEmpty,
   ensureFileOrFolder,
@@ -23,6 +26,7 @@ const allAvailableFunctions = {
   openSimpleBrowser,
   openTerminal,
   showInputBox,
+  handleMessage,
+  showMessage,
+  cd,
 };
-
-export default allAvailableFunctions;

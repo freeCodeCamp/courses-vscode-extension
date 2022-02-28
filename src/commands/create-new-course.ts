@@ -1,9 +1,6 @@
 import { window } from "vscode";
-import {
-  handleConnection,
-  handleEmptyDirectory,
-  handleMessage,
-} from "../handles";
+import { handleConnection, handleEmptyDirectory } from "../handles";
+import { handleMessage } from "../flash";
 import { createBackgroundTerminal } from "../handles";
 import { showInputBox } from "../inputs";
 import { FlashTypes } from "../typings";
