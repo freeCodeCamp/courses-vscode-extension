@@ -1,7 +1,7 @@
 import { commands, Uri, workspace, window } from "vscode";
 import { Course, FlashTypes } from "./typings";
-import fetch from "node-fetch";
-import { handleMessage } from "./handles";
+import axios from "axios";
+import { handleMessage } from "./flash";
 import { PATH } from "./usefuls";
 
 export async function openTerminal() {
@@ -55,8 +55,8 @@ export async function getRootWorkspaceDir() {
  */
 export async function isConnectedToInternet(): Promise<boolean> {
   try {
-    const res = await fetch("https://www.google.com");
-    return Promise.resolve(res.ok);
+    const res = await axios.get("https://www.google.com");
+    return Promise.resolve(res.status === 200);
   } catch (e) {
     console.log("isConnected: ", e);
     return Promise.resolve(false);

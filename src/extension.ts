@@ -3,8 +3,6 @@ import openCourse from "./commands/open-course";
 import runCourse from "./commands/run-course";
 import developCourse from "./commands/develop-course";
 import createNewCourse from "./commands/create-new-course";
-import { handleConfig } from "./handles";
-import { getConfig } from "./usefuls";
 import test from "./commands/test";
 
 export function activate(context: ExtensionContext) {

@@ -2,9 +2,9 @@
   "name": "freecodecamp-courses",
   "displayName": "freeCodeCamp - Courses",
   "description": "Provides tooling for quick and easy selection of courses offered by freeCodeCamp",
-  "version": "0.13.3",
+  "version": "0.13.8",
   "author": "freeCodeCamp",
-  "publisher": "freeCodeCamp",
+  "publisher": "freecodecamp",
   "galleryBanner": {
     "color": "#0a0a23",
     "theme": "dark"
@@ -90,11 +90,11 @@
     "type": "git",
     "url": "https://github.com/freeCodeCamp/freecodecamp-courses"
   },
-  "dependencies": {
-    "node-fetch": "~3.2.0"
-  },
   "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/freeCodeCamp/freecodecamp-courses/issues"
+  },
+  "dependencies": {
+    "axios": "^0.26.0"
   }
 }

@@ -1,4 +1,5 @@
-import { handleConfig, handleMessage } from "../handles";
+import { handleConfig } from "../handles";
+import { handleMessage } from "../flash";
 import { FlashTypes } from "../typings";
 import { getConfig } from "../usefuls";
 
