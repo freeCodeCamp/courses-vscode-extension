@@ -8,9 +8,7 @@ This extension helps run the freeCodeCamp courses found here: [./resources/cours
 
 ### How to Open A Course
 
-1. Press `Ctrl + Shift + P` to open the command palette
-
-2. Select `freeCodeCamp: Open Course`
+1. Press `Ctrl + Shift + P` and select `freeCodeCamp: Open Course`
 
 ![Open Course](images/open-course.png)
 
@@ -36,9 +34,11 @@ Official release of the freeCodeCamp Courses extension!
 
 ## Published Courses
 
-- [Project Euler in Rust](https://github.com/freeCodeCamp/euler-rust/)
+- [Project Euler: Rust](https://github.com/freeCodeCamp/euler-rust/)
 
 ## Contributing
+
+freeCodeCamp contributor's guide: https://contribute.freecodecamp.org/
 
 To contribute a new course, see the [external-project](https://github.com/freeCodeCamp/external-project) repository.
 
@@ -65,19 +65,27 @@ Run the development script:
 npm run watch
 ```
 
-This should open a new VSCode window with the extension running.
+`F5` should open a new VSCode window with the extension running.
 
 ### Submitting a Pull Request
 
-Create a new branch following naming convention provided here: https://contribute.freecodecamp.org/#/how-to-open-a-pull-request
+#### Naming Convention
+
+**VSIX Commit Message**: `patch(1.0.1): update courses url`
+
+**Pull Request Title**: `fix(patch): update courses url`
 
 Include the _vsix_ file, and specify if change is patch (`0.0.x`), minor (`0.x.0`), or major (`x.0.0`).
 
+#### Building the VSIX
+
+Run the following command with the argument being either `patch`, `minor`, or `major`:
+
 ```bash
-npm run pack patch
+npm run pack <semver_change>
 ```
 
-## Config
+## Course Config
 
 Create a `freecodecamp.conf.json` file somewhere within the workspace.
 
@@ -206,12 +214,3 @@ export interface Config {
   };
 }
 ```
-
-## TODO On Release
-
-- [x] Update `resources/courses.json` to match actual available courses
-- [x] Update this README to suit features
-- [x] Package major release
-- [x] Double-confirm LICENSE
-- [x] Develop CONTRIBUTION guide for this extension
-- [x] Iron out development guide for courses using extension
