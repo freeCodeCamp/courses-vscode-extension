@@ -18,7 +18,7 @@ export default async function openCourse() {
 
     const { courses } = (
       await axios.get(
-        "https://raw.githubusercontent.com/ShaunSHamilton/courses-plus/main/resources/courses.json"
+        "https://raw.githubusercontent.com/freeCodeCamp/freecodecamp-courses/main/resources/courses.json"
       )
     ).data as Courses;
     // Check if course is already downloaded

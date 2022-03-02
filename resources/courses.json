@@ -1,7 +1,7 @@
 {
   "courses": [
     {
-      "name": "Project Euler in Rust",
+      "name": "Project Euler: Rust",
       "githubLink": "https://github.com/freeCodeCamp/euler-rust",
       "tags": ["rust"]
     }
