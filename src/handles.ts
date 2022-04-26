@@ -30,6 +30,15 @@ export function handleTerminal(name: string, ...commands: string[]) {
   const commandString = commands
     .join(" && ")
     .replace(/ ?([^&]+) && & && ([^&]+)/g, " ($1 & $2)");
+
+  // If terminal already exists, then re-use it:
+  const existingTerminal = window.terminals.find(
+    (terminal) => terminal.name === name
+  );
+  if (existingTerminal) {
+    existingTerminal.sendText(commandString);
+    return existingTerminal;
+  }
   const terminal = window.createTerminal(name);
   terminal.sendText(commandString, true);
   return terminal;
