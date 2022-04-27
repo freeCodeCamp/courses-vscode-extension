@@ -16,6 +16,13 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Released]
 
+##[1.0.2](#v1.0.2) (2020-04-27)
+
+### Changed
+
+- `freeCodeCamp: Develop Course` and `freeCodeCamp: Start Course`
+  - Re-uses the same terminal, if it exists
+
 ##[1.0.1](#v1.0.1) (2020-03-02)
 
 ### Added
