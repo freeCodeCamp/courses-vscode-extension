@@ -32,13 +32,13 @@ type Preview =
   | {
       open: true;
       order?: Order;
-      timeout: number;
+      showLoader: boolean;
       url: string;
     }
   | {
       open: false;
       order?: Order;
-      timeout?: number;
+      showLoader: boolean;
       url?: string;
     };
 
@@ -62,6 +62,7 @@ export type Test = {
 export interface Config {
   bashrc?: Bashrc;
   path: string;
+  prepare: string;
   scripts: {
     "develop-course": string;
     "run-course": string;
