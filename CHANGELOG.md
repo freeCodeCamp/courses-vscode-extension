@@ -16,7 +16,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Released]
 
-##[1.0.3](#v1.0.3) (2022-04-28)
+##[1.0.3](#v1.1.0) (2022-04-28)
 
 ### Added
 
