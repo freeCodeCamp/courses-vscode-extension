@@ -6,17 +6,19 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
-##[1.1.0](#v1.1.0)
+## [Released]
+
+##[1.1.1](#v1.1.1) (2022-04-28)
+
+### Fixed
+
+- Did you know, in HTML, the `className` attribute is just `class`... 🤦‍♂️
 
 ### Changed
 
-- `freeCodeCamp: Create New Course`
-  - Prompts for course name, and GitHub repo
-  - Clones course from GitHub repo into current workspace
+- Re-used terminal logic to simplify loader logic
 
-## [Released]
-
-##[1.0.3](#v1.1.0) (2022-04-28)
+##[1.1.0](#v1.1.0) (2022-04-28)
 
 ### Added
 

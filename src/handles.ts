@@ -133,14 +133,9 @@ export function sourceBashrc(val: Bashrc, path: string): void {
   }
 }
 
-async function handlePrepare(path: string, val: string) {
-  const term = handleTerminal("freeCodeCamp: Preparing Course", cd(path, val));
-  return pollTerminal(term);
-}
-
 export async function handleWorkspace(
   workspace: Config["workspace"],
-  prepareTerminal: ReturnType<typeof handlePrepare>
+  prepareTerminalClose: ReturnType<typeof createBackgroundTerminal>
 ): Promise<void> {
   if (workspace!.previews) {
     const compulsoryKeys = ["open"];
@@ -156,12 +151,15 @@ export async function handleWorkspace(
       if (preview.showLoader) {
         const panel = createLoaderWebView();
         // TODO: could use result here to show error in loader webview
-        await prepareTerminal;
+        await prepareTerminalClose;
         panel.dispose();
       }
 
       if (preview?.open) {
-        openSimpleBrowser(preview.url);
+        // After 1000ms, open the preview.
+        setTimeout(() => {
+          openSimpleBrowser(preview.url);
+        }, 1000);
       }
     }
   }
@@ -229,10 +227,13 @@ export async function handleConfig(
   }
 
   // Run prepare script
-  const prepareTerminal = handlePrepare(path, config.prepare);
+  const prepareTerminalClose = createBackgroundTerminal(
+    "freeCodeCamp: Preparing Course",
+    cd(path, config.prepare)
+  );
 
   if (config.workspace) {
-    await handleWorkspace(config.workspace, prepareTerminal);
+    await handleWorkspace(config.workspace, prepareTerminalClose);
   }
 
   const calledScript = config.scripts[caller];

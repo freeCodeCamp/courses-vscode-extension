@@ -81,7 +81,7 @@ body {
 }
 </style>
 <body>
-  <div className="loader"></div>;
+  <div class="loader"></div>;
 </body>
 </html>`;
 }
