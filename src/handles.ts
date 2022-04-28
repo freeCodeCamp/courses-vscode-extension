@@ -5,6 +5,7 @@ import { isConnectedToInternet, openSimpleBrowser } from "./components";
 import { cd, ensureDirectoryIsEmpty } from "./usefuls";
 import { handleMessage } from "./flash";
 import { everythingButHandles } from ".";
+import { createLoaderWebView } from "./loader";
 
 // This is done to avoid circular imports.
 // hours_of_my_life_lost_by_circular_imports += 2;
@@ -133,7 +134,8 @@ export function sourceBashrc(val: Bashrc, path: string): void {
 }
 
 export async function handleWorkspace(
-  workspace: Config["workspace"]
+  workspace: Config["workspace"],
+  prepareTerminalClose: ReturnType<typeof createBackgroundTerminal>
 ): Promise<void> {
   if (workspace!.previews) {
     const compulsoryKeys = ["open"];
@@ -146,12 +148,18 @@ export async function handleWorkspace(
         });
         return Promise.reject();
       }
+      if (preview.showLoader) {
+        const panel = createLoaderWebView();
+        // TODO: could use result here to show error in loader webview
+        await prepareTerminalClose;
+        panel.dispose();
+      }
+
       if (preview?.open) {
-        // Timeout for to ensure server is running
-        await new Promise((resolve) =>
-          setTimeout(resolve, preview?.timeout || 100)
-        );
-        openSimpleBrowser(preview.url);
+        // After 1000ms, open the preview.
+        setTimeout(() => {
+          openSimpleBrowser(preview.url);
+        }, 1000);
       }
     }
   }
@@ -202,6 +210,7 @@ export async function handleConfig(
   const path = config.path;
   const compulsoryKeys = [
     "path",
+    "prepare",
     "scripts",
     "scripts.develop-course",
     "scripts.run-course",
@@ -217,6 +226,16 @@ export async function handleConfig(
     });
   }
 
+  // Run prepare script
+  const prepareTerminalClose = createBackgroundTerminal(
+    "freeCodeCamp: Preparing Course",
+    cd(path, config.prepare)
+  );
+
+  if (config.workspace) {
+    await handleWorkspace(config.workspace, prepareTerminalClose);
+  }
+
   const calledScript = config.scripts[caller];
   if (typeof calledScript === "string" && caller !== "test") {
     scripts[caller](path, calledScript);
@@ -226,9 +245,6 @@ export async function handleConfig(
 
   if (config.bashrc) {
     sourceBashrc(config.bashrc, path);
-  }
-  if (config.workspace) {
-    await handleWorkspace(config.workspace);
   }
 }
 

@@ -53,6 +53,7 @@ const exampleConfig = {
     path: "./.freeCodeCamp/.bashrc", // Relative path to .bashrc file
   },
   path: ".freeCodeCamp", // Relative path to tooling directory where scripts will be run
+  prepare: "npm ci",
   scripts: {
     // Scripts linked to extension commands
     "develop-course": "npm run develop", // Run when `Develop Course` command is executed
@@ -90,7 +91,7 @@ const exampleConfig = {
           rows: [0], // First row
           cols: [1], // Second column
         },
-        timeout: 100, // Timeout before opening preview, if required
+        showLoader: true, // Whilst packages are being installed, show loader
         url: "https://www.freecodecamp.org/", // URL to open
       },
     ],

@@ -6,31 +6,40 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
-##[1.1.0](#v1.1.0)
+## [Released]
+
+##[1.1.1](#v1.1.1) (2022-04-28)
+
+### Fixed
+
+- Did you know, in HTML, the `className` attribute is just `class`... 🤦‍♂️
 
 ### Changed
 
-- `freeCodeCamp: Create New Course`
-  - Prompts for course name, and GitHub repo
-  - Clones course from GitHub repo into current workspace
+- Re-used terminal logic to simplify loader logic
 
-## [Released]
+##[1.1.0](#v1.1.0) (2022-04-28)
 
-##[1.0.2](#v1.0.2) (2020-04-27)
+### Added
+
+- Loader Screen to conf
+- `prepare` script to conf
+
+##[1.0.2](#v1.0.2) (2022-04-27)
 
 ### Changed
 
 - `freeCodeCamp: Develop Course` and `freeCodeCamp: Start Course`
   - Re-uses the same terminal, if it exists
 
-##[1.0.1](#v1.0.1) (2020-03-02)
+##[1.0.1](#v1.0.1) (2022-03-02)
 
 ### Added
 
 - General first patch for release
 - `freeCodeCamp: Test` for development
 
-##[1.0.0](#v1.0.0) (2020-03-02)
+##[1.0.0](#v1.0.0) (2022-03-02)
 
 ### Added
 
