@@ -95,6 +95,6 @@
     "url": "https://github.com/freeCodeCamp/freecodecamp-courses/issues"
   },
   "dependencies": {
-    "axios": "^0.26.0"
+    "axios": "^0.27.0"
   }
 }
