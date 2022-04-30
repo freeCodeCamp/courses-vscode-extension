@@ -29,22 +29,12 @@ export const exampleConfig: Config = {
       // Files to be opened in workspace
       {
         path: "README.md", // Relative path to file
-        order: {
-          // Order to display file in workspace. Similar to grid-template-area
-          rows: [0], // First row
-          cols: [0], // First column
-        },
       },
     ],
     previews: [
       // Previews to be opened in workspace
       {
         open: true, // Whether or not to open preview
-        order: {
-          // Order to display preview in workspace
-          rows: [0], // First row
-          cols: [1], // Second column
-        },
         showLoader: true, // Whether or not to show loading indicator
         url: "https://www.freecodecamp.org/", // URL to open
       },
@@ -55,11 +45,6 @@ export const exampleConfig: Config = {
         directory: ".", // Relative path to open terminal with
         message: "'Hello World!'", // Message to display in terminal
         name: "Camper", // Name of terminal
-        order: {
-          // Order to display terminal in workspace
-          rows: [1], // Second row
-          cols: [0, 1], // Span across first and second columns
-        },
         show: true, // Whether or not to show terminal
       },
     ],

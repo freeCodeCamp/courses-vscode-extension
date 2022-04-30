@@ -31,13 +31,11 @@ export type Bashrc =
 type Preview =
   | {
       open: true;
-      order?: Order;
       showLoader: boolean;
       url: string;
     }
   | {
       open: false;
-      order?: Order;
       showLoader: boolean;
       url?: string;
     };
@@ -46,13 +44,10 @@ type Terminal = {
   directory: string;
   message?: string;
   name: string;
-  order?: Order;
   show: boolean;
 };
 
-type Order = { rows: number[]; cols: number[] };
-
-type File = { path: string; order?: Order };
+type File = { path: string };
 
 export type Test = {
   functionName: string;

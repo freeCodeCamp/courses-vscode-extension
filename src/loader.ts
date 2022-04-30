@@ -38,6 +38,9 @@ body {
   background-color: #000000;
   overflow: hidden;
 }
+h1 {
+  color: #ffffff;
+}
 .loader {
   --b: 10px; /* border thickness */
   --n: 10; /* number of dashes*/
@@ -81,6 +84,7 @@ body {
 }
 </style>
 <body>
+  <h1>Preparing the course...</h1>
   <div class="loader"></div>;
 </body>
 </html>`;

@@ -27,7 +27,11 @@ const allAvailableFunctions = {
  * @example
  * handleTerminal("freeCodeCamp: Open Course", "git clone something", "npm install", "live-server .")
  */
-export function handleTerminal(name: string, ...commands: string[]) {
+export function handleTerminal(
+  path: string,
+  name: string,
+  ...commands: string[]
+) {
   const commandString = commands
     .join(" && ")
     .replace(/ ?([^&]+) && & && ([^&]+)/g, " ($1 & $2)");
@@ -41,7 +45,7 @@ export function handleTerminal(name: string, ...commands: string[]) {
     return existingTerminal;
   }
   const terminal = window.createTerminal(name);
-  terminal.sendText(commandString, true);
+  terminal.sendText(cd(path, commandString), true);
   return terminal;
 }
 
@@ -106,10 +110,10 @@ export async function handleEmptyDirectory() {
 
 const scripts = {
   "develop-course": (path: string, val: string) => {
-    handleTerminal("freeCodeCamp: Develop Course", cd(path, val));
+    handleTerminal(path, "freeCodeCamp: Develop Course", val);
   },
   "run-course": (path: string, val: string) => {
-    handleTerminal("freeCodeCamp: Run Course", cd(path, val));
+    handleTerminal(path, "freeCodeCamp: Run Course", val);
   },
   test: async (_path: string, val?: Test) => {
     try {
@@ -176,8 +180,9 @@ export async function handleWorkspace(
       }
       if (term?.name) {
         const t = handleTerminal(
+          term.directory,
           term.name,
-          cd(term.directory, `echo ${term.message || ""}`)
+          `echo ${term.message || ""}`
         );
         if (term?.show) {
           t.show();
