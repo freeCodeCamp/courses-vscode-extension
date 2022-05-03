@@ -3,11 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - main
-    labels:
-      - patch
-      - minor
-      - major
+      - prod
 
 env:
   # Specific name is required to login: https://code.visualstudio.com/api/working-with-extensions/continuous-integration
@@ -15,7 +11,7 @@ env:
 
 jobs:
   build:
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'patch') || contains(github.event.pull_request.labels.*.name, 'minor') || contains(github.event.pull_request.labels.*.name, 'major') }}
+    if: ${{ contains(github.event.head_commit.message, 'patch') || contains(github.event.head_commit.message, 'minor') || contains(github.event.head_commit.message, 'major') }}
     name: Build and Publish Extension
     runs-on: ubuntu-20.04
 
@@ -31,7 +27,7 @@ jobs:
       - name: Install Dependencies
         run: npm install
       - name: Build Extension
-        run: npm run pack -- ${{ (contains(github.event.pull_request.labels.*.name, 'patch') && 'patch') || (contains(github.event.pull_request.labels.*.name, 'minor') && 'minor') || (contains(github.event.pull_request.labels.*.name, 'major') && 'major') }} -m "build %s [skip ci]"
+        run: npm run pack -- ${{ (contains(github.event.head_commit.message, 'patch') && 'patch') || (contains(github.event.head_commit.message, 'minor') && 'minor') || (contains(github.event.head_commit.message, 'major') && 'major') }} -m "build %s [skip ci]"
 
       - name: Publish
         run: npm run deploy
