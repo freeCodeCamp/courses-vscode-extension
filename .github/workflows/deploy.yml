@@ -1,8 +1,5 @@
-# After the build.yml workflow runs, this workflow will run, and deploy the built .vsix file to https://marketplace.visualstudio.com
-
 name: Deploy
 
-# On push to main, when one of the following labels exists: `patch`, `minor`, `major`
 on:
   push:
     branches:
@@ -17,31 +14,20 @@ env:
   VSCE_PAT: ${{ secrets.VSCE_PAT }}
 
 jobs:
-  publish:
-    name: Publish Extension
+  build:
+    name: Build and Publish Extension
     runs-on: ubuntu-20.04
-
     strategy:
       fail-fast: false
       matrix:
         node-version: [16.x]
         version-labels: [patch, minor, major]
-    needs:
-      - build
+
     steps:
-      - name: Checkout Source
-        uses: actions/checkout@v3
-      - name: Install Node ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-
       - name: Install Dependencies
-        run: npm install -g vsce
-
-      - name: Login Publisher
-        run: vsce login freeCodeCamp
+        run: npm install
+      - name: Build Extension
+        run: npm run pack -- ${{ github.event.pull_request.labels.find(label => [${{version-labels}}].includes(label.name)).name }} -m "build %s [skip ci]"
 
       - name: Publish
-        uses: *.vsix
-        run: vsce publish ${{ github.event.pull_request.labels.find(label => [${{version-labels}}].includes(label.name)) }}
+        run: npm run deploy

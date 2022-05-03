@@ -1,0 +1,27 @@
+name: Build Test
+
+# On push to main, when one of the following labels exists: `patch`, `minor`, `major`
+on:
+  pull_request:
+    branches:
+      - main
+    labels:
+      - patch
+      - minor
+      - major
+
+jobs:
+  build:
+    name: Build Test
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [16.x]
+        version-labels: [patch, minor, major]
+
+    steps:
+      - name: Install Dependencies
+        run: npm install
+      - name: Build Extension
+        run: npm run vsce -- ls
