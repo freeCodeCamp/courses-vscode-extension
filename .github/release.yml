@@ -1,0 +1,17 @@
+changelog:
+  exclude:
+    labels:
+      - ignore-for-release
+    authors:
+      - renovate
+      - renovate[bot]
+  categories:
+    - title: Breaking Changes 🛠
+      labels:
+        - major
+    - title: Exciting New Features and Bugs 🎉
+      labels:
+        - minor
+    - title: Bug Removals
+      labels:
+        - patch

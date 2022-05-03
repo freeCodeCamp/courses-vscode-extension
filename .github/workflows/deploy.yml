@@ -1,0 +1,37 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+    labels:
+      - patch
+      - minor
+      - major
+
+env:
+  # Specific name is required to login: https://code.visualstudio.com/api/working-with-extensions/continuous-integration
+  VSCE_PAT: ${{ secrets.VSCE_PAT }}
+
+jobs:
+  build:
+    name: Build and Publish Extension
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout Source Files
+        uses: actions/checkout@v3
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: "npm"
+
+      - name: Install Dependencies
+        run: npm install
+      - name: Build Extension
+        run: npm run pack -- ${{ (contains(github.event.pull_request.labels.*.name, 'patch') && 'patch') || (contains(github.event.pull_request.labels.*.name, 'minor') && 'minor') || (contains(github.event.pull_request.labels.*.name, 'major') && 'major') }} -m "build %s [skip ci]"
+        if: ${{ contains(github.event.pull_request.labels.*.name, 'patch') || contains(github.event.pull_request.labels.*.name, 'minor') || contains(github.event.pull_request.labels.*.name, 'major') }}
+
+      - name: Publish
+        run: npm run deploy
