@@ -30,8 +30,8 @@ jobs:
       - name: Install Dependencies
         run: npm install
       - name: Build Extension
-        run: npm run pack -- ${{ github.event.pull_request.labels.find(label => ['patch', 'minor', 'major'].includes(label.name)).name }} -m "build %s [skip ci]"
-        if: ${{ github.event.pull_request.labels.find(label => ['patch', 'minor', 'major'].includes(label.name)) }}
+        run: npm run pack -- ${{ (contains(github.event.pull_request.labels.*.name, 'patch') && 'patch') || (contains(github.event.pull_request.labels.*.name, 'minor') && 'minor') || (contains(github.event.pull_request.labels.*.name, 'major') && 'major') }} -m "build %s [skip ci]"
+        if: ${{ contains(github.event.pull_request.labels.*.name, 'patch') || contains(github.event.pull_request.labels.*.name, 'minor') || contains(github.event.pull_request.labels.*.name, 'major') }}
 
       - name: Publish
         run: npm run deploy
