@@ -6,7 +6,7 @@ To contribute a new course, see the [external-project](https://github.com/freeCo
 
 To contribute to this extension, see below.
 
-### Developing Locally
+## Developing Locally
 
 Fork the repository, then clone it to your local machine:
 
@@ -29,20 +29,21 @@ npm run watch
 
 `F5` should open a new VSCode window with the extension running.
 
-### Submitting a Pull Request
+## Submitting a Pull Request
 
-#### Naming Convention
+### Naming Convention
 
-**VSIX Commit Message**: `patch(1.0.1): update courses url`
+**Pull Request Title**: `<verb>(<version>): <description>`
 
-**Pull Request Title**: `fix(patch): update courses url`
+Example: `fix(patch): update image links in readme`
 
-Include the _vsix_ file, and specify if change is patch (`0.0.x`), minor (`0.x.0`), or major (`x.0.0`).
-
-#### Building the VSIX
-
-Run the following command with the argument being either `patch`, `minor`, or `major`:
+## Publishing the Extension
 
 ```bash
-npm run pack <semver_change>
+git checkout main
+git fetch upstream
+git reset --hard upstream/main
+git checkout prod
+git merge main
+git push upstream
 ```
