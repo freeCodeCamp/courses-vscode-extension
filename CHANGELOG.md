@@ -8,6 +8,16 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Released]
 
+##[1.2.0](#v1.2.0) (2022-04-30)
+
+### Changed
+
+- Removed idea of `order` in workspace - too difficult to implement
+
+### Fixed
+
+- Do not try change directory, if terminal has already existed
+
 ##[1.1.1](#v1.1.1) (2022-04-28)
 
 ### Fixed
