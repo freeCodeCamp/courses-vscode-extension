@@ -21,13 +21,12 @@ jobs:
       fail-fast: false
       matrix:
         node-version: [16.x]
-        version-labels: [patch, minor, major]
 
     steps:
       - name: Install Dependencies
         run: npm install
       - name: Build Extension
-        run: npm run pack -- ${{ github.event.pull_request.labels.find(label => [${{version-labels}}].includes(label.name)).name }} -m "build %s [skip ci]"
+        run: npm run pack -- ${{ github.event.pull_request.labels.find(label => ['patch', 'minor', 'major'].includes(label.name)).name }} -m "build %s [skip ci]"
 
       - name: Publish
         run: npm run deploy
