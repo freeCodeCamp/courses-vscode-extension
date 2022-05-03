@@ -22,10 +22,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
-          cache: "npm"
 
       - name: Install Dependencies
         run: npm install
+      - name: Config Git
+        run: |
+          git config --global user.email "{{ github.actor.email }}"
+          git config --global user.name "{{ github.actor.name }}"
       - name: Build Extension
         run: npm run pack -- ${{ (contains(github.event.head_commit.message, 'patch') && 'patch') || (contains(github.event.head_commit.message, 'minor') && 'minor') || (contains(github.event.head_commit.message, 'major') && 'major') }} -m "build %s [skip ci]"
 
