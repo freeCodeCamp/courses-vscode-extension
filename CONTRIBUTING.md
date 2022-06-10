@@ -11,13 +11,13 @@ To contribute to this extension, see below.
 Fork the repository, then clone it to your local machine:
 
 ```bash
-git clone https://github.com/freeCodeCamp/freecodecamp-courses.git
+git clone https://github.com/freeCodeCamp/courses-vscode-extension.git
 ```
 
 Change into the directory, and install the dependencies:
 
 ```bash
-cd freecodecamp-courses
+cd courses-vscode-extension
 npm install
 ```
 
