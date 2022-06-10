@@ -8,6 +8,19 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Released]
 
+##[1.2.1](#v1.2.1) (2022-06-10)
+
+### Updated
+
+- chore(deps): update dependency @types/vscode to v1.68.0
+- chore(deps): update typescript-eslint monorepo to v5.27.0
+- chore(deps): update dependency webpack to v5.73.0
+- chore(deps): update dependency vsce to v2.9.1
+- chore(deps): update dependency eslint to v8.17.0
+- chore(deps): update dependency typescript to v4.7.3
+- chore(deps): update dependency @types/node to v14.18.20
+- chore(deps): update dependency glob to v7.2.3
+
 ##[1.2.0](#v1.2.0) (2022-04-30)
 
 ### Changed
