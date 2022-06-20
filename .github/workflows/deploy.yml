@@ -1,9 +1,9 @@
 name: Deploy
 
 on:
-  push:
-    branches:
-      - prod
+  release:
+    types:
+      - created
 
 env:
   # Specific name is required to login: https://code.visualstudio.com/api/working-with-extensions/continuous-integration
@@ -11,8 +11,8 @@ env:
 
 jobs:
   build:
-    if: ${{ contains(github.event.head_commit.message, 'patch') || contains(github.event.head_commit.message, 'minor') || contains(github.event.head_commit.message, 'major') }}
-    name: Build and Publish Extension
+    if: startsWith( github.ref, 'refs/tags/releases/')
+    name: Publish Extension from Release
     runs-on: ubuntu-20.04
 
     steps:
@@ -22,15 +22,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
-
-      - name: Install Dependencies
-        run: npm ci
-      - name: Git Config
-        run: |
-          git config --global user.email "${{ secrets.GIT_AUTHOR_EMAIL }}"
-          git config --global user.name "${{ secrets.GIT_AUTHOR_NAME }}"
-      - name: Build Extension
-        run: npm run pack -- ${{ (contains(github.event.head_commit.message, 'patch') && 'patch') || (contains(github.event.head_commit.message, 'minor') && 'minor') || (contains(github.event.head_commit.message, 'major') && 'major') }} -m "build %s [skip ci]"
 
       - name: Publish
         run: npm run deploy
