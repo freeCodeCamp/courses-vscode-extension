@@ -24,7 +24,7 @@ jobs:
           node-version: 16.x
 
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
       - name: Git Config
         run: |
           git config --global user.email "${{ secrets.GIT_AUTHOR_EMAIL }}"
