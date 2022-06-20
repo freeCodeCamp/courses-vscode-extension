@@ -2,8 +2,7 @@ name: Deploy
 
 on:
   release:
-    types:
-      - created
+    types: [released]
 
 env:
   # Specific name is required to login: https://code.visualstudio.com/api/working-with-extensions/continuous-integration
@@ -11,7 +10,6 @@ env:
 
 jobs:
   build:
-    if: startsWith( github.ref, 'refs/tags/releases/')
     name: Publish Extension from Release
     runs-on: ubuntu-20.04
 
@@ -22,6 +20,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
+
+      - name: Install Dependencies
+        run: npm install
 
       - name: Publish
         run: npm run deploy
