@@ -160,17 +160,24 @@ export async function handleWorkspace(
         await prepareTerminalClose;
 
         // Wait for the port to be available, before disposing the panel.
-        if (preview.url) {
-          await checkIfURLIsAvailable(preview.url, preview.timeout);
-        }
-        panel.dispose();
+        new Promise(async (resolve) => {
+          if (preview.url) {
+            await checkIfURLIsAvailable(preview.url, preview.timeout);
+          }
+          if (preview?.open) {
+            // After 1000ms, open the preview.
+            setTimeout(() => {
+              openSimpleBrowser(preview.url);
+            }, 500);
+          }
+          panel.dispose();
+        });
       }
-
-      if (preview?.open) {
+      if (!preview.url && preview?.open) {
         // After 1000ms, open the preview.
         setTimeout(() => {
           openSimpleBrowser(preview.url);
-        }, 1000);
+        }, 500);
       }
     }
   }

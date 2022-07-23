@@ -102,10 +102,15 @@ export async function checkIfURLIsAvailable(
   try {
     return new Promise((resolve, reject) => {
       const interval = setInterval(async () => {
-        const response = await axios.get(url);
-        if (response.status === 200) {
-          clearInterval(interval);
-          resolve(true);
+        try {
+          const response = await axios.get(url, { timeout: 250 });
+          if (response.status === 200) {
+            clearInterval(interval);
+            resolve(true);
+          }
+        } catch (e) {
+          // Do nothing.
+          console.log("freeCodeCamp > checkIfURLIsAvailable: ", e);
         }
       }, 250);
       setTimeout(() => {
