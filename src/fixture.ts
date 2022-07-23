@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Config } from "./typings";
 
 export const exampleConfig: Config = {
@@ -37,6 +38,7 @@ export const exampleConfig: Config = {
         open: true, // Whether or not to open preview
         showLoader: true, // Whether or not to show loading indicator
         url: "https://www.freecodecamp.org/", // URL to open
+        timeout: 10000, // Timeout for URL to respond with 200
       },
     ],
     terminals: [
