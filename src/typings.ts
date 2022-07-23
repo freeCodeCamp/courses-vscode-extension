@@ -33,11 +33,13 @@ type Preview =
       open: true;
       showLoader: boolean;
       url: string;
+      timeout: number;
     }
   | {
       open: false;
       showLoader: boolean;
       url?: string;
+      timeout?: number;
     };
 
 type Terminal = {

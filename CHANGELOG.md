@@ -8,6 +8,17 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Released]
 
+##[1.4.0](#v1.4.0) (2022-07-23)
+
+### Added
+
+- feat: previews ping `url` until it is available
+- feat: previews have `timeout` to wait for `url` to be available
+
+### Changed
+
+- feat: loader looks more fCC -like
+
 ##[1.3.2](#v1.3.2) (2022-07-23)
 
 - chore(patch): update dependencies

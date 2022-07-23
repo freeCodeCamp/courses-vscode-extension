@@ -2,7 +2,7 @@ import { Bashrc, Config, FlashTypes, Test } from "./typings";
 import { exampleConfig } from "./fixture";
 import { commands, Terminal, window } from "vscode";
 import { isConnectedToInternet, openSimpleBrowser } from "./components";
-import { cd, ensureDirectoryIsEmpty } from "./usefuls";
+import { cd, checkIfURLIsAvailable, ensureDirectoryIsEmpty } from "./usefuls";
 import { handleMessage } from "./flash";
 import { everythingButHandles } from ".";
 import { createLoaderWebView } from "./loader";
@@ -158,6 +158,11 @@ export async function handleWorkspace(
         const panel = createLoaderWebView();
         // TODO: could use result here to show error in loader webview
         await prepareTerminalClose;
+
+        // Wait for the port to be available, before disposing the panel.
+        if (preview.url) {
+          await checkIfURLIsAvailable(preview.url, preview.timeout);
+        }
         panel.dispose();
       }
 
