@@ -2,7 +2,7 @@ import { Bashrc, Config, FlashTypes, Test } from "./typings";
 import { exampleConfig } from "./fixture";
 import { commands, Terminal, window } from "vscode";
 import { isConnectedToInternet, openSimpleBrowser } from "./components";
-import { cd, ensureDirectoryIsEmpty } from "./usefuls";
+import { cd, checkIfURLIsAvailable, ensureDirectoryIsEmpty } from "./usefuls";
 import { handleMessage } from "./flash";
 import { everythingButHandles } from ".";
 import { createLoaderWebView } from "./loader";
@@ -25,7 +25,7 @@ const allAvailableFunctions = {
 /**
  * Creates a terminal with the given name and executes the given commands.
  * @example
- * handleTerminal("freeCodeCamp: Open Course", "git clone something", "npm install", "live-server .")
+ * handleTerminal(".freeCodeCamp", "freeCodeCamp: Open Course", "npm install", "live-server .")
  */
 export function handleTerminal(
   path: string,
@@ -109,9 +109,11 @@ export async function handleEmptyDirectory() {
 }
 
 const scripts = {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   "develop-course": (path: string, val: string) => {
     handleTerminal(path, "freeCodeCamp: Develop Course", val);
   },
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   "run-course": (path: string, val: string) => {
     handleTerminal(path, "freeCodeCamp: Run Course", val);
   },
@@ -156,6 +158,11 @@ export async function handleWorkspace(
         const panel = createLoaderWebView();
         // TODO: could use result here to show error in loader webview
         await prepareTerminalClose;
+
+        // Wait for the port to be available, before disposing the panel.
+        if (preview.url) {
+          await checkIfURLIsAvailable(preview.url, preview.timeout);
+        }
         panel.dispose();
       }
 

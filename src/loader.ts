@@ -22,70 +22,106 @@ export function createLoaderWebView() {
 function getLoaderHTML() {
   return `<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loading</title>
-    <meta name="theme-color" content="#000000">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Loading</title>
+	<meta name="theme-color" content="#000000">
 </head>
 <style>
-body {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #000000;
-  overflow: hidden;
-}
-h1 {
-  color: #ffffff;
-}
-.loader {
-  --b: 10px; /* border thickness */
-  --n: 10; /* number of dashes*/
-  --g: 10deg; /* gap  between dashes*/
-  --c: green; /* the color */
+	body {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		background-color: #1b1b32;
+		overflow: hidden;
+		margin: 0;
+	}
 
-  width: 100px; /* size */
-  margin: 0 auto;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  padding: 1px; /* get rid of bad outlines */
-  background: conic-gradient(#0000, var(--c)) content-box;
-  -webkit-mask: /* we use +/-1deg between colors to avoid jagged edges */ repeating-conic-gradient(
-      #0000 0deg,
-      #000 1deg calc(360deg / var(--n) - var(--g) - 1deg),
-      #0000 calc(360deg / var(--n) - var(--g)) calc(360deg / var(--n))
-    ),
-    radial-gradient(
-      farthest-side,
-      #0000 calc(98% - var(--b)),
-      #000 calc(100% - var(--b))
-    );
-  mask: repeating-conic-gradient(
-      #0000 0deg,
-      #000 1deg calc(360deg / var(--n) - var(--g) - 1deg),
-      #0000 calc(360deg / var(--n) - var(--g)) calc(360deg / var(--n))
-    ),
-    radial-gradient(
-      farthest-side,
-      #0000 calc(98% - var(--b)),
-      #000 calc(100% - var(--b))
-    );
-  -webkit-mask-composite: destination-in;
-  mask-composite: intersect;
-  animation: load 1s infinite steps(var(--n));
-}
-@keyframes load {
-  to {
-    transform: rotate(1turn);
-  }
-}
+	header {
+		width: 100%;
+		height: 55px;
+		background-color: #0a0a23;
+		display: flex;
+		justify-content: center;
+	}
+
+	#logo {
+		width: 350px;
+		height: 42px;
+		max-height: 100%;
+		background-color: #0a0a23;
+		padding: 0.4rem;
+		display: block;
+		margin: 0 auto;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+
+	h1 {
+		color: #f5f6f7;
+	}
+
+	.loader {
+		display: flex;
+		flex-direction: row;
+	}
+
+	.loader>div {
+		width: 5px;
+		height: 27px;
+		background-color: #99c9ff;
+		margin: 2px;
+	}
+
+	.loader>div:nth-of-type(1) {
+		animation: load 1.0s infinite ease-in-out alternate 1s;
+	}
+
+	.loader>div:nth-of-type(2) {
+		animation: load 1.0s infinite ease-in-out alternate 1.2s;
+	}
+
+	.loader>div:nth-of-type(3) {
+		animation: load 1.0s infinite ease-in-out alternate 1.4s;
+	}
+
+	.loader>div:nth-of-type(4) {
+		animation: load 1.0s infinite ease-in-out alternate 1.6s;
+	}
+
+	.loader>div:nth-of-type(5) {
+		animation: load 1.0s infinite ease-in-out alternate 1.8s;
+	}
+
+	@keyframes load {
+		0% {
+			transform: scaleY(1.0);
+		}
+
+		100% {
+			transform: scaleY(2.0);
+		}
+	}
 </style>
+
 <body>
-  <h1>Preparing the course...</h1>
-  <div class="loader"></div>;
+	<header>
+		<img src='https://raw.githubusercontent.com/freeCodeCamp/cdn/main/build/platform/universal/fcc_primary.svg' id='logo' alt='freeCodeCamp logo' />
+	</header>
+	<h1>Preparing the course...</h1>
+	<div class="loader">
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+	</div>;
 </body>
+
 </html>`;
 }

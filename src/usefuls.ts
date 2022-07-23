@@ -1,3 +1,4 @@
+import axios from "axios";
 import { workspace, Uri, FileType } from "vscode";
 import { handleMessage } from "./flash";
 import { Config, FlashTypes } from "./typings";
@@ -86,5 +87,34 @@ export async function getConfig(): Promise<Config> {
       type: FlashTypes.ERROR,
     });
     return Promise.reject(e);
+  }
+}
+
+/**
+ * Requests the argument URL every 250ms until it returns a 200 status code, or until the timeout is reached.
+ * @param url The URL to ping.
+ * @param timeout The timeout in milliseconds.
+ */
+export async function checkIfURLIsAvailable(
+  url: string,
+  timeout: number = 10000
+): Promise<boolean> {
+  try {
+    return new Promise((resolve, reject) => {
+      const interval = setInterval(async () => {
+        const response = await axios.get(url);
+        if (response.status === 200) {
+          clearInterval(interval);
+          resolve(true);
+        }
+      }, 250);
+      setTimeout(() => {
+        clearInterval(interval);
+        resolve(false);
+      }, timeout);
+    });
+  } catch (e) {
+    console.error("freeCodeCamp > checkIfURLIsAvailable: ", e);
+    return Promise.reject(false);
   }
 }

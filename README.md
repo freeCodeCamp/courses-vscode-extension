@@ -75,6 +75,7 @@ const exampleConfig = {
         open: true, // Whether or not to open preview
         showLoader: true, // Whilst packages are being installed, show loader
         url: "https://www.freecodecamp.org/", // URL to open
+        timeout: 10000, // Timeout for loading URL
       },
     ],
     terminals: [
