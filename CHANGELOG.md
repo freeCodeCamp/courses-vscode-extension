@@ -8,6 +8,30 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Released]
 
+##[1.3.2](#v1.3.2) (2022-07-23)
+
+- chore(patch): update dependencies
+
+##[1.3.1](#v1.3.1) (2022-06-20)
+
+### Changed
+
+- chore(minor): minor package updates
+
+##[1.2.3](#v1.2.3) (2022-06-20)
+
+### Test
+
+##[1.2.2](#v1.2.2) (2022-06-20)
+
+### Added
+
+- fix(minor): change terminal directory if `!term`
+
+### Fixed
+
+- chore(patch): update dependencies
+
 ##[1.2.1](#v1.2.1) (2022-06-10)
 
 ### Updated
