@@ -70,7 +70,8 @@
     "test": "node ./out/test/runTest.js",
     "pack": "vsce package",
     "deploy": "vsce publish",
-    "vsce": "vsce"
+    "vsce": "vsce",
+    "test:pack": "npm run pack -- --no-git-tag-version --no-update-package-json 1.0.0 -o freecodecamp-courses-test.vsix"
   },
   "devDependencies": {
     "@types/glob": "7.2.0",
