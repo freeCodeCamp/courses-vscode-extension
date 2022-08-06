@@ -40,6 +40,7 @@ function getLoaderHTML() {
 		background-color: #1b1b32;
 		overflow: hidden;
 		margin: 0;
+    padding: 0 !important;
 	}
 
 	header {
@@ -120,7 +121,7 @@ function getLoaderHTML() {
 		<div></div>
 		<div></div>
 		<div></div>
-	</div>;
+	</div>
 </body>
 
 </html>`;
