@@ -1,6 +1,5 @@
 import { commands, Uri, workspace, window } from "vscode";
 import { Course, FlashTypes } from "./typings";
-import axios from "axios";
 import { handleMessage } from "./flash";
 import { PATH } from "./usefuls";
 
@@ -55,7 +54,7 @@ export async function getRootWorkspaceDir() {
  */
 export async function isConnectedToInternet(): Promise<boolean> {
   try {
-    const res = await axios.get("https://www.google.com");
+    const res = await fetch("https://www.google.com");
     return Promise.resolve(res.status === 200);
   } catch (e) {
     console.log("isConnected: ", e);

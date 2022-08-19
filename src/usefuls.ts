@@ -1,4 +1,3 @@
-import axios from "axios";
 import { workspace, Uri, FileType } from "vscode";
 import { handleMessage } from "./flash";
 import { Config, FlashTypes } from "./typings";
@@ -103,7 +102,7 @@ export async function checkIfURLIsAvailable(
     return new Promise((resolve, reject) => {
       const interval = setInterval(async () => {
         try {
-          const response = await axios.get(url, { timeout: 250 });
+          const response = await fetchWithTimeout(url, 250);
           if (response.status === 200) {
             clearInterval(interval);
             resolve(true);
@@ -122,4 +121,14 @@ export async function checkIfURLIsAvailable(
     console.error("freeCodeCamp > checkIfURLIsAvailable: ", e);
     return Promise.reject(false);
   }
+}
+
+async function fetchWithTimeout(url: string, timeout: number) {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
+  const response = await fetch(url, {
+    signal: controller.signal,
+  });
+  clearTimeout(id);
+  return response;
 }
