@@ -10,17 +10,15 @@ import { promptQuickPick } from "../inputs";
 import { currentDirectoryCourse } from "../components";
 import { gitClone } from "../usefuls";
 
-import axios from "axios";
-
 export default async function openCourse() {
   try {
     await handleConnection();
 
-    const { courses } = (
-      await axios.get(
+    const { courses } = (await (
+      await fetch(
         "https://raw.githubusercontent.com/freeCodeCamp/freecodecamp-courses/main/resources/courses.json"
       )
-    ).data as Courses;
+    ).json()) as Courses;
     // Check if course is already downloaded
     const courseGitDownloaded = await currentDirectoryCourse();
 

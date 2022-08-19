@@ -8,6 +8,17 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Released]
 
+##[1.4.4](#v1.4.4) (2022-08-19)
+
+### Updated
+
+- `vscode` engine to `1.70.0`
+- `node` engine to `>=18`
+
+### Changed
+
+- Removed `axios` for native Node.js `fetch`
+
 ##[1.4.0](#v1.4.0) (2022-07-23)
 
 ### Added
