@@ -8,6 +8,26 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Released]
 
+##[1.5.0](#v1.5.0) (2022-09-06)
+
+### Changed
+
+- `config.prepare` is no longer required
+- freeCodeCamp - Courses extension version is now tied to [freeCodeCampOS](https://github.com/freeCodeCamp/freeCodeCampOS) version
+
+### Added
+
+- New `freecodecamp.conf.json` properties:
+  - `bash`
+  - `client`
+  - `config`
+  - `curriculum`
+  - `tooling`
+
+### Updated
+
+- `vscode` engine to `1.71.0`
+
 ##[1.4.4](#v1.4.4) (2022-08-19)
 
 ### Updated

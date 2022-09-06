@@ -51,4 +51,31 @@ export const exampleConfig: Config = {
       },
     ],
   },
+  bash: {
+    ".bashrc": "./bash/.bashrc",
+    "sourcerer.sh": "./bash/sourcerer.sh",
+  },
+  client: {
+    assets: {
+      header: "./client/assets/fcc_primary_small.svg",
+      favicon: "./client/assets/fcc_primary_small.svg",
+    },
+    landing: {
+      description: "Placeholder description",
+      "faq-link": "#",
+      "faq-text": "Link to FAQ related to course",
+    },
+  },
+  config: {
+    "projects.json": "./config/projects.json",
+    "state.json": "./config/state.json",
+  },
+  curriculum: {
+    locales: {
+      english: "./curriculum/locales/english",
+    },
+  },
+  tooling: {
+    helpers: "./tooling/test-utils.js",
+  },
 };
