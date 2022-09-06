@@ -59,7 +59,7 @@ export type Test = {
 export interface Config {
   bashrc?: Bashrc;
   path: string;
-  prepare: string;
+  prepare?: string;
   scripts: {
     "develop-course": string;
     "run-course": string;
@@ -69,5 +69,32 @@ export interface Config {
     files?: File[];
     previews?: Preview[];
     terminals?: Terminal[];
+  };
+  bash?: {
+    ".bashrc"?: string;
+    "sourcerer.sh"?: string;
+  };
+  client?: {
+    assets?: {
+      header?: string;
+      favicon?: string;
+    };
+    landing?: {
+      description?: string;
+      "faq-link"?: string;
+      "faq-text"?: string;
+    };
+  };
+  config?: {
+    "projects.json"?: string;
+    "state.json"?: string;
+  };
+  curriculum: {
+    locales: {
+      [key: string]: string;
+    };
+  };
+  tooling?: {
+    helpers?: string;
   };
 }

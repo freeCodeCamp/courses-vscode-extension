@@ -1,6 +1,6 @@
 import { Bashrc, Config, FlashTypes, Test } from "./typings";
 import { exampleConfig } from "./fixture";
-import { commands, Terminal, window } from "vscode";
+import { commands, Terminal, TerminalExitStatus, window } from "vscode";
 import { isConnectedToInternet, openSimpleBrowser } from "./components";
 import { cd, checkIfURLIsAvailable, ensureDirectoryIsEmpty } from "./usefuls";
 import { handleMessage } from "./flash";
@@ -229,10 +229,11 @@ export async function handleConfig(
   const path = config.path;
   const compulsoryKeys = [
     "path",
-    "prepare",
     "scripts",
     "scripts.develop-course",
     "scripts.run-course",
+    "curriculum",
+    "curriculum.locales",
   ];
 
   ensureNoExtraKeys(config, exampleConfig);
@@ -246,10 +247,15 @@ export async function handleConfig(
   }
 
   // Run prepare script
-  const prepareTerminalClose = createBackgroundTerminal(
-    "freeCodeCamp: Preparing Course",
-    cd(path, config.prepare)
+  let prepareTerminalClose: Promise<TerminalExitStatus> = new Promise(
+    (resolve) => resolve({ code: 0 } as TerminalExitStatus)
   );
+  if (config.prepare) {
+    prepareTerminalClose = createBackgroundTerminal(
+      "freeCodeCamp: Preparing Course",
+      cd(path, config.prepare)
+    );
+  }
 
   if (config.workspace) {
     await handleWorkspace(config.workspace, prepareTerminalClose);
