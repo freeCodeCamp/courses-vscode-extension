@@ -4,6 +4,21 @@
       "name": "Project Euler: Rust",
       "githubLink": "https://github.com/freeCodeCamp/euler-rust",
       "tags": ["rust"]
+    },
+    {
+      "name": "Web3",
+      "githubLink": "https://github.com/freeCodeCamp/web3-curriculum",
+      "tags": ["web3"]
+    },
+    {
+      "name": "Solana",
+      "githubLink": "https://github.com/freeCodeCamp/solana-curriculum",
+      "tags": ["web3"]
+    },
+    {
+      "name": "NEAR",
+      "githubLink": "https://github.com/freeCodeCamp/near-curriculum",
+      "tags": ["web3"]
     }
   ]
 }

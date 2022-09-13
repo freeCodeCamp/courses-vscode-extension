@@ -1,7 +1,6 @@
 import { commands, Uri, workspace, window } from "vscode";
 import { Course, FlashTypes } from "./typings";
 import { handleMessage } from "./flash";
-import { PATH } from "./usefuls";
 
 export async function openTerminal() {
   const terminal = window.createTerminal("freeCodeCamp");
@@ -25,7 +24,7 @@ export async function currentDirectoryCourse(): Promise<
 > {
   try {
     const work = workspace.workspaceFolders?.[0]?.uri?.fsPath ?? "";
-    const path = Uri.file(`${work}/${PATH}`);
+    const path = Uri.file(work);
     const bin = await workspace.fs.readFile(Uri.joinPath(path, "package.json"));
     const fileData = JSON.parse(bin.toString());
     const courseGithubLink = fileData?.repository?.url ?? null;
