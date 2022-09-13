@@ -2,7 +2,7 @@
   "name": "freecodecamp-courses",
   "displayName": "freeCodeCamp - Courses",
   "description": "Provides tooling for quick and easy selection of courses offered by freeCodeCamp",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "author": "freeCodeCamp",
   "publisher": "freeCodeCamp",
   "galleryBanner": {
@@ -11,7 +11,7 @@
   },
   "icon": "images/logo-128X128.png",
   "engines": {
-    "vscode": "1.71.0",
+    "vscode": "^1.71.1",
     "node": ">=18.0.0"
   },
   "categories": [

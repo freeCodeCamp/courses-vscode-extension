@@ -8,6 +8,12 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Released]
 
+##[1.5.1](#v1.5.1) (2022-09-13)
+
+### Updated
+
+- `vscode` engine to `^1.71.1`
+
 ##[1.5.0](#v1.5.0) (2022-09-06)
 
 ### Changed
