@@ -95,6 +95,9 @@ export interface Config {
       [key: string]: string;
     };
   };
+  hotReload?: {
+    ignore?: string[];
+  };
   tooling?: {
     helpers?: string;
   };

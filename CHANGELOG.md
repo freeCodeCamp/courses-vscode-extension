@@ -14,7 +14,12 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 - New `freecodecamp.conf.json` property:
   - `version`
+  - `hotReload.ignore`
 - On `freeCodeCamp: Run Course`, if a course version has been updated, a Camper is warned.
+
+### Fixed
+
+- Added `node-fetch` dependency, because `fetch` does not appear in `vscode@1.71.0`
 
 ##[1.5.1](#v1.5.1) (2022-09-13)
 

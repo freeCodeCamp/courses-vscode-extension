@@ -76,6 +76,9 @@ export const exampleConfig: Config = {
       english: "./curriculum/locales/english",
     },
   },
+  hotReload: {
+    ignore: ["some/path/to/ignore"],
+  },
   tooling: {
     helpers: "./tooling/test-utils.js",
   },

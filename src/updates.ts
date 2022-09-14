@@ -1,4 +1,5 @@
 import { join } from "path";
+import fetch from "node-fetch";
 import { Config } from "./typings";
 
 export async function checkForCourseUpdates(
@@ -6,7 +7,8 @@ export async function checkForCourseUpdates(
   config: Config
 ): Promise<boolean> {
   const currentVersion = config.version;
-  const repoVersion = await getConfigFromGitHub(githubLink);
+  const repoConfig = await getConfigFromGitHub(githubLink);
+  const repoVersion = repoConfig.version;
   const [currMajor, currMinor, currPatch] = semVer(currentVersion);
   const [repoMajor, repoMinor, repoPatch] = semVer(repoVersion);
   return (
@@ -29,7 +31,7 @@ async function getConfigFromGitHub(githubLink: string) {
   // Example: https://raw.githubusercontent.com/freeCodeCamp/web3-curriculum/main/freecodecamp.conf.json
   const url = githubLinkToURL(githubLink);
   const res = await fetch(url.href);
-  const config = await res.json();
+  const config = (await res.json()) as Config;
   return config;
 }
 

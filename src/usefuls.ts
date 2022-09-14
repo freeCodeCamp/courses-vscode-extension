@@ -1,4 +1,5 @@
 import { workspace, Uri, FileType } from "vscode";
+import fetch from "node-fetch";
 import { handleMessage } from "./flash";
 import { Config, FlashTypes } from "./typings";
 

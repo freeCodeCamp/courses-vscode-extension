@@ -1,4 +1,5 @@
 import { commands, Uri, workspace, window } from "vscode";
+import fetch from "node-fetch";
 import { Course, FlashTypes } from "./typings";
 import { handleMessage } from "./flash";
 
