@@ -9,6 +9,10 @@ export async function checkForCourseUpdates(
   const currentVersion = config.version;
   const repoConfig = await getConfigFromGitHub(githubLink);
   const repoVersion = repoConfig.version;
+  if (!repoVersion || currentVersion) {
+    console.error("Unable to get curriculum version for: ", githubLink);
+    return false;
+  }
   const [currMajor, currMinor, currPatch] = semVer(currentVersion);
   const [repoMajor, repoMinor, repoPatch] = semVer(repoVersion);
   return (
