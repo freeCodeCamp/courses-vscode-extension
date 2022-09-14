@@ -1,9 +1,9 @@
 import { workspace, Uri, FileType } from "vscode";
+import fetch from "node-fetch";
 import { handleMessage } from "./flash";
 import { Config, FlashTypes } from "./typings";
 
 export const gitClone = (githubLink: string) => `git clone ${githubLink}.git .`;
-export const PATH = ".freeCodeCamp";
 export const cd = (path: string, cmd: string) => `cd ${path} && ${cmd}`;
 
 export async function ensureDirectoryIsEmpty(): Promise<boolean> {
@@ -25,7 +25,7 @@ export async function ensureDirectoryIsEmpty(): Promise<boolean> {
 export async function getPackageJson(): Promise<any> {
   try {
     const work = workspace.workspaceFolders?.[0]?.uri?.fsPath ?? "";
-    const path = Uri.file(`${work}/${PATH}/package.json`);
+    const path = Uri.file(`${work}/package.json`);
     const bin = await workspace.fs.readFile(path);
     const fileData = JSON.parse(bin.toString());
     return Promise.resolve(fileData);

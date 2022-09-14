@@ -292,6 +292,9 @@ export function hasProp<T>(obj: T, keys: string): boolean {
 export function ensureNoExtraKeys(obj: any, exampleObject: any) {
   const unrecognisedKeys = [];
   for (const key in obj) {
+    if (typeof obj[key] === "string") {
+      continue;
+    }
     if (!exampleObject.hasOwnProperty(key)) {
       unrecognisedKeys.push(key);
       continue;

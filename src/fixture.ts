@@ -7,6 +7,7 @@ export const exampleConfig: Config = {
     enabled: true, // Whether or not to source .bashrc file
     path: "./.freeCodeCamp/.bashrc", // Relative path to .bashrc file
   },
+  version: "1.1.1",
   path: ".freeCodeCamp", // Relative path to tooling directory where scripts will be run
   prepare: "cp sample.env .env && source ./tooling/.bashrc && npm ci", // Run before running scripts
   scripts: {
@@ -74,6 +75,9 @@ export const exampleConfig: Config = {
     locales: {
       english: "./curriculum/locales/english",
     },
+  },
+  hotReload: {
+    ignore: ["some/path/to/ignore"],
   },
   tooling: {
     helpers: "./tooling/test-utils.js",

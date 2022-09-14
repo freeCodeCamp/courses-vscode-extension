@@ -59,6 +59,7 @@ export type Test = {
 export interface Config {
   bashrc?: Bashrc;
   path: string;
+  version: string;
   prepare?: string;
   scripts: {
     "develop-course": string;
@@ -93,6 +94,9 @@ export interface Config {
     locales: {
       [key: string]: string;
     };
+  };
+  hotReload?: {
+    ignore?: string[];
   };
   tooling?: {
     helpers?: string;

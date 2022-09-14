@@ -1,4 +1,5 @@
 import { window } from "vscode";
+import fetch from "node-fetch";
 import {
   handleConnection,
   handleEmptyDirectory,
