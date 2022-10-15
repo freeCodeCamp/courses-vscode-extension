@@ -78,7 +78,7 @@
     "@types/glob": "7.2.0",
     "@types/mocha": "9.1.1",
     "@types/node": "18.7.6",
-    "@types/vscode": "1.71.0",
+    "@types/vscode": "1.72.0",
     "@typescript-eslint/eslint-plugin": "5.40.0",
     "@typescript-eslint/parser": "5.40.0",
     "@vscode/test-electron": "2.1.5",
