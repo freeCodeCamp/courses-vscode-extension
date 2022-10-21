@@ -8,6 +8,16 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Released]
 
+##[1.6.1](#v1.6.1) (2022-10-22)
+
+### Updated
+
+- `vscode` engine to `^1.72.0`
+- `vsce` to `2.13.0`
+- `typescript-eslint` monorepo to `5.40.0`
+- `eslint` to `8.25.0`
+- `typescript` to `4.8.4`
+
 ##[1.6.0](#v1.6.0) (2022-09-14)
 
 ### Added
