@@ -81,7 +81,7 @@
     "@types/vscode": "1.72.0",
     "@typescript-eslint/eslint-plugin": "5.40.1",
     "@typescript-eslint/parser": "5.40.1",
-    "@vscode/test-electron": "2.1.5",
+    "@vscode/test-electron": "2.2.0",
     "eslint": "8.25.0",
     "glob": "7.2.3",
     "mocha": "9.2.2",
