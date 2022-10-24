@@ -8,6 +8,12 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Released]
 
+##[1.7.0](#v1.7.0) (2022-10-24)
+
+### Added
+
+- `freeCodeCamp: Collapse` command to collapse all matched text levels in the editor
+
 ##[1.6.1](#v1.6.1) (2022-10-22)
 
 ### Updated
