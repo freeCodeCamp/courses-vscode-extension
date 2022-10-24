@@ -3,6 +3,7 @@ import openCourse from "./commands/open-course";
 import runCourse from "./commands/run-course";
 import developCourse from "./commands/develop-course";
 import createNewCourse from "./commands/create-new-course";
+import collapse from "./commands/collapse";
 import test from "./commands/test";
 
 export function activate(context: ExtensionContext) {
@@ -21,6 +22,11 @@ export function activate(context: ExtensionContext) {
   context.subscriptions.push(
     commands.registerCommand("freecodecamp-courses.developCourse", async () => {
       developCourse();
+    })
+  );
+  context.subscriptions.push(
+    commands.registerCommand("freecodecamp-courses.collapse", async () => {
+      collapse();
     })
   );
   context.subscriptions.push(
