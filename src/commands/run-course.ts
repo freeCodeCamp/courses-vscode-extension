@@ -21,7 +21,7 @@ export default async function runCourse() {
   } catch (e) {
     console.error("freeCodeCamp > runCourse: ", e);
     return handleMessage({
-      message: "Unable to find a `freecodecamp.conf.json` file in workspace.",
+      message: "Unable to run course. See dev console for more details.",
       type: FlashTypes.ERROR,
     });
   }
