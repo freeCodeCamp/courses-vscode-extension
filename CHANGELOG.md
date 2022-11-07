@@ -8,6 +8,12 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Released]
 
+##[1.7.1])(#v1.7.1) (2022-11-07)
+
+### Fixed
+
+- `freeCodeCamp: Run Course` checks for new version of curriculum from `raw.githubusercontent.com`. Prevent fail-fast if fetch fails.
+
 ##[1.7.0](#v1.7.0) (2022-10-24)
 
 ### Added

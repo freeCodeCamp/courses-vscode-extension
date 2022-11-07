@@ -1,18 +1,36 @@
 import { join } from "path";
 import fetch from "node-fetch";
-import { Config } from "./typings";
+import { Config, FlashTypes } from "./typings";
+import { handleMessage } from "./flash";
 
 export async function checkForCourseUpdates(
   githubLink: string,
   config: Config
 ): Promise<boolean> {
   const currentVersion = config.version;
-  const repoConfig = await getConfigFromGitHub(githubLink);
-  const repoVersion = repoConfig.version;
-  if (!repoVersion || currentVersion) {
-    console.error("Unable to get curriculum version for: ", githubLink);
+  if (!currentVersion) {
+    handleMessage({
+      message:
+        "Unable to find curriculum version from `freecodecamp.conf.json` file",
+      type: FlashTypes.WARNING,
+    });
     return false;
   }
+
+  const repoConfig = await getConfigFromGitHub(githubLink);
+  if (!repoConfig) {
+    return false;
+  }
+
+  const repoVersion = repoConfig.version;
+  if (!repoVersion) {
+    handleMessage({
+      message: "Unable to get curriculum version from upstream",
+      type: FlashTypes.WARNING,
+    });
+    return false;
+  }
+
   const [currMajor, currMinor, currPatch] = semVer(currentVersion);
   const [repoMajor, repoMinor, repoPatch] = semVer(repoVersion);
   return (
@@ -34,9 +52,22 @@ function semVer(version: string) {
 async function getConfigFromGitHub(githubLink: string) {
   // Example: https://raw.githubusercontent.com/freeCodeCamp/web3-curriculum/main/freecodecamp.conf.json
   const url = githubLinkToURL(githubLink);
-  const res = await fetch(url.href);
-  const config = (await res.json()) as Config;
-  return config;
+  try {
+    const res = await fetch(url.href);
+    const config = (await res.json()) as Config;
+    return config;
+  } catch (e) {
+    console.error(e);
+    handleMessage({
+      message: `Unable to check for latest curriculum version: ${url.href}`,
+      type: FlashTypes.WARNING,
+      opts: {
+        detail:
+          "You might be running a version of the curriculum that does not have bug fixes or new features.",
+      },
+    });
+  }
+  return null;
 }
 
 function githubLinkToURL(githubLink: string) {
