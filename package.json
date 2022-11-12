@@ -105,6 +105,6 @@
     "url": "https://github.com/freeCodeCamp/courses-vscode-extension/issues"
   },
   "dependencies": {
-    "node-fetch": "3.2.10"
+    "node-fetch": "3.3.0"
   }
 }
