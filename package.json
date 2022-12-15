@@ -2,7 +2,7 @@
   "name": "freecodecamp-courses",
   "displayName": "freeCodeCamp - Courses",
   "description": "Provides tooling for quick and easy selection of courses offered by freeCodeCamp",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "author": "freeCodeCamp",
   "publisher": "freeCodeCamp",
   "galleryBanner": {
@@ -33,6 +33,12 @@
   ],
   "main": "./dist/extension.js",
   "contributes": {
+    "jsonValidation": [
+      {
+        "fileMatch": "**/freecodecamp.conf.json",
+        "url": "./schema.json"
+      }
+    ],
     "commands": [
       {
         "command": "freecodecamp-courses.openCourse",
