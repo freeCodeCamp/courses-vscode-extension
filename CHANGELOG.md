@@ -14,6 +14,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 - `schema.json` for `freecodecamp.conf.json`
 
+### Updated
+
+- `vscode` engine to `1.74.0`
+
 ##[1.7.1](#v1.7.1) (2022-11-07)
 
 ### Fixed
