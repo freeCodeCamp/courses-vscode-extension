@@ -8,7 +8,13 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Released]
 
-##[1.7.1])(#v1.7.1) (2022-11-07)
+##[1.7.2](#v1.7.2) (2022-12-15)
+
+### Added
+
+- `schema.json` for `freecodecamp.conf.json`
+
+##[1.7.1](#v1.7.1) (2022-11-07)
 
 ### Fixed
 
