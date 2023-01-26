@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    if: ${{ contains(github.event.pull_request.labels.*.name, "patch") || contains(github.event.pull_request.labels.*.name, "minor") || contains(github.event.pull_request.labels.*.name, "major") }}
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'patch') || contains(github.event.pull_request.labels.*.name, 'minor') || contains(github.event.pull_request.labels.*.name, 'major') }}
     name: Build Test
     runs-on: ubuntu-22.04
 
