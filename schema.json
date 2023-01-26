@@ -56,10 +56,7 @@
               "type": "string"
             },
             "arguments": {
-              "type": "array",
-              "items": {
-                "type": "unknown"
-              }
+              "type": "array"
             }
           }
         }
