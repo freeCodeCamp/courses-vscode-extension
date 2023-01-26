@@ -8,6 +8,25 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Released]
 
+##[1.7.3](#v1.7.3) (2022-01-26)
+
+### Fixed
+
+- `schema.json` definition for `freecodecamp.conf.json`
+
+### Removed
+
+- `glob`
+- `@types/glob`
+- `mocha`
+- `@types/mocha`
+- `vscode-test-electron`
+- `src/test` directory
+
+### Updated
+
+- `webpack-cli` to `5.0.1`
+
 ##[1.7.2](#v1.7.2) (2022-12-15)
 
 ### Added
