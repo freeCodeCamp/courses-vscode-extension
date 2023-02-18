@@ -83,7 +83,7 @@
     "test:pack": "npm run pack -- --no-git-tag-version --no-update-package-json 1.0.0 -o freecodecamp-courses-test.vsix"
   },
   "devDependencies": {
-    "@types/node": "18.13.0",
+    "@types/node": "18.14.0",
     "@types/vscode": "1.75.1",
     "@typescript-eslint/eslint-plugin": "5.51.0",
     "@typescript-eslint/parser": "5.51.0",
