@@ -2,7 +2,7 @@
   "name": "freecodecamp-courses",
   "displayName": "freeCodeCamp - Courses",
   "description": "Provides tooling for quick and easy selection of courses offered by freeCodeCamp",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "author": "freeCodeCamp",
   "publisher": "freeCodeCamp",
   "galleryBanner": {
@@ -11,7 +11,7 @@
   },
   "icon": "images/logo-128X128.png",
   "engines": {
-    "vscode": "^1.74.0",
+    "vscode": ">=1.76.0",
     "node": ">=18.0.0"
   },
   "categories": [
@@ -22,14 +22,6 @@
     "courses",
     "web3",
     "rust"
-  ],
-  "activationEvents": [
-    "onCommand:freecodecamp-courses.openCourse",
-    "onCommand:freecodecamp-courses.createNewCourse",
-    "onCommand:freecodecamp-courses.runCourse",
-    "onCommand:freecodecamp-courses.developCourse",
-    "onCommand:freecodecamp-courses.collapse",
-    "onCommand:freecodecamp-courses.test"
   ],
   "main": "./dist/extension.js",
   "contributes": {
