@@ -6,13 +6,15 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
-##[1.7.4](#v1.7.4) (2022-01-26)
+## [Released]
+
+##[1.7.4](#v1.7.4) (2022-03-30)
 
 ### Updated
 
 - Use `@vscode/vsce` instead of `vsce`
-
-## [Released]
+- Update all dependencies
+- Year in `LICENSE`
 
 ##[1.7.3](#v1.7.3) (2022-01-26)
 
