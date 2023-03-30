@@ -15,6 +15,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Use `@vscode/vsce` instead of `vsce`
 - Update all dependencies
 - Year in `LICENSE`
+- Remove `activationEvents` from `package.json`
 
 ##[1.7.3](#v1.7.3) (2022-01-26)
 
