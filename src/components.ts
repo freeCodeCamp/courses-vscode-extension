@@ -1,7 +1,6 @@
 import { commands, Uri, workspace, window } from "vscode";
 import fetch from "node-fetch";
-import { Course, FlashTypes } from "./typings";
-import { handleMessage } from "./flash";
+import { Course } from "./typings";
 
 export async function openTerminal() {
   const terminal = window.createTerminal("freeCodeCamp");
@@ -32,7 +31,7 @@ export async function currentDirectoryCourse(): Promise<
     return Promise.resolve(courseGithubLink);
   } catch (e) {
     console.error(e);
-    handleMessage({ message: e as string, type: FlashTypes.INFO });
+    window.showInformationMessage(e as string);
     return Promise.resolve(null);
   }
 }
@@ -43,7 +42,7 @@ export async function getRootWorkspaceDir() {
     return Promise.resolve(path.path);
   } catch (e) {
     console.error(e);
-    handleMessage({ message: e as string, type: FlashTypes.INFO });
+    window.showInformationMessage(e as string);
     return Promise.resolve(null);
   }
 }

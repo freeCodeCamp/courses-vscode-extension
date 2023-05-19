@@ -8,6 +8,13 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Released]
 
+##[1.8.0](#v1.8.0) (2022-03-30)
+
+### Added
+
+- Prompt Camper to update course, when update is detected
+- Provide a button to automatically update course
+
 ##[1.7.4](#v1.7.4) (2022-03-30)
 
 ### Updated

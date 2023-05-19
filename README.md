@@ -30,7 +30,10 @@ This extension helps run the freeCodeCamp courses found here: [./resources/cours
 
 ## Published Courses
 
+- [NEAR Curriculum](https://github.com/freeCodeCamp/near-curriculum/)
 - [Project Euler: Rust](https://github.com/freeCodeCamp/euler-rust/)
+- [Solana Curriculum](https://github.com/freeCodeCamp/solana-curriculum/)
+- [Web3 Curriculum](https://github.com/freeCodeCamp/web3-curriculum/)
 
 ## Course Config
 

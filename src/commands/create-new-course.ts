@@ -1,18 +1,13 @@
 import { window } from "vscode";
 import { handleConnection, handleEmptyDirectory } from "../handles";
-import { handleMessage } from "../flash";
 import { createBackgroundTerminal } from "../handles";
 import { showInputBox } from "../inputs";
-import { FlashTypes } from "../typings";
 import { gitClone } from "../usefuls";
 
 export default async function createNewCourse() {
   const course = await showInputBox();
   if (!course) {
-    handleMessage({
-      message: "No course name provided.",
-      type: FlashTypes.ERROR,
-    });
+    window.showErrorMessage("No course name provided.");
     return Promise.reject();
   }
   try {
@@ -27,10 +22,7 @@ export default async function createNewCourse() {
     return Promise.resolve();
   } catch (e) {
     console.error(e);
-    handleMessage({
-      message: "Error cloning course. See console for details.",
-      type: FlashTypes.ERROR,
-    });
+    window.showErrorMessage("Error cloning course. See console for details.");
     return Promise.reject();
   }
 }

@@ -1,7 +1,6 @@
-import { workspace, Uri, FileType } from "vscode";
+import { workspace, Uri, FileType, window } from "vscode";
 import fetch from "node-fetch";
-import { handleMessage } from "./flash";
-import { Config, FlashTypes } from "./typings";
+import { Config } from "./typings";
 
 export const gitClone = (githubLink: string) => `git clone ${githubLink}.git .`;
 export const cd = (path: string, cmd: string) => `cd ${path} && ${cmd}`;
@@ -81,10 +80,9 @@ export async function getConfig(): Promise<Config> {
     return Promise.resolve(fileData);
   } catch (e) {
     console.error("freeCodeCamp > getConfig: ", e);
-    handleMessage({
-      message: "Unable to find a `freecodecamp.conf.json` file in workspace.",
-      type: FlashTypes.ERROR,
-    });
+    window.showErrorMessage(
+      "Unable to find a `freecodecamp.conf.json` file in workspace."
+    );
     return Promise.reject(e);
   }
 }

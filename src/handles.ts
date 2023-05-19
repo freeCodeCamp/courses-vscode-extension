@@ -1,9 +1,8 @@
-import { Bashrc, Config, FlashTypes, Test } from "./typings";
+import { Bashrc, Config, Test } from "./typings";
 import { exampleConfig } from "./fixture";
 import { commands, Terminal, TerminalExitStatus, window } from "vscode";
 import { isConnectedToInternet, openSimpleBrowser } from "./components";
 import { cd, checkIfURLIsAvailable, ensureDirectoryIsEmpty } from "./usefuls";
-import { handleMessage } from "./flash";
 import { everythingButHandles } from ".";
 import { createLoaderWebView } from "./loader";
 
@@ -82,10 +81,9 @@ export function rebuildAndReopenInContainer() {
 export async function handleConnection() {
   const isConnected = await isConnectedToInternet();
   if (!isConnected) {
-    handleMessage({
-      message: "No connection found. Please check your internet connection",
-      type: FlashTypes.ERROR,
-    });
+    window.showErrorMessage(
+      "No connection found. Please check your internet connection"
+    );
     return Promise.reject();
   }
   return Promise.resolve();
@@ -94,15 +92,7 @@ export async function handleConnection() {
 export async function handleEmptyDirectory() {
   const isEmpty = await ensureDirectoryIsEmpty();
   if (!isEmpty) {
-    handleMessage({
-      message: "Directory is not empty.",
-      type: FlashTypes.WARNING,
-      opts: {
-        detail: "Please empty working directory, and try again.",
-        modal: true,
-      },
-    });
-
+    window.showWarningMessage("Directory is not empty.");
     return Promise.reject();
   }
   return Promise.resolve();
@@ -148,10 +138,7 @@ export async function handleWorkspace(
     for (const preview of workspace!.previews) {
       const notSets = getNotSets(preview, compulsoryKeys);
       if (notSets.length) {
-        handleMessage({
-          message: `Preview missing keys: ${notSets.join(", ")}`,
-          type: FlashTypes.ERROR,
-        });
+        window.showErrorMessage(`Preview missing keys: ${notSets.join(", ")}`);
         return Promise.reject();
       }
       if (preview.showLoader) {
@@ -186,10 +173,9 @@ export async function handleWorkspace(
     for (const term of workspace!.terminals) {
       const notSets = getNotSets(term, compulsoryKeys);
       if (notSets.length) {
-        handleMessage({
-          message: `Terminals missing keys: ${notSets.join(", ")}`,
-          type: FlashTypes.ERROR,
-        });
+        window.showErrorMessage(
+          `Terminals missing keys: ${notSets.join(", ")}`
+        );
         return Promise.reject();
       }
       if (term?.name) {
@@ -209,10 +195,7 @@ export async function handleWorkspace(
     for (const file of workspace!.files) {
       const notSets = getNotSets(file, compulsoryKeys);
       if (notSets.length) {
-        handleMessage({
-          message: `Files missing keys: ${notSets.join(", ")}`,
-          type: FlashTypes.ERROR,
-        });
+        window.showErrorMessage(`Files missing keys: ${notSets.join(", ")}`);
         return Promise.reject();
       }
       // TODO: Open file
@@ -240,10 +223,7 @@ export async function handleConfig(
 
   const notSets = getNotSets<Config>(config, compulsoryKeys);
   if (notSets.length) {
-    return handleMessage({
-      type: FlashTypes.ERROR,
-      message: `${notSets.join(", and ")} not set.`,
-    });
+    return window.showErrorMessage(`${notSets.join(", and ")} not set.`);
   }
 
   // Run prepare script
@@ -307,9 +287,8 @@ export function ensureNoExtraKeys(obj: any, exampleObject: any) {
     console.log(
       "There are keys that are not recognised in the `freecodecamp.conf.json` file. Double-check the specification."
     );
-    handleMessage({
-      type: FlashTypes.WARNING,
-      message: `Unrecognised keys: ${unrecognisedKeys.join(", ")}`,
-    });
+    window.showWarningMessage(
+      `Unrecognised keys: ${unrecognisedKeys.join(", ")}`
+    );
   }
 }

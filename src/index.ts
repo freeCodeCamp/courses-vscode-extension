@@ -13,8 +13,6 @@ import {
   cd,
 } from "./usefuls";
 
-import { handleMessage, showMessage } from "./flash";
-
 export const everythingButHandles = {
   currentDirectoryCourse,
   ensureDirectoryIsEmpty,
@@ -26,7 +24,5 @@ export const everythingButHandles = {
   openSimpleBrowser,
   openTerminal,
   showInputBox,
-  handleMessage,
-  showMessage,
   cd,
 };

@@ -1,8 +1,8 @@
 import { handleConfig } from "../handles";
-import { handleMessage } from "../flash";
-import { FlashTypes } from "../typings";
+import { window } from "vscode";
 import { getConfig, getPackageJson } from "../usefuls";
 import { checkForCourseUpdates } from "../updates";
+import { updateRepository } from "../update-repository";
 
 export default async function runCourse() {
   try {
@@ -11,18 +11,24 @@ export default async function runCourse() {
     const githubLink = rootPackage.repository.url;
     const isCourseUpdates = await checkForCourseUpdates(githubLink, config);
     if (isCourseUpdates) {
-      handleMessage({
-        message:
-          "This course has been updated. It is recommended you re-clone the repository.",
-        type: FlashTypes.WARNING,
-      });
+      /**
+       * There is an update to the curriculum, it is recommended that you update your local copy of the curriculum and rebuild the container.
+       * NOTE: You will lose any progress in your container.
+       */
+      const camperChoice = await window.showWarningMessage(
+        "This course has been updated. It is recommended you update the repository.",
+        "Update",
+        "Dismiss"
+      );
+      if (camperChoice === "Update") {
+        return updateRepository();
+      }
     }
     handleConfig(config, "run-course");
   } catch (e) {
     console.error("freeCodeCamp > runCourse: ", e);
-    return handleMessage({
-      message: "Unable to run course. See dev console for more details.",
-      type: FlashTypes.ERROR,
-    });
+    return window.showErrorMessage(
+      "Unable to run course. See dev console for more details."
+    );
   }
 }

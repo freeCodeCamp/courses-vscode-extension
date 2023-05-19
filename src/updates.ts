@@ -1,7 +1,7 @@
 import { join } from "path";
+import { window } from "vscode";
 import fetch from "node-fetch";
-import { Config, FlashTypes } from "./typings";
-import { handleMessage } from "./flash";
+import { Config } from "./typings";
 
 export async function checkForCourseUpdates(
   githubLink: string,
@@ -9,11 +9,9 @@ export async function checkForCourseUpdates(
 ): Promise<boolean> {
   const currentVersion = config.version;
   if (!currentVersion) {
-    handleMessage({
-      message:
-        "Unable to find curriculum version from `freecodecamp.conf.json` file",
-      type: FlashTypes.WARNING,
-    });
+    window.showWarningMessage(
+      "Unable to find curriculum version from `freecodecamp.conf.json` file"
+    );
     return false;
   }
 
@@ -24,10 +22,7 @@ export async function checkForCourseUpdates(
 
   const repoVersion = repoConfig.version;
   if (!repoVersion) {
-    handleMessage({
-      message: "Unable to get curriculum version from upstream",
-      type: FlashTypes.WARNING,
-    });
+    window.showWarningMessage("Unable to get curriculum version from upstream");
     return false;
   }
 
@@ -58,14 +53,9 @@ async function getConfigFromGitHub(githubLink: string) {
     return config;
   } catch (e) {
     console.error(e);
-    handleMessage({
-      message: `Unable to check for latest curriculum version: ${url.href}`,
-      type: FlashTypes.WARNING,
-      opts: {
-        detail:
-          "You might be running a version of the curriculum that does not have bug fixes or new features.",
-      },
-    });
+    window.showWarningMessage(
+      "Unable to check for latest curriculum version: " + url.href
+    );
   }
   return null;
 }

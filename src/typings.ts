@@ -1,19 +1,4 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-export enum FlashTypes {
-  ERROR = "error",
-  INFO = "info",
-  WARNING = "warning",
-}
-
-export type Flash = {
-  message: string;
-  opts?: {
-    detail: string;
-    modal?: boolean;
-  };
-  type: FlashTypes;
-};
-
 export interface Course {
   githubLink: string;
   name: string;
