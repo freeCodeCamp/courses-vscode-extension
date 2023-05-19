@@ -8,6 +8,17 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Released]
 
+##[1.7.5](#v1.7.5) (2023-05-19)
+
+### Updated
+
+- `@types/node` to `18.16.9`
+- `@types/vscode` to `1.78.0`
+- `@typescript-eslint/eslint-plugin` to `5.59.6`
+- `@typescript-eslint/parser` to `5.59.6`
+- `typescript` to `5.0.4`
+- `webpack` to `5.83.1`
+
 ##[1.7.4](#v1.7.4) (2022-03-30)
 
 ### Updated
