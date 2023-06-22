@@ -48,17 +48,6 @@
         },
         "run-course": {
           "type": "string"
-        },
-        "test": {
-          "type": "object",
-          "properties": {
-            "functionName": {
-              "type": "string"
-            },
-            "arguments": {
-              "type": "array"
-            }
-          }
         }
       }
     },
@@ -139,17 +128,6 @@
               }
             }
           }
-        }
-      }
-    },
-    "bash": {
-      "type": "object",
-      "properties": {
-        ".bashrc": {
-          "type": "string"
-        },
-        "sourcerer.sh": {
-          "type": "string"
         }
       }
     },

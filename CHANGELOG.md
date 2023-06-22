@@ -8,6 +8,24 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Released]
 
+##[2.0.0](#v2.0.0) (2023-06-22)
+
+### Added
+
+### Updated
+
+### Removed
+
+- `freeCodeCamp: Test`
+  - `config.scripts.test`
+- `config.bash`
+
+### Changed
+
+- `freeCodeCamp: Collapse` -> `freeCodeCamp Dev: Collapse`
+- `freeCodeCamp: Create New Course`
+  - Does not clone a repo, but uses the terminal to create the template
+
 ##[1.7.5](#v1.7.5) (2023-05-19)
 
 ### Updated

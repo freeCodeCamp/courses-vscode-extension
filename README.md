@@ -4,7 +4,7 @@
 
 This extension helps run the freeCodeCamp courses found here: [./resources/courses.json](resources/courses.json)
 
-**NOTE:** To be used in conjunction with [freeCodeCampOS](https://github.com/freeCodeCamp/freeCodeCampOS).
+**NOTE TO COURSE CREATORS:** To be used in conjunction with [freeCodeCampOS](https://github.com/freeCodeCamp/freeCodeCampOS).
 
 ## Features
 
@@ -28,13 +28,9 @@ This extension helps run the freeCodeCamp courses found here: [./resources/cours
 
 ---
 
-## Published Courses
+## Creating a Course
 
-- [Project Euler: Rust](https://github.com/freeCodeCamp/euler-rust/)
-
-## Course Config
-
-Create a `freecodecamp.conf.json` file somewhere within the workspace.
+See https://opensource.freecodecamp.org/freeCodeCampOS/
 
 ### Basic Config File
 

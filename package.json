@@ -2,7 +2,7 @@
   "name": "freecodecamp-courses",
   "displayName": "freeCodeCamp - Courses",
   "description": "Provides tooling for quick and easy selection of courses offered by freeCodeCamp",
-  "version": "1.7.5",
+  "version": "2.0.0",
   "author": "freeCodeCamp",
   "publisher": "freeCodeCamp",
   "galleryBanner": {
@@ -21,7 +21,8 @@
     "freecodecamp",
     "courses",
     "web3",
-    "rust"
+    "rust",
+    "backend"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -50,15 +51,11 @@
       },
       {
         "command": "freecodecamp-courses.collapse",
-        "title": "freeCodeCamp: Collapse"
+        "title": "freeCodeCamp Dev: Collapse"
       },
       {
         "command": "freecodecamp-courses.shutdownCourse",
         "title": "freeCodeCamp: Shutdown Course"
-      },
-      {
-        "command": "freecodecamp-courses.test",
-        "title": "freeCodeCamp: Test"
       }
     ]
   },

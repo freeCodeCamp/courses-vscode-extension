@@ -51,11 +51,6 @@ type Terminal = {
 
 type File = { path: string };
 
-export type Test = {
-  functionName: string;
-  arguments?: unknown[];
-};
-
 export interface Config {
   bashrc?: Bashrc;
   path: string;
@@ -64,16 +59,11 @@ export interface Config {
   scripts: {
     "develop-course": string;
     "run-course": string;
-    test?: Test;
   };
   workspace?: {
     files?: File[];
     previews?: Preview[];
     terminals?: Terminal[];
-  };
-  bash?: {
-    ".bashrc"?: string;
-    "sourcerer.sh"?: string;
   };
   client?: {
     assets?: {
