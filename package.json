@@ -11,8 +11,8 @@
   },
   "icon": "images/logo-128X128.png",
   "engines": {
-    "vscode": ">=1.78.0",
-    "node": ">=18.0.0"
+    "vscode": "^1.79.0",
+    "node": "^18.0.0"
   },
   "categories": [
     "Education"
