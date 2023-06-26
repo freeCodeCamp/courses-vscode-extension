@@ -37,17 +37,6 @@ export async function currentDirectoryCourse(): Promise<
   }
 }
 
-export async function getRootWorkspaceDir() {
-  try {
-    const path = Uri.file(workspace.workspaceFolders?.[0]?.uri?.fsPath ?? "");
-    return Promise.resolve(path.path);
-  } catch (e) {
-    console.error(e);
-    handleMessage({ message: e as string, type: FlashTypes.INFO });
-    return Promise.resolve(null);
-  }
-}
-
 /**
  * This function pings `google.com` to check if internet connection is available
  * @returns boolean

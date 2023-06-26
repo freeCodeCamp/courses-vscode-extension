@@ -35,31 +35,6 @@ export async function getPackageJson(): Promise<any> {
   }
 }
 
-export async function ensureFileOrFolder(
-  fileOrFolder: string,
-  type: FileType,
-  parentDirectory: string = ""
-): Promise<boolean> {
-  try {
-    const work = Uri.file(workspace.workspaceFolders?.[0]?.uri?.fsPath ?? "");
-    const arrOfArrs = await workspace.fs.readDirectory(
-      Uri.joinPath(work, parentDirectory)
-    );
-    if (
-      arrOfArrs.find(
-        ([name, fileType]) => name === fileOrFolder && fileType === type
-      )
-    ) {
-      return Promise.resolve(true);
-    } else {
-      return Promise.resolve(false);
-    }
-  } catch (e) {
-    console.log("freeCodeCamp > ensureFileOrFolder: ", e);
-    return Promise.reject(false);
-  }
-}
-
 /**
  * Finds the `freecodecamp.conf.json` file somewhere in the workspace.
  */
