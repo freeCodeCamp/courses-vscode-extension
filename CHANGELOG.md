@@ -8,7 +8,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Released]
 
-##[2.0.0](#v2.0.0) (2023-06-22)
+##[2.0.0](#v2.0.0) (2023-07-22)
 
 ### Removed
 
@@ -21,6 +21,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - `freeCodeCamp: Collapse` -> `freeCodeCamp Dev: Collapse`
 - `freeCodeCamp: Create New Course`
   - Does not clone a repo. Instead, uses the terminal to clone the `minimal-example` folder from `freecodecamp-os`
+- Require `freecodecamp.conf.json` to be in workspace root
+- `config.path` defaults to current workspace root
 
 ##[1.7.5](#v1.7.5) (2023-05-19)
 

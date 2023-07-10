@@ -53,7 +53,7 @@ type File = { path: string };
 
 export interface Config {
   bashrc?: Bashrc;
-  path: string;
+  path?: string;
   version: string;
   prepare?: string;
   scripts: {

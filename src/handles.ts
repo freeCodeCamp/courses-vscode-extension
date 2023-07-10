@@ -199,9 +199,8 @@ export async function handleConfig(
   caller: keyof Config["scripts"]
 ) {
   // Ensure compulsory keys and values are set
-  const path = config.path;
+  const path = config.path || ".";
   const compulsoryKeys = [
-    "path",
     "scripts",
     "scripts.develop-course",
     "scripts.run-course",

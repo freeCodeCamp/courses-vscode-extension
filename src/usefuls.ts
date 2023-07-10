@@ -1,4 +1,4 @@
-import { workspace, Uri, FileType } from "vscode";
+import { workspace, Uri, FileType, RelativePattern } from "vscode";
 import fetch from "node-fetch";
 import { handleMessage } from "./flash";
 import { Config, FlashTypes } from "./typings";
@@ -42,13 +42,16 @@ export async function getConfig(): Promise<Config> {
   try {
     // Without `null` in pos. 2, `.vscode > files.exclude` will apply to search.
     const uriArr = await workspace.findFiles(
-      "**/freecodecamp.conf.json",
+      new RelativePattern(
+        workspace.workspaceFolders?.[0] ?? "",
+        "freecodecamp.conf.json"
+      ),
       null,
       1
     );
     if (uriArr.length === 0) {
       return Promise.reject(
-        "Unable to find a `freecodecamp.conf.json` file in workspace."
+        "Unable to find a `freecodecamp.conf.json` file in workspace root."
       );
     }
     const bin = await workspace.fs.readFile(uriArr[0]);
@@ -57,7 +60,8 @@ export async function getConfig(): Promise<Config> {
   } catch (e) {
     console.error("freeCodeCamp > getConfig: ", e);
     handleMessage({
-      message: "Unable to find a `freecodecamp.conf.json` file in workspace.",
+      message:
+        "Unable to find a `freecodecamp.conf.json` file in workspace root.",
       type: FlashTypes.ERROR,
     });
     return Promise.reject(e);
