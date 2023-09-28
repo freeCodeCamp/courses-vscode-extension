@@ -8,7 +8,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Released]
 
-##[2.0.0](#v2.0.0) (2023-07-22)
+##[2.0.0](#v2.0.0) (2023-09-28)
 
 ### Removed
 
@@ -23,6 +23,19 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
   - Does not clone a repo. Instead, uses the terminal to clone the `minimal-example` folder from `freecodecamp-os`
 - Require `freecodecamp.conf.json` to be in workspace root
 - `config.path` defaults to current workspace root
+
+### Updated
+
+- `@types/node`: `20.7.1`,
+- `@types/vscode`: `1.82.0`,
+- `@typescript-eslint/eslint-plugin`: `6.7.3`,
+- `@typescript-eslint/parser`: `6.7.3`,
+- `@vscode/vsce`: `2.21.0`,
+- `eslint`: `8.50.0`,
+- `ts-loader`: `9.4.4`,
+- `typescript`: `5.2.2`,
+- `webpack`: `5.88.2`,
+- `node-fetch`: `3.3.2`
 
 ##[1.7.5](#v1.7.5) (2023-05-19)
 
