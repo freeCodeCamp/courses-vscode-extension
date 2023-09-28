@@ -12,9 +12,9 @@ export async function promptQuickPick(
 /**
  * Shows an input box using window.showInputBox().
  */
-export async function showInputBox() {
+export async function showInputBox(placeHolder: string) {
   const result = await window.showInputBox({
-    placeHolder: "Link to fork of course template",
+    placeHolder,
   });
   return result;
 }

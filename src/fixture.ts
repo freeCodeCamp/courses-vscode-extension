@@ -14,16 +14,6 @@ export const exampleConfig: Config = {
     // Scripts linked to extension commands
     "develop-course": "npm run develop", // Run when `Develop Course` command is executed
     "run-course": "npm run start", // Run when `Run Course` command is executed
-    test: {
-      // Run when `Test` command is executed
-      functionName: "handleMessage", // Name of the function to be called
-      arguments: [
-        {
-          message: "Hello World!",
-          type: "info",
-        },
-      ], // Arguments to be passed to the function
-    },
   },
   workspace: {
     // Workspace settings
@@ -51,10 +41,6 @@ export const exampleConfig: Config = {
         show: true, // Whether or not to show terminal
       },
     ],
-  },
-  bash: {
-    ".bashrc": "./bash/.bashrc",
-    "sourcerer.sh": "./bash/sourcerer.sh",
   },
   client: {
     assets: {

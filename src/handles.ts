@@ -1,26 +1,10 @@
-import { Bashrc, Config, FlashTypes, Test } from "./typings";
+import { Bashrc, Config, FlashTypes } from "./typings";
 import { exampleConfig } from "./fixture";
 import { commands, Terminal, TerminalExitStatus, window } from "vscode";
 import { isConnectedToInternet, openSimpleBrowser } from "./components";
 import { cd, checkIfURLIsAvailable, ensureDirectoryIsEmpty } from "./usefuls";
 import { handleMessage } from "./flash";
-import { everythingButHandles } from ".";
 import { createLoaderWebView } from "./loader";
-
-// This is done to avoid circular imports.
-// hours_of_my_life_lost_by_circular_imports += 2;
-const allAvailableFunctions = {
-  createBackgroundTerminal,
-  ensureNoExtraKeys,
-  getNotSets,
-  handleConnection,
-  handleEmptyDirectory,
-  handleWorkspace,
-  pollTerminal,
-  rebuildAndReopenInContainer,
-  sourceBashrc,
-  ...everythingButHandles,
-};
 
 /**
  * Creates a terminal with the given name and executes the given commands.
@@ -116,17 +100,6 @@ const scripts = {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   "run-course": (path: string, val: string) => {
     handleTerminal(path, "freeCodeCamp: Run Course", val);
-  },
-  test: async (_path: string, val?: Test) => {
-    try {
-      const args = val?.arguments || [];
-      // @ts-expect-error This is for testing. So, errors are not bad.
-      const res = await allAvailableFunctions?.[val?.functionName]?.(...args);
-      return Promise.resolve(res);
-    } catch (e) {
-      console.error(e);
-      return Promise.reject(e);
-    }
   },
 };
 
@@ -226,9 +199,8 @@ export async function handleConfig(
   caller: keyof Config["scripts"]
 ) {
   // Ensure compulsory keys and values are set
-  const path = config.path;
+  const path = config.path || ".";
   const compulsoryKeys = [
-    "path",
     "scripts",
     "scripts.develop-course",
     "scripts.run-course",
@@ -262,10 +234,8 @@ export async function handleConfig(
   }
 
   const calledScript = config.scripts[caller];
-  if (typeof calledScript === "string" && caller !== "test") {
+  if (typeof calledScript === "string") {
     scripts[caller](path, calledScript);
-  } else if (caller === "test" && typeof calledScript !== "string") {
-    await scripts[caller](path, calledScript);
   }
 
   if (config.bashrc) {
