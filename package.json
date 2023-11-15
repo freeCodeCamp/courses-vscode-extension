@@ -78,7 +78,7 @@
     "@typescript-eslint/parser": "6.11.0",
     "@vscode/vsce": "2.22.0",
     "eslint": "8.53.0",
-    "ts-loader": "9.5.0",
+    "ts-loader": "9.5.1",
     "typescript": "5.2.2",
     "webpack": "5.89.0",
     "webpack-cli": "5.1.4"
