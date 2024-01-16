@@ -17,6 +17,7 @@ export const exampleConfig: Config = {
   },
   workspace: {
     // Workspace settings
+    autoStart: true, // Whether or not to automatically start course on open of VSCode
     files: [
       // Files to be opened in workspace
       {

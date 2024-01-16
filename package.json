@@ -1,37 +1,15 @@
 {
-  "name": "freecodecamp-courses",
-  "displayName": "freeCodeCamp - Courses",
-  "description": "Provides tooling for quick and easy selection of courses offered by freeCodeCamp",
-  "version": "2.0.0",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "author": "freeCodeCamp",
-  "publisher": "freeCodeCamp",
-  "galleryBanner": {
-    "color": "#0a0a23",
-    "theme": "dark"
-  },
-  "icon": "images/logo-128X128.png",
-  "engines": {
-    "vscode": "^1.82.0",
-    "node": "^20.0.0"
+  "bugs": {
+    "url": "https://github.com/freeCodeCamp/courses-vscode-extension/issues"
   },
   "categories": [
     "Education"
   ],
-  "keywords": [
-    "freecodecamp",
-    "courses",
-    "web3",
-    "rust",
-    "backend"
-  ],
-  "main": "./dist/extension.js",
   "contributes": {
-    "jsonValidation": [
-      {
-        "fileMatch": "**/freecodecamp.conf.json",
-        "url": "./schema.json"
-      }
-    ],
     "commands": [
       {
         "command": "freecodecamp-courses.openCourse",
@@ -57,20 +35,41 @@
         "command": "freecodecamp-courses.shutdownCourse",
         "title": "freeCodeCamp: Shutdown Course"
       }
+    ],
+    "jsonValidation": [
+      {
+        "fileMatch": "**/freecodecamp.conf.json",
+        "url": "./schema.json"
+      }
+    ],
+    "views": {
+      "freecodecamp-courses-view": [
+        {
+          "id": "freecodecamp-courses",
+          "name": "Courses"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "icon": "images/fcc_primary_small.svg",
+          "id": "freecodecamp-courses-view",
+          "title": "freeCodeCamp"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "contents": "Start with [freeCodeCamp](https://www.freecodecamp.org/).\n[Open Course](command:freecodecamp-courses.openCourse)",
+        "view": "freecodecamp-courses"
+      }
     ]
   },
-  "scripts": {
-    "vscode:prepublish": "npm run package",
-    "compile": "webpack",
-    "watch": "webpack --watch",
-    "package": "webpack --mode production --devtool hidden-source-map",
-    "pretest": "npm run compile-tests && npm run compile && npm run lint",
-    "lint": "eslint src --ext ts",
-    "pack": "vsce package",
-    "deploy": "vsce publish",
-    "vsce": "vsce",
-    "test:pack": "npm run pack -- --no-git-tag-version --no-update-package-json 1.0.0 -o freecodecamp-courses-test.vsix"
+  "dependencies": {
+    "node-fetch": "3.3.2"
   },
+  "description": "Provides tooling for quick and easy selection of courses offered by freeCodeCamp",
   "devDependencies": {
     "@types/node": "20.10.5",
     "@types/vscode": "1.85.0",
@@ -83,15 +82,42 @@
     "webpack": "5.89.0",
     "webpack-cli": "5.1.4"
   },
+  "displayName": "freeCodeCamp - Courses",
+  "engines": {
+    "node": "^20.0.0",
+    "vscode": "^1.85.0"
+  },
+  "galleryBanner": {
+    "color": "#0a0a23",
+    "theme": "dark"
+  },
+  "icon": "images/logo-128X128.png",
+  "keywords": [
+    "freecodecamp",
+    "courses",
+    "web3",
+    "rust",
+    "backend"
+  ],
+  "license": "BSD-3-Clause",
+  "main": "./dist/extension.js",
+  "name": "freecodecamp-courses",
+  "publisher": "freeCodeCamp",
   "repository": {
     "type": "git",
     "url": "https://github.com/freeCodeCamp/courses-vscode-extension"
   },
-  "license": "BSD-3-Clause",
-  "bugs": {
-    "url": "https://github.com/freeCodeCamp/courses-vscode-extension/issues"
+  "scripts": {
+    "compile": "webpack",
+    "deploy": "vsce publish",
+    "lint": "eslint src --ext ts",
+    "pack": "vsce package",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "test:pack": "npm run pack -- --no-git-tag-version --no-update-package-json 1.0.0 -o freecodecamp-courses-test.vsix",
+    "vsce": "vsce",
+    "vscode:prepublish": "npm run package",
+    "watch": "webpack --watch"
   },
-  "dependencies": {
-    "node-fetch": "3.3.2"
-  }
+  "version": "2.1.0"
 }

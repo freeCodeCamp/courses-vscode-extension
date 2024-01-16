@@ -4,8 +4,19 @@ import runCourse from "./commands/run-course";
 import developCourse from "./commands/develop-course";
 import createNewCourse from "./commands/create-new-course";
 import collapse from "./commands/collapse";
+import { ProjectsProvider } from "./view";
+import { getConfig } from "./usefuls";
 
-export function activate(context: ExtensionContext) {
+export async function activate(context: ExtensionContext) {
+  // If config is set to automatically open course on startup:
+  try {
+    const config = await getConfig();
+    if (config.workspace?.autoStart) {
+      runCourse();
+    }
+  } catch (e) {
+    console.debug(e);
+  }
   console.log("freeCodeCamp Courses extension is now active!");
 
   context.subscriptions.push(
@@ -44,6 +55,14 @@ export function activate(context: ExtensionContext) {
       }
     )
   );
+
+  const superblockJson = await fetch(
+    "https://www.freecodecamp.org/curriculum-data/v1/available-superblocks.json"
+  );
+  const availableSuperblocks = await superblockJson.json();
+  const projectsView = new ProjectsProvider(availableSuperblocks.superblocks);
+  window.registerTreeDataProvider("freecodecamp-courses", projectsView);
+  // context.subscriptions.push(workspacesExplorerView);
 }
 
 function shutdownCourse() {
