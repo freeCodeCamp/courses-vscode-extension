@@ -4,9 +4,19 @@ import runCourse from "./commands/run-course";
 import developCourse from "./commands/develop-course";
 import createNewCourse from "./commands/create-new-course";
 import collapse from "./commands/collapse";
+import { getConfig } from "./usefuls";
 
-export function activate(context: ExtensionContext) {
+export async function activate(context: ExtensionContext) {
   console.log("freeCodeCamp Courses extension is now active!");
+
+  try {
+    const config = await getConfig();
+    if (config.workspace?.autoStart) {
+      runCourse();
+    }
+  } catch (e) {
+    console.debug(e);
+  }
 
   context.subscriptions.push(
     commands.registerCommand("freecodecamp-courses.openCourse", async () => {

@@ -61,6 +61,7 @@ export interface Config {
     "run-course": string;
   };
   workspace?: {
+    autoStart?: boolean;
     files?: File[];
     previews?: Preview[];
     terminals?: Terminal[];

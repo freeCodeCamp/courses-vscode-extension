@@ -8,6 +8,13 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Released]
 
+##[2.1.0](#v2.1.0) (2024-01-18)
+
+### Added
+
+- `workspace.autoStart` configuration option
+- Extension activates and auto-starts if `workspace.autoStart` is `true`
+
 ##[2.0.0](#v2.0.0) (2023-09-28)
 
 ### Removed
