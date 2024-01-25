@@ -1,10 +1,5 @@
 import { window } from "vscode";
-import fetch from "node-fetch";
-import {
-  handleConnection,
-  handleEmptyDirectory,
-  createBackgroundTerminal,
-} from "../handles";
+import { handleEmptyDirectory, createBackgroundTerminal } from "../handles";
 
 import { Courses } from "../typings";
 import { promptQuickPick } from "../inputs";
@@ -13,8 +8,6 @@ import { gitClone } from "../usefuls";
 
 export default async function openCourse() {
   try {
-    await handleConnection();
-
     const { courses } = (await (
       await fetch(
         "https://raw.githubusercontent.com/freeCodeCamp/freecodecamp-courses/main/resources/courses.json"

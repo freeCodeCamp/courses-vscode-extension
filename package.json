@@ -1,6 +1,6 @@
 {
   "activationEvents": [
-    "workspaceContains:**/freecodecamp.conf.json"
+    "onStartupFinished"
   ],
   "author": "freeCodeCamp",
   "bugs": {
@@ -14,10 +14,6 @@
       {
         "command": "freecodecamp-courses.openCourse",
         "title": "freeCodeCamp: Open Course"
-      },
-      {
-        "command": "freecodecamp-courses.createNewCourse",
-        "title": "freeCodeCamp: Create New Course"
       },
       {
         "command": "freecodecamp-courses.runCourse",
@@ -36,15 +32,122 @@
         "title": "freeCodeCamp: Shutdown Course"
       }
     ],
+    "configuration": {
+      "title": "freeCodeCamp - Courses",
+      "properties": {
+        "freecodecamp-courses.autoStart": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically start the course when opened in VS Code"
+        },
+        "freecodecamp-courses.path": {
+          "type": "string",
+          "default": ".",
+          "description": "Relative path to directory where scripts will be run"
+        },
+        "freecodecamp-courses.prepare": {
+          "type": "string",
+          "default": "npm install",
+          "description": "Command to run on first opening a course"
+        },
+        "freecodecamp-courses.scripts.develop-course": {
+          "type": "string",
+          "default": "npm run develop",
+          "description": "Command to run when developing a course"
+        },
+        "freecodecamp-courses.scripts.run-course": {
+          "type": "string",
+          "default": "npm run start",
+          "description": "Command to run when running a course in production"
+        },
+        "freecodecamp-courses.workspace.files": {
+          "type": "array",
+          "default": [],
+          "description": "Files to open in the workspace when opening a course",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "Relative path to file"
+              }
+            }
+          }
+        },
+        "freecodecamp-courses.workspace.previews": {
+          "type": "array",
+          "default": [
+            {
+              "open": true,
+              "showLoader": true,
+              "url": "http://localhost:8080",
+              "timeout": 4000
+            }
+          ],
+          "description": "Previews to open in the workspace when opening a course",
+          "items": {
+            "type": "object",
+            "properties": {
+              "open": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to open the preview"
+              },
+              "showLoader": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to show the loading screen"
+              },
+              "url": {
+                "type": "string",
+                "description": "URL to open in the preview"
+              },
+              "timeout": {
+                "type": "number",
+                "default": 4000,
+                "description": "Timeout for URL to respond with 200"
+              }
+            }
+          }
+        },
+        "freecodecamp-courses.workspace.terminals": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "directory": {
+                "type": "string",
+                "description": "Relative path to directory where scripts will be run"
+              },
+              "message": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "default": null,
+                "description": "Message to display in terminal"
+              },
+              "name": {
+                "type": "string",
+                "description": "Name of terminal"
+              },
+              "show": {
+                "type": "boolean",
+                "description": "Whether to show the terminal"
+              }
+            }
+          },
+          "description": "Terminals to open in the workspace when opening a course"
+        }
+      }
+    },
     "jsonValidation": [
       {
         "fileMatch": "**/freecodecamp.conf.json",
         "url": "./schema.json"
       }
     ]
-  },
-  "dependencies": {
-    "node-fetch": "3.3.2"
   },
   "description": "Provides tooling for quick and easy selection of courses offered by freeCodeCamp",
   "devDependencies": {
@@ -96,5 +199,5 @@
     "vscode:prepublish": "npm run package",
     "watch": "webpack --watch"
   },
-  "version": "2.1.0"
+  "version": "3.0.0"
 }

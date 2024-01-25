@@ -1,17 +1,16 @@
-import { commands, ExtensionContext, window } from "vscode";
+import { commands, ExtensionContext, window, workspace } from "vscode";
 import openCourse from "./commands/open-course";
 import runCourse from "./commands/run-course";
 import developCourse from "./commands/develop-course";
-import createNewCourse from "./commands/create-new-course";
 import collapse from "./commands/collapse";
-import { getConfig } from "./usefuls";
 
 export async function activate(context: ExtensionContext) {
   console.log("freeCodeCamp Courses extension is now active!");
 
+  // Get extension settings
+  const configuration = workspace.getConfiguration("freecodecamp-courses");
   try {
-    const config = await getConfig();
-    if (config.workspace?.autoStart) {
+    if (configuration.get("autoStart")) {
       runCourse();
     }
   } catch (e) {
@@ -43,14 +42,6 @@ export async function activate(context: ExtensionContext) {
       "freecodecamp-courses.shutdownCourse",
       async () => {
         shutdownCourse();
-      }
-    )
-  );
-  context.subscriptions.push(
-    commands.registerCommand(
-      "freecodecamp-courses.createNewCourse",
-      async () => {
-        createNewCourse();
       }
     )
   );

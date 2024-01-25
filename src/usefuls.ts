@@ -1,7 +1,4 @@
-import { workspace, Uri, FileType, RelativePattern } from "vscode";
-import fetch from "node-fetch";
-import { handleMessage } from "./flash";
-import { Config, FlashTypes } from "./typings";
+import { workspace, Uri } from "vscode";
 
 export const gitClone = (githubLink: string) => `git clone ${githubLink}.git .`;
 export const cd = (path: string, cmd: string) => `cd ${path} && ${cmd}`;
@@ -19,52 +16,6 @@ export async function ensureDirectoryIsEmpty(): Promise<boolean> {
   } catch (e) {
     console.error("freeCodeCamp > ensureDirectoryIsEmpty: ", e);
     return Promise.reject(false);
-  }
-}
-
-export async function getPackageJson(): Promise<any> {
-  try {
-    const work = workspace.workspaceFolders?.[0]?.uri?.fsPath ?? "";
-    const path = Uri.file(`${work}/package.json`);
-    const bin = await workspace.fs.readFile(path);
-    const fileData = JSON.parse(bin.toString());
-    return Promise.resolve(fileData);
-  } catch (e) {
-    console.error("freeCodeCamp > getPackageJson: ", e);
-    return Promise.reject(e);
-  }
-}
-
-/**
- * Finds the `freecodecamp.conf.json` file somewhere in the workspace.
- */
-export async function getConfig(): Promise<Config> {
-  try {
-    // Without `null` in pos. 2, `.vscode > files.exclude` will apply to search.
-    const uriArr = await workspace.findFiles(
-      new RelativePattern(
-        workspace.workspaceFolders?.[0] ?? "",
-        "freecodecamp.conf.json"
-      ),
-      null,
-      1
-    );
-    if (uriArr.length === 0) {
-      return Promise.reject(
-        "Unable to find a `freecodecamp.conf.json` file in workspace root."
-      );
-    }
-    const bin = await workspace.fs.readFile(uriArr[0]);
-    const fileData = JSON.parse(bin.toString());
-    return Promise.resolve(fileData);
-  } catch (e) {
-    console.error("freeCodeCamp > getConfig: ", e);
-    handleMessage({
-      message:
-        "Unable to find a `freecodecamp.conf.json` file in workspace root.",
-      type: FlashTypes.ERROR,
-    });
-    return Promise.reject(e);
   }
 }
 

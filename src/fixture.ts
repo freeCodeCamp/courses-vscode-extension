@@ -2,12 +2,7 @@
 import { Config } from "./typings";
 
 export const exampleConfig: Config = {
-  bashrc: {
-    // The .bashrc file to be sourced
-    enabled: true, // Whether or not to source .bashrc file
-    path: "./.freeCodeCamp/.bashrc", // Relative path to .bashrc file
-  },
-  version: "1.1.1",
+  autoStart: false, // Whether or not to automatically start course on open of VSCode
   path: ".freeCodeCamp", // Relative path to tooling directory where scripts will be run
   prepare: "cp sample.env .env && source ./tooling/.bashrc && npm ci", // Run before running scripts
   scripts: {
@@ -17,7 +12,6 @@ export const exampleConfig: Config = {
   },
   workspace: {
     // Workspace settings
-    autoStart: false, // Whether or not to automatically start course on open of VSCode
     files: [
       // Files to be opened in workspace
       {
@@ -42,31 +36,5 @@ export const exampleConfig: Config = {
         show: true, // Whether or not to show terminal
       },
     ],
-  },
-  client: {
-    assets: {
-      header: "./client/assets/fcc_primary_small.svg",
-      favicon: "./client/assets/fcc_primary_small.svg",
-    },
-    landing: {
-      description: "Placeholder description",
-      "faq-link": "#",
-      "faq-text": "Link to FAQ related to course",
-    },
-  },
-  config: {
-    "projects.json": "./config/projects.json",
-    "state.json": "./config/state.json",
-  },
-  curriculum: {
-    locales: {
-      english: "./curriculum/locales/english",
-    },
-  },
-  hotReload: {
-    ignore: ["some/path/to/ignore"],
-  },
-  tooling: {
-    helpers: "./tooling/test-utils.js",
   },
 };
