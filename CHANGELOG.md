@@ -30,6 +30,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ### Removed
 
 - Removed the `create-new-course.ts` file and related command registration from extension.ts.
+- Delete `schema.json` for `freecodecamp.conf.json`
 
 ##[2.1.0](#v2.1.0) (2024-01-18)
 

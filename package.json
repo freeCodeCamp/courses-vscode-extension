@@ -141,13 +141,7 @@
           "description": "Terminals to open in the workspace when opening a course"
         }
       }
-    },
-    "jsonValidation": [
-      {
-        "fileMatch": "**/freecodecamp.conf.json",
-        "url": "./schema.json"
-      }
-    ]
+    }
   },
   "description": "Provides tooling for quick and easy selection of courses offered by freeCodeCamp",
   "devDependencies": {

@@ -39,7 +39,7 @@ export async function checkIfURLIsAvailable(
           }
         } catch (e) {
           // Do nothing.
-          console.log("freeCodeCamp > checkIfURLIsAvailable: ", e);
+          console.debug("freeCodeCamp > checkIfURLIsAvailable: ", e);
         }
       }, 250);
       setTimeout(() => {
