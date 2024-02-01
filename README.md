@@ -31,7 +31,3 @@ This extension helps run the freeCodeCamp courses found here: [./resources/cours
 ## Creating a Course
 
 See https://opensource.freecodecamp.org/freeCodeCampOS/
-
-### Basic Config File
-
-See up-to-date example here: [./src/fixture.ts](src/fixture.ts)

@@ -1,7 +1,12 @@
-import { Bashrc, Config, FlashTypes } from "./typings";
-import { exampleConfig } from "./fixture";
-import { commands, Terminal, TerminalExitStatus, window } from "vscode";
-import { isConnectedToInternet, openSimpleBrowser } from "./components";
+import { Config, FlashTypes } from "./typings";
+import {
+  commands,
+  Terminal,
+  TerminalExitStatus,
+  window,
+  WorkspaceConfiguration,
+} from "vscode";
+import { openSimpleBrowser } from "./components";
 import { cd, checkIfURLIsAvailable, ensureDirectoryIsEmpty } from "./usefuls";
 import { handleMessage } from "./flash";
 import { createLoaderWebView } from "./loader";
@@ -63,18 +68,6 @@ export function rebuildAndReopenInContainer() {
   commands.executeCommand("remote-containers.rebuildAndReopenInContainer");
 }
 
-export async function handleConnection() {
-  const isConnected = await isConnectedToInternet();
-  if (!isConnected) {
-    handleMessage({
-      message: "No connection found. Please check your internet connection",
-      type: FlashTypes.ERROR,
-    });
-    return Promise.reject();
-  }
-  return Promise.resolve();
-}
-
 export async function handleEmptyDirectory() {
   const isEmpty = await ensureDirectoryIsEmpty();
   if (!isEmpty) {
@@ -103,30 +96,12 @@ const scripts = {
   },
 };
 
-export function sourceBashrc(val: Bashrc, path: string): void {
-  if (val?.enabled) {
-    createBackgroundTerminal(
-      "freeCodeCamp: Source bashrc",
-      cd(path, `source ${val.path}`)
-    );
-  }
-}
-
 export async function handleWorkspace(
   workspace: Config["workspace"],
   prepareTerminalClose: ReturnType<typeof createBackgroundTerminal>
 ): Promise<void> {
   if (workspace!.previews) {
-    const compulsoryKeys = ["open"];
     for (const preview of workspace!.previews) {
-      const notSets = getNotSets(preview, compulsoryKeys);
-      if (notSets.length) {
-        handleMessage({
-          message: `Preview missing keys: ${notSets.join(", ")}`,
-          type: FlashTypes.ERROR,
-        });
-        return Promise.reject();
-      }
       if (preview.showLoader) {
         const panel = createLoaderWebView();
         // TODO: could use result here to show error in loader webview
@@ -138,7 +113,6 @@ export async function handleWorkspace(
             await checkIfURLIsAvailable(preview.url, preview.timeout);
           }
           if (preview?.open) {
-            // After 1000ms, open the preview.
             setTimeout(() => {
               openSimpleBrowser(preview.url);
             }, 500);
@@ -147,7 +121,6 @@ export async function handleWorkspace(
         });
       }
       if (!preview.url && preview?.open) {
-        // After 1000ms, open the preview.
         setTimeout(() => {
           openSimpleBrowser(preview.url);
         }, 500);
@@ -155,16 +128,7 @@ export async function handleWorkspace(
     }
   }
   if (workspace!.terminals) {
-    const compulsoryKeys = ["directory"];
     for (const term of workspace!.terminals) {
-      const notSets = getNotSets(term, compulsoryKeys);
-      if (notSets.length) {
-        handleMessage({
-          message: `Terminals missing keys: ${notSets.join(", ")}`,
-          type: FlashTypes.ERROR,
-        });
-        return Promise.reject();
-      }
       if (term?.name) {
         const t = handleTerminal(
           term.directory,
@@ -178,16 +142,7 @@ export async function handleWorkspace(
     }
   }
   if (workspace!.files) {
-    const compulsoryKeys = ["name"];
-    for (const file of workspace!.files) {
-      const notSets = getNotSets(file, compulsoryKeys);
-      if (notSets.length) {
-        handleMessage({
-          message: `Files missing keys: ${notSets.join(", ")}`,
-          type: FlashTypes.ERROR,
-        });
-        return Promise.reject();
-      }
+    for (const _file of workspace!.files) {
       // TODO: Open file
     }
   }
@@ -195,91 +150,28 @@ export async function handleWorkspace(
 }
 
 export async function handleConfig(
-  config: Config,
+  config: WorkspaceConfiguration,
   caller: keyof Config["scripts"]
 ) {
   // Ensure compulsory keys and values are set
   const path = config.path || ".";
-  const compulsoryKeys = [
-    "scripts",
-    "scripts.develop-course",
-    "scripts.run-course",
-    "curriculum",
-    "curriculum.locales",
-  ];
-
-  ensureNoExtraKeys(config, exampleConfig);
-
-  const notSets = getNotSets<Config>(config, compulsoryKeys);
-  if (notSets.length) {
-    return handleMessage({
-      type: FlashTypes.ERROR,
-      message: `${notSets.join(", and ")} not set.`,
-    });
-  }
-
   // Run prepare script
   let prepareTerminalClose: Promise<TerminalExitStatus> = new Promise(
     (resolve) => resolve({ code: 0 } as TerminalExitStatus)
   );
-  if (config.prepare) {
+  if (config.get("prepare")) {
     prepareTerminalClose = createBackgroundTerminal(
       "freeCodeCamp: Preparing Course",
       cd(path, config.prepare)
     );
   }
 
-  if (config.workspace) {
+  if (config.get("workspace")) {
     await handleWorkspace(config.workspace, prepareTerminalClose);
   }
 
   const calledScript = config.scripts[caller];
   if (typeof calledScript === "string") {
     scripts[caller](path, calledScript);
-  }
-
-  if (config.bashrc) {
-    sourceBashrc(config.bashrc, path);
-  }
-}
-
-export function getNotSets<T>(obj: T, compulsoryKeys: string[]) {
-  return compulsoryKeys.filter((key) => !hasProp<T>(obj, key));
-}
-
-export function hasProp<T>(obj: T, keys: string): boolean {
-  const keysArr = keys.split(".");
-  let currObj: any = obj;
-  for (const key of keysArr) {
-    if (!currObj[key]) {
-      return false;
-    }
-    currObj = currObj[key];
-  }
-  return true;
-}
-
-export function ensureNoExtraKeys(obj: any, exampleObject: any) {
-  const unrecognisedKeys = [];
-  for (const key in obj) {
-    if (typeof obj[key] === "string") {
-      continue;
-    }
-    if (!exampleObject.hasOwnProperty(key)) {
-      unrecognisedKeys.push(key);
-      continue;
-    }
-    if (typeof obj[key] === "object") {
-      ensureNoExtraKeys(obj[key], exampleObject[key]);
-    }
-  }
-  if (unrecognisedKeys.length) {
-    console.log(
-      "There are keys that are not recognised in the `freecodecamp.conf.json` file. Double-check the specification."
-    );
-    handleMessage({
-      type: FlashTypes.WARNING,
-      message: `Unrecognised keys: ${unrecognisedKeys.join(", ")}`,
-    });
   }
 }

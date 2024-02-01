@@ -1,5 +1,4 @@
 import { commands, Uri, workspace, window } from "vscode";
-import fetch from "node-fetch";
 import { Course, FlashTypes } from "./typings";
 import { handleMessage } from "./flash";
 
@@ -34,19 +33,5 @@ export async function currentDirectoryCourse(): Promise<
     console.error(e);
     handleMessage({ message: e as string, type: FlashTypes.INFO });
     return Promise.resolve(null);
-  }
-}
-
-/**
- * This function pings `google.com` to check if internet connection is available
- * @returns boolean
- */
-export async function isConnectedToInternet(): Promise<boolean> {
-  try {
-    const res = await fetch("https://www.google.com");
-    return Promise.resolve(res.status === 200);
-  } catch (e) {
-    console.log("isConnected: ", e);
-    return Promise.resolve(false);
   }
 }

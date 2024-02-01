@@ -24,27 +24,16 @@ export interface Courses {
   courses: Course[];
 }
 
-export type Bashrc =
-  | { enabled: true; path: string }
-  | { enabled: false; path?: string };
-
-type Preview =
-  | {
-      open: true;
-      showLoader: boolean;
-      url: string;
-      timeout: number;
-    }
-  | {
-      open: false;
-      showLoader: boolean;
-      url?: string;
-      timeout?: number;
-    };
+type Preview = {
+  open: boolean;
+  showLoader: boolean;
+  url: string;
+  timeout: number;
+};
 
 type Terminal = {
   directory: string;
-  message?: string;
+  message: string | null;
   name: string;
   show: boolean;
 };
@@ -52,44 +41,16 @@ type Terminal = {
 type File = { path: string };
 
 export interface Config {
-  bashrc?: Bashrc;
-  path?: string;
-  version: string;
-  prepare?: string;
+  autoStart: boolean;
+  path: string;
+  prepare: string;
   scripts: {
     "develop-course": string;
     "run-course": string;
   };
-  workspace?: {
-    autoStart?: boolean;
-    files?: File[];
-    previews?: Preview[];
-    terminals?: Terminal[];
-  };
-  client?: {
-    assets?: {
-      header?: string;
-      favicon?: string;
-    };
-    landing?: {
-      description?: string;
-      "faq-link"?: string;
-      "faq-text"?: string;
-    };
-  };
-  config?: {
-    "projects.json"?: string;
-    "state.json"?: string;
-  };
-  curriculum: {
-    locales: {
-      [key: string]: string;
-    };
-  };
-  hotReload?: {
-    ignore?: string[];
-  };
-  tooling?: {
-    helpers?: string;
+  workspace: {
+    files: File[];
+    previews: Preview[];
+    terminals: Terminal[];
   };
 }

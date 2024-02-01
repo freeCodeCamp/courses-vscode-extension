@@ -4,9 +4,31 @@ All notable changes to the `freecodecamp-courses` extension will be documented i
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## [Unreleased]
-
 ## [Released]
+
+##[3.0.0](#v3.0.0) (2024-02-01)
+
+### Changed
+
+- `activationEvents`:
+  - `"workspaceContains:**/freecodecamp.conf.json"` to `"onStartupFinished"`
+
+### Added
+
+- Configuration settings in package.json:
+  - `"freecodecamp-courses.autoStart"`: Automatically start the course when opened in VS Code (boolean, default: false)
+  - `"freecodecamp-courses.path"`: Relative path to the directory where scripts will be run (string, default: ".")
+  - `"freecodecamp-courses.prepare"`: Command to run on the first opening of a course (string, default: "npm install")
+  - `"freecodecamp-courses.scripts.develop-course"`: Command to run when developing a course (string, default: "npm run develop")
+  - `"freecodecamp-courses.scripts.run-course"`: Command to run when running a course in production (string, default: "npm run start")
+  - `"freecodecamp-courses.workspace.files"`: Files to open in the workspace when opening a course (array of objects with "path" property)
+  - `"freecodecamp-courses.workspace.previews"`: Previews to open in the workspace when opening a course (array of objects with "open", "showLoader", "url", and "timeout" properties)
+  - `"freecodecamp-courses.workspace.terminals"`: Terminals to open in the workspace when opening a course (array of objects with "directory", "message", "name", and "show" properties)
+
+### Removed
+
+- Removed the `create-new-course.ts` file and related command registration from extension.ts.
+- Delete `schema.json` for `freecodecamp.conf.json`
 
 ##[2.1.0](#v2.1.0) (2024-01-18)
 
