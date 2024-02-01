@@ -113,7 +113,6 @@ export async function handleWorkspace(
             await checkIfURLIsAvailable(preview.url, preview.timeout);
           }
           if (preview?.open) {
-            // After 1000ms, open the preview.
             setTimeout(() => {
               openSimpleBrowser(preview.url);
             }, 500);
@@ -122,7 +121,6 @@ export async function handleWorkspace(
         });
       }
       if (!preview.url && preview?.open) {
-        // After 1000ms, open the preview.
         setTimeout(() => {
           openSimpleBrowser(preview.url);
         }, 500);

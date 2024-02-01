@@ -4,11 +4,9 @@ All notable changes to the `freecodecamp-courses` extension will be documented i
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## [Unreleased]
-
 ## [Released]
 
-##[3.0.0](#v3.0.0) (2024-10-26)
+##[3.0.0](#v3.0.0) (2024-02-01)
 
 ### Changed
 
