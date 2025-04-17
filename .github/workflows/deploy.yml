@@ -17,7 +17,7 @@ jobs:
       - name: Checkout Source Files
         uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
       - name: Use Node.js 18.x
-        uses: actions/setup-node@dbe1369d7be17e7823f8c1ee1ae8bec5779239dd # v3
+        uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610 # v3
         with:
           node-version: 18.x
 
