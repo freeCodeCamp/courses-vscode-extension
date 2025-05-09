@@ -146,7 +146,7 @@
   "description": "Provides tooling for quick and easy selection of courses offered by freeCodeCamp",
   "devDependencies": {
     "@types/node": "20.17.46",
-    "@types/vscode": "1.99.1",
+    "@types/vscode": "1.100.0",
     "@typescript-eslint/eslint-plugin": "6.21.0",
     "@typescript-eslint/parser": "6.21.0",
     "@vscode/vsce": "2.32.0",
