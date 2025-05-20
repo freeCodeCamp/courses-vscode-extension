@@ -6,6 +6,17 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Released]
 
+##[3.0.1](#v3.0.1) (2025-05-20)
+
+### Updated
+
+- `@types/node`: `22.15.20`
+- `@typescript-eslint/eslint-plugin`: `8.32.1`
+- `@typescript-eslint/parser`: `8.32.1`
+- `@vscode/vsce`: `3.4.1`
+- `eslint`: `9.27.0`
+- `webpack-cli`: `6.0.1`
+
 ##[3.0.0](#v3.0.0) (2024-02-01)
 
 ### Changed
