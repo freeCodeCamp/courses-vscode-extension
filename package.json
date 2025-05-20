@@ -193,5 +193,5 @@
     "vscode:prepublish": "npm run package",
     "watch": "webpack --watch"
   },
-  "version": "3.0.1"
+  "version": "3.0.0"
 }
