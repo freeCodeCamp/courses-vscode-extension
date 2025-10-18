@@ -150,7 +150,7 @@
     "@typescript-eslint/eslint-plugin": "8.46.1",
     "@typescript-eslint/parser": "8.46.1",
     "@vscode/vsce": "3.6.2",
-    "eslint": "9.37.0",
+    "eslint": "9.38.0",
     "ts-loader": "9.5.4",
     "typescript": "5.9.3",
     "webpack": "5.102.1",
