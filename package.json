@@ -147,8 +147,8 @@
   "devDependencies": {
     "@types/node": "22.19.0",
     "@types/vscode": "1.105.0",
-    "@typescript-eslint/eslint-plugin": "8.46.2",
-    "@typescript-eslint/parser": "8.46.2",
+    "@typescript-eslint/eslint-plugin": "8.46.3",
+    "@typescript-eslint/parser": "8.46.3",
     "@vscode/vsce": "3.6.2",
     "eslint": "9.39.0",
     "ts-loader": "9.5.4",
