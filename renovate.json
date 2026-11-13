@@ -5,20 +5,23 @@
   ],
   "packageRules": [
     {
-      "description": "@types/vscode must not exceed engines.vscode (minimum supported VS Code version)",
-      "matchPackageNames": [
-        "@types/vscode"
-      ],
-      "enabled": false
+      "description": "Minimum supported VS Code: only move engines.vscode to releases at least 1 year old",
+      "matchDepTypes": ["engines"],
+      "matchDepNames": ["vscode"],
+      "groupName": "VS Code minimum version",
+      "rangeStrategy": "bump",
+      "minimumReleaseAge": "365 days"
+    },
+    {
+      "description": "@types/vscode must not exceed engines.vscode: extra week of age keeps it at or behind the engines bump",
+      "matchPackageNames": ["@types/vscode"],
+      "groupName": "VS Code minimum version",
+      "minimumReleaseAge": "372 days"
     },
     {
       "description": "engines.node tracks the Node.js runtime bundled with VS Code, update manually",
-      "matchPackageNames": [
-        "node"
-      ],
-      "matchDepTypes": [
-        "engines"
-      ],
+      "matchPackageNames": ["node"],
+      "matchDepTypes": ["engines"],
       "enabled": false
     }
   ]
