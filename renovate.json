@@ -1,8 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "local>freeCodeCamp/renovate-config"
-  ],
+  "extends": ["local>freeCodeCamp/renovate-config"],
   "packageRules": [
     {
       "description": "Minimum supported VS Code: only move engines.vscode to releases at least 1 year old",
@@ -19,10 +17,20 @@
       "minimumReleaseAge": "372 days"
     },
     {
-      "description": "engines.node tracks the Node.js runtime bundled with VS Code, update manually",
+      "description": "engines.node tracks the Node.js runtime bundled with the minimum supported VS Code. Update manually, together with the @types/node allowedVersions cap",
       "matchPackageNames": ["node"],
       "matchDepTypes": ["engines"],
       "enabled": false
+    },
+    {
+      "description": "@types/node major must match engines.node. Raise this cap when engines.node is raised",
+      "matchPackageNames": ["@types/node"],
+      "allowedVersions": "<25"
+    },
+    {
+      "description": "TypeScript 7 drops the JS API used by ts-loader 9 and is outside the typescript-eslint peer range (<6.1.0). Raise when both support it",
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": "<7"
     }
   ]
 }
