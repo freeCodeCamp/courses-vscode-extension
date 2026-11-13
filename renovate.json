@@ -6,7 +6,19 @@
   "packageRules": [
     {
       "description": "@types/vscode must not exceed engines.vscode (minimum supported VS Code version)",
-      "matchPackageNames": ["@types/vscode"],
+      "matchPackageNames": [
+        "@types/vscode"
+      ],
+      "enabled": false
+    },
+    {
+      "description": "engines.node tracks the Node.js runtime bundled with VS Code, update manually",
+      "matchPackageNames": [
+        "node"
+      ],
+      "matchDepTypes": [
+        "engines"
+      ],
       "enabled": false
     }
   ]
