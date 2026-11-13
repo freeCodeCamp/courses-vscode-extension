@@ -150,7 +150,7 @@
     "@typescript-eslint/eslint-plugin": "8.72.2",
     "@typescript-eslint/parser": "8.72.2",
     "@vscode/vsce": "3.9.2",
-    "eslint": "9.39.5",
+    "eslint": "10.14.0",
     "ts-loader": "9.6.2",
     "typescript": "5.9.3",
     "webpack": "5.112.2",
@@ -184,7 +184,7 @@
   "scripts": {
     "compile": "webpack",
     "deploy": "vsce publish",
-    "lint": "eslint src --ext ts",
+    "lint": "eslint src",
     "pack": "vsce package",
     "package": "webpack --mode production --devtool hidden-source-map",
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
