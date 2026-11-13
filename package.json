@@ -149,7 +149,7 @@
     "@types/vscode": "1.120.0",
     "@typescript-eslint/eslint-plugin": "8.72.2",
     "@typescript-eslint/parser": "8.72.2",
-    "@vscode/vsce": "3.9.2",
+    "@vscode/vsce": "4.1.1",
     "eslint": "10.14.0",
     "ts-loader": "9.6.2",
     "typescript": "6.0.3",
