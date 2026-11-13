@@ -2,5 +2,12 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "local>freeCodeCamp/renovate-config"
+  ],
+  "packageRules": [
+    {
+      "description": "@types/vscode must not exceed engines.vscode (minimum supported VS Code version)",
+      "matchPackageNames": ["@types/vscode"],
+      "enabled": false
+    }
   ]
 }
